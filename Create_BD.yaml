@@ -1,1 +1,18 @@
+# Create BD
+---
+- name: ACI Configuration
+  hosts: apic
+  connection: local
+  gather_facts: no
 
+  tasks: 
+  - name: Add Bridge Domain "{{apic_bd}}"
+    aci_bd:
+      host: "{{ inventory_hostname }}"
+      username: "{{ username }}"
+      password: "{{ password }}"
+      validate_certs: false
+      state: present
+      tenant: "{{apic_tenant}}"
+      bd: "{{apic_bd}}"
+      vrf: "{{apic_vrf}}"
