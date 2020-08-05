@@ -1,0 +1,16 @@
+---
+- name: ACI Configuration
+  hosts: apic
+  connection: local
+  gather_facts: no
+
+  tasks: 
+  - name: Add a new physical domain "{{apic_domain}}"
+    aci_domain:
+      host: "{{ inventory_hostname }}"
+      username: "{{ username }}"
+      password: "{{ password }}"
+      domain: "{{apic_domain}}"
+      domain_type: phys
+      validate_certs: no
+      state: present 
