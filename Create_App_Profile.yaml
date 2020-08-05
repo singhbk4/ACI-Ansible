@@ -1,1 +1,19 @@
 # Add Application Profile 
+---
+- name: ACI Configuration
+  hosts: apic
+  connection: local
+  gather_facts: no
+
+  tasks: 
+  
+  - name: Add a new AP "{{apic_ap}}"
+    aci_ap:
+      host: "{{ inventory_hostname }}"
+      username: "{{ username }}"
+      password: "{{ password }}"
+      tenant: "{{apic_tenant}}"
+      ap: "{{apic_ap}}"
+      validate_certs: no
+      description: AP creaded by Ansible
+      state: present
