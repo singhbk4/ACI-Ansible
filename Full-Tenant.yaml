@@ -1,0 +1,249 @@
+---
+- name: ACI Configuration
+  hosts: apic
+  connection: local
+  gather_facts: no
+
+  tasks: 
+  - name: Add a new tenant "{{apic_tenant}}"
+    aci_tenant:
+      host: "{{ inventory_hostname }}"
+      username: "{{ username }}"
+      password: "{{ password }}"
+      tenant: "{{apic_tenant}}"
+      validate_certs: no
+      description: Tenant created by Ansible
+      state: present
+    delegate_to: localhost
+ 
+  - name: Add a new AP "{{apic_ap}}"
+    aci_ap:
+      host: "{{ inventory_hostname }}"
+      username: "{{ username }}"
+      password: "{{ password }}"
+      tenant: "{{apic_tenant}}"
+      ap: "{{apic_ap}}"
+      validate_certs: no
+      description: AP creaded by Ansible
+      state: present
+
+  - name: Add a new VRF "{{apic_vrf}}" to a tenant
+    aci_vrf:
+      host: "{{ inventory_hostname }}"
+      username: "{{ username }}"
+      password: "{{ password }}"
+      vrf: "{{apic_vrf}}"
+      tenant: "{{apic_tenant}}"
+      validate_certs: no
+      descr: VRF creaded by Ansible
+      policy_control_preference: enforced
+      policy_control_direction: ingress
+      state: present
+
+  - name: Add Bridge Domain "{{apic_bd}}"
+    aci_bd:
+      host: "{{ inventory_hostname }}"
+      username: "{{ username }}"
+      password: "{{ password }}"
+      validate_certs: false
+      state: present
+      tenant: "{{apic_tenant}}"
+      bd: "{{apic_bd}}"
+      vrf: "{{apic_vrf}}"
+
+  - name: Add a new EPG "{{apic_epg_01}}"
+    aci_epg:
+      host: "{{ inventory_hostname }}"
+      username: "{{ username }}"
+      password: "{{ password }}"
+      tenant: "{{apic_tenant}}"
+      ap: "{{apic_ap}}"
+      epg: "{{apic_epg_01}}"
+      description: Web EPG creaded by Ansible
+      bd: "{{apic_bd}}"
+      validate_certs: no
+      preferred_group: yes
+      state: present
+    delegate_to: localhost
+ 
+  - name: Add a new EPG "{{apic_epg_02}}"
+    aci_epg:
+      host: "{{ inventory_hostname }}"
+      username: "{{ username }}"
+      password: "{{ password }}"
+      tenant: "{{apic_tenant}}"
+      ap: "{{apic_ap}}"
+      epg: "{{apic_epg_02}}"
+      description: Web EPG creaded by Ansible
+      bd: "{{apic_bd}}"
+      validate_certs: no
+      preferred_group: yes
+      state: present
+    delegate_to: localhost 
+
+  - name: Add a new contract "{{apic_contract}}"
+    aci_contract:
+      host: "{{ inventory_hostname }}"
+      username: "{{ username }}"
+      password: "{{ password }}"
+      tenant: "{{apic_tenant}}"
+      contract: "{{apic_contract}}"
+      validate_certs: no
+      state: present
+
+  - name: Add a new physical domain "{{apic_domain}}"
+    aci_domain:
+      host: "{{ inventory_hostname }}"
+      username: "{{ username }}"
+      password: "{{ password }}"
+      domain: "{{apic_domain}}"
+      domain_type: phys
+      validate_certs: no
+      state: present       
+
+  - name: Add a new AEP "{{apic_aep}}" 
+    aci_aep:
+      host: "{{ inventory_hostname }}"
+      username: "{{ username }}"
+      password: "{{ password }}"
+      aep: "{{apic_aep}}"
+      description: created by ansible
+      validate_certs: no
+      state: present 
+
+  - name: Add AEP to domain binding 
+    aci_aep_to_domain:
+      host: "{{ inventory_hostname }}"
+      username: "{{ username }}"
+      password: "{{ password }}"
+      aep: "{{apic_aep}}"
+      domain: "{{apic_domain}}"
+      domain_type: phys
+      validate_certs: no
+      state: present       
+  
+  - name: Add a physical domain to EPG
+    aci_epg_to_domain:
+      host: "{{ inventory_hostname }}"
+      username: "{{ username }}"
+      password: "{{ password }}"
+      tenant: "{{apic_tenant}}"
+      ap: "{{apic_ap}}"
+      epg: "{{apic_epg_01}}"
+      domain: "{{apic_domain}}"
+      domain_type: phys
+      validate_certs: no
+      state: present    
+
+  - name: Add subnet in "{{apic_bd}}"
+    aci_bd_subnet:
+      hostname: "{{ inventory_hostname }}"
+      username: "{{ username }}"
+      password: "{{ password }}"
+      validate_certs: no
+      tenant: "{{apic_tenant}}"
+      bd: "{{apic_bd}}"
+      subnet_name: "{{apic_subnet1}}"
+      gateway: "{{apic_subnet1_gw}}"
+      mask: "{{apic_subnet1_mask}}"      
+      scope: "public"
+
+  - name: Add a new leaf interface profile
+    aci_interface_policy_leaf_profile:
+      host: "{{ inventory_hostname }}"
+      username: "{{ username }}"
+      password: "{{ password }}"
+      leaf_interface_profile: "{{apic_leaf_profile}}"
+      description: created by Ansible
+      validate_certs: no
+      state: present    
+
+  - name: Associate an access port block to an interface selector under interface profile
+    aci_access_port_to_interface_policy_leaf_profile:
+      host: "{{ inventory_hostname }}"
+      username: "{{ username }}"
+      password: "{{ password }}"
+      leaf_interface_profile: "{{apic_leaf_profile}}"
+      access_port_selector: Port_Selector
+      leaf_port_blk: port_block
+      from_port: 30
+      to_port: 31
+      description: created by Ansible
+      validate_certs: no
+      state: present   
+
+  - name: Create a leaf access port policy group
+    aci_interface_policy_leaf_policy_group:
+      host: "{{ inventory_hostname }}"
+      username: "{{ username }}"
+      password: "{{ password }}"
+      lag_type: leaf
+      policy_group: Access_Port_Policy
+      link_level_policy: port_speed
+      cdp_policy: enable_cdp
+      description: created by Ansible
+      validate_certs: no
+      state: present      
+
+  - name: Associate policy group to interface selector 
+    aci_access_port_to_interface_policy_leaf_profile:
+      host: "{{ inventory_hostname }}"
+      username: "{{ username }}"
+      password: "{{ password }}"
+      leaf_interface_profile: "{{apic_leaf_profile}}"
+      access_port_selector: Port_Selector
+      policy_group: Access_Port_Policy
+      description: created by Ansible
+      validate_certs: no
+      state: present        
+ 
+  - name: Create a switch leaf profile 
+    aci_switch_policy_leaf_profile:
+      host: "{{ inventory_hostname }}"
+      username: "{{ username }}"
+      password: "{{ password }}"
+      leaf_profile: SW_Leaf_101_102
+      description: created by Ansible
+      validate_certs: no
+      state: present        
+    
+  - name: Adding switch policy leaf profile selector associated Node Block range
+    aci_switch_leaf_selector:
+      host: "{{ inventory_hostname }}"
+      username: "{{ username }}"
+      password: "{{ password }}"
+      leaf_profile: SW_Leaf_101_102
+      leaf: node_101_102
+      leaf_node_blk: L_101_102
+      from: 101
+      to: 102
+      validate_certs: no
+      state: present
+
+  - name: Associate interface selector profile to switch policy leaf profile 
+    aci_interface_selector_to_switch_policy_leaf_profile:
+      host: "{{ inventory_hostname }}"
+      username: "{{ username }}"
+      password: "{{ password }}"
+      leaf_profile: SW_Leaf_101_102
+      interface_selector: "{{apic_leaf_profile}}"
+      validate_certs: no
+      state: present  
+ 
+  - name: Static path binding for given EPG 
+    aci_static_binding_to_epg:
+      host: "{{ inventory_hostname }}"
+      username: "{{ username }}"
+      password: "{{ password }}"
+      tenant: "{{apic_tenant}}"
+      ap: "{{apic_ap}}"
+      epg: "{{apic_epg_01}}"  
+      encap_id: 3001
+      deploy_immediacy: lazy
+      interface_mode: untagged
+      interface_type: switch_port
+      pod_id: 1
+      leafs: 101
+      interface: '1/31'  
+      validate_certs: no
+      state: present 
