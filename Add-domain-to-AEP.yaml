@@ -1,0 +1,17 @@
+---
+- name: ACI Configuration
+  hosts: apic
+  connection: local
+  gather_facts: no
+
+  tasks:
+  - name: Add AEP to domain binding 
+    aci_aep_to_domain:
+      host: "{{ inventory_hostname }}"
+      username: "{{ username }}"
+      password: "{{ password }}"
+      aep: "{{apic_aep}}"
+      domain: "{{apic_domain}}"
+      domain_type: phys
+      validate_certs: no
+      state: present 
