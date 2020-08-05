@@ -1,0 +1,20 @@
+---
+- name: ACI Configuration
+  hosts: apic
+  connection: local
+  gather_facts: no
+
+  tasks: 
+  - name: Associate an access port block to an interface selector under interface profile
+    aci_access_port_to_interface_policy_leaf_profile:
+      host: "{{ inventory_hostname }}"
+      username: "{{ username }}"
+      password: "{{ password }}"
+      leaf_interface_profile: "{{apic_leaf_profile}}"
+      access_port_selector: Port_Selector
+      leaf_port_blk: port_block
+      from_port: 30
+      to_port: 31
+      description: created by Ansible
+      validate_certs: no
+      state: present
