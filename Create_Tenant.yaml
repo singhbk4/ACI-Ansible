@@ -1,1 +1,17 @@
 # Add Tenant 
+- name: ACI Configuration
+  hosts: apic
+  connection: local
+  gather_facts: no
+
+  tasks: 
+  - name: Add a new tenant "{{apic_tenant}}"
+    aci_tenant:
+      host: "{{ inventory_hostname }}"
+      username: "{{ username }}"
+      password: "{{ password }}"
+      tenant: "{{apic_tenant}}"
+      validate_certs: no
+      description: Tenant created by Ansible
+      state: present
+    delegate_to: localhost
