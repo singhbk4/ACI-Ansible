@@ -1,0 +1,16 @@
+---
+- name: ACI Configuration
+  hosts: apic
+  connection: local
+  gather_facts: no
+
+  tasks: 
+  - name: Create a switch leaf profile 
+    aci_switch_policy_leaf_profile:
+      host: "{{ inventory_hostname }}"
+      username: "{{ username }}"
+      password: "{{ password }}"
+      leaf_profile: SW_Leaf_101_102
+      description: created by Ansible
+      validate_certs: no
+      state: present 
