@@ -1,1 +1,22 @@
+# Create EPG
+---
+- name: ACI Configuration
+  hosts: apic
+  connection: local
+  gather_facts: no
 
+  tasks: 
+  - name: Add a new EPG "{{apic_epg_01}}"
+    aci_epg:
+      host: "{{ inventory_hostname }}"
+      username: "{{ username }}"
+      password: "{{ password }}"
+      tenant: "{{apic_tenant}}"
+      ap: "{{apic_ap}}"
+      epg: "{{apic_epg_01}}"
+      description: Web EPG creaded by Ansible
+      bd: "{{apic_bd}}"
+      validate_certs: no
+      preferred_group: yes
+      state: present
+    delegate_to: localhost
