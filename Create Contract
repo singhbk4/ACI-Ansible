@@ -1,0 +1,17 @@
+# Create a contract
+---
+- name: ACI Configuration
+  hosts: apic
+  connection: local
+  gather_facts: no
+
+  tasks: 
+  - name: Add a new contract "{{apic_contract}}"
+    aci_contract:
+      host: "{{ inventory_hostname }}"
+      username: "{{ username }}"
+      password: "{{ password }}"
+      tenant: "{{apic_tenant}}"
+      contract: "{{apic_contract}}"
+      validate_certs: no
+      state: present
