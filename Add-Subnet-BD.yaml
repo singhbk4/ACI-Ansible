@@ -1,0 +1,19 @@
+---
+- name: ACI Configuration
+  hosts: apic
+  connection: local
+  gather_facts: no
+
+  tasks: 
+  - name: Add subnet in "{{apic_bd}}"
+    aci_bd_subnet:
+      hostname: "{{ inventory_hostname }}"
+      username: "{{ username }}"
+      password: "{{ password }}"
+      validate_certs: no
+      tenant: "{{apic_tenant}}"
+      bd: "{{apic_bd}}"
+      subnet_name: "{{apic_subnet1}}"
+      gateway: "{{apic_subnet1_gw}}"
+      mask: "{{apic_subnet1_mask}}"      
+      scope: "public"
