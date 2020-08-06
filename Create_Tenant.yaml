@@ -1,6 +1,6 @@
 # Add Tenant 
 - name: ACI Configuration
-  hosts: apic
+  hosts: all
   connection: local
   gather_facts: no
 
