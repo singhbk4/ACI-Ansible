@@ -10,7 +10,7 @@
       host: "{{ inventory_hostname }}"
       username: "{{username}}"
       password: "{{password}}"
-      tenant: "{{apic_tenant}}"
+      tenant: "{{tenant}}"
       validate_certs: no
       description: Tenant created by Ansible
       state: present
