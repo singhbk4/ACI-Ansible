@@ -1,14 +1,28 @@
 # Add Tenant 
-- name: ACI Configuration
-  hosts: all
+- name: Create or delete a tenant in ACI
+  hosts: localhost
   connection: local
   gather_facts: no
+  
+  vars_files:
+  - '{{ playbook_dir}}/files/passwords.yml'
 
+  vars:
+    # These are default values which can be overridden at run time using -e or --extra-vars
+    description: This is my tenant       # Tenant Description 
+    tenant: ABC                          # Tenant Name
+    desired_state: present               # 'present' to create or 'absent' to delete
+    validate_certs: no                   # certificate verify
+    password: '{{ apic.password }}'      # specify the actual password as an extra var
+    
   tasks: 
-  - name: Add a new tenant "{{tenant}}"
+  - name: Add a new tenant"
     aci_tenant:
-      tenant: "{{tenant}}"
-      validate_certs: no
-      description: Tenant created by Ansible
-      state: present
+      hostname: '{{ apic.hostname }}'
+      username: '{{ apic.username }}'
+      password: '{{ password }}'
+      tenant: "{{ tenant }}"
+      validate_certs: '{{ validate_certs }}'
+      description: '{{ description }}'
+      state: '{{ desired_state }}'
     delegate_to: localhost
