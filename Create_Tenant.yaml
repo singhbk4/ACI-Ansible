@@ -1,12 +1,9 @@
 # Add Tenant 
 - name: Create or delete a tenant in ACI
-  hosts: localhost
+  hosts: aci                           # Name of the host inventory created in Ansible tower 
   connection: local
-  gather_facts: no
+  gather_facts: false
   
-  vars_files:
-  - '{{ playbook_dir}}/files/passwords.yml'
-
   vars:
     # These are default values which can be overridden at run time using -e or --extra-vars
     description: This is my tenant       # Tenant Description 
@@ -14,15 +11,21 @@
     desired_state: present               # 'present' to create or 'absent' to delete
     validate_certs: no                   # certificate verify
     password: '{{ apic.password }}'      # specify the actual password as an extra var
+    vlan_encap: []
     
   tasks: 
   - name: Add a new tenant"
     aci_tenant:
-      hostname: '{{ apic.hostname }}'
-      username: '{{ apic.username }}'
-      password: '{{ password }}'
+      host: '{{inventory_hostname}}'
+      username: '{{ lookup("env", "ANSIBLE_NET_USERNAME") }}'
+      password: '{{ lookup("env", "ANSIBLE_NET_PASSWORD") }}'
       tenant: "{{ tenant }}"
       validate_certs: '{{ validate_certs }}'
       description: '{{ description }}'
       state: '{{ desired_state }}'
-    delegate_to: localhost
+    register: result
+    
+  - name: debug output
+    debug: msg="{{result}}"
+    
+    
