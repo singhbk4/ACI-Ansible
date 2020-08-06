@@ -7,9 +7,6 @@
   tasks: 
   - name: Add a new tenant "{{tenant}}"
     aci_tenant:
-      host: "{{ inventory_hostname }}"
-      username: "{{username}}"
-      password: "{{password}}"
       tenant: "{{tenant}}"
       validate_certs: no
       description: Tenant created by Ansible
