@@ -1,6 +1,6 @@
 # Add Tenant 
 - name: Create or delete a tenant in ACI
-  hosts: aci1                           # Name of the host inventory created in Ansible tower 
+  hosts: aci                           # Name of the host inventory created in Ansible tower 
   connection: local
   gather_facts: false
   
