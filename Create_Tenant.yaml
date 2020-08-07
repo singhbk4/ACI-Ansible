@@ -8,7 +8,7 @@
     # These are default values which can be overridden at run time using -e or --extra-vars
     description: This is my tenant       # Tenant Description 
     tenant: XYZ                          # Tenant Name
-    desired_state: present               # 'present' to create or 'absent' to delete
+    desired_state: absent               # 'present' to create or 'absent' to delete
     validate_certs: no                   # certificate verify
     password: '{{ apic.password }}'      # specify the actual password as an extra var
     vlan_encap: []
