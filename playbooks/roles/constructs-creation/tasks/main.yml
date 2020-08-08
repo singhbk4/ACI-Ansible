@@ -90,7 +90,6 @@
     aci_tenant:
       <<: *apic_info
       tenant: "{{tenant}}"
-      app_pr
       description: Tenant created by Ansible
       state: present
     delegate_to: localhost
@@ -100,7 +99,6 @@
       <<: *apic_info
       tenant: "{{tenant}}"
       ap: "{{app_pr}}"
-      app_pr
       description: AP creaded by Ansible
       state: present
 
@@ -109,7 +107,6 @@
       <<: *apic_info
       vrf: "{{apic_vrf}}"
       tenant: "{{tenant}}"
-      app_pr
       descr: VRF creaded by Ansible
       policy_control_preference: enforced
       policy_control_direction: ingress
@@ -136,7 +133,6 @@
       epg: "{{apic_epg_01}}"
       description: Web EPG creaded by Ansible
       bd: "{{apic_bd00}}"
-      app_pr
       preferred_group: yes
       state: present
     delegate_to: localhost
@@ -149,7 +145,6 @@
       epg: "{{apic_epg_02}}"
       description: Web EPG creaded by Ansible
       bd: "{{apic_bd02}}"
-      app_pr
       preferred_group: yes
       state: present
     delegate_to: localhost 
@@ -159,7 +154,6 @@
       <<: *apic_info
       tenant: "{{tenant}}"
       contract: "{{apic_contract}}"
-      app_pr
       state: present
 
   - name: Add a new physical domain "{{apic_domain}}"
@@ -167,7 +161,6 @@
       <<: *apic_info
       domain: "{{apic_domain}}"
       domain_type: phys
-      app_pr
       state: present       
 
   - name: Add a new AEP "{{apic_aep}}" 
@@ -175,7 +168,6 @@
       <<: *apic_info
       aep: "{{apic_aep}}"
       description: created by ansible
-      app_pr
       state: present 
 
   - name: Add AEP to domain binding 
@@ -184,7 +176,6 @@
       aep: "{{apic_aep}}"
       domain: "{{apic_domain}}"
       domain_type: phys
-      app_pr
       state: present       
   
   - name: Add a physical domain to EPG
@@ -195,13 +186,11 @@
       epg: "{{apic_epg_01}}"
       domain: "{{apic_domain}}"
       domain_type: phys
-      app_pr
       state: present    
 
   - name: Add subnet in "{{apic_bd00}}"
     aci_bd_subnet:
       <<: *apic_info
-      app_pr
       tenant: "{{tenant}}"
       bd: "{{apic_bd00}}"
       subnet_name: "{{apic_subnet1}}"
@@ -214,7 +203,6 @@
       <<: *apic_info
       leaf_interface_profile: "{{item}}"
       description: created by Ansible
-      app_pr
       state: present 
     with_items:
       "{{ifPolicyLeafProfileNames}}"  
@@ -230,7 +218,6 @@
       from_port: 41
       to_port: 46
       description: created by Ansible
-      app_pr
       state: present   
 
   - name: Create a leaf access port policy group
@@ -242,7 +229,6 @@
       cdp_policy: disable_cdp
       aep: "{{apic_aep}}"
       description: created by Ansible
-      app_pr
       state: present      
 
   - name: Associate policy group to interface selector 
@@ -252,7 +238,6 @@
       access_port_selector: Port_Selector
       policy_group: Access_Port_Policy
       description: created by Ansible
-      app_pr
       state: present        
  
   - name: Create a switch leaf profile 
@@ -260,7 +245,6 @@
       <<: *apic_info
       leaf_profile: SW_Leaf_101_102
       description: created by Ansible
-      app_pr
       state: present        
     
   - name: Adding switch policy leaf profile selector associated Node Block range
@@ -271,7 +255,6 @@
       leaf_node_blk: L_101_102
       from: 101
       to: 102
-      app_pr
       state: present
 
   - name: Associate interface selector profile to switch policy leaf profile 
@@ -279,7 +262,6 @@
       <<: *apic_info
       leaf_profile: "{{apic_leaf_profile}}"
       interface_selector: "{{apic_int_sel01}}"
-      app_pr
       state: present  
  
   - name: Static path binding for given EPG 
@@ -295,5 +277,4 @@
       pod_id: 1
       leafs: 101
       interface: '1/41'  
-      app_pr
       state: present
