@@ -1,0 +1,15 @@
+---
+- name: ACI Configuration
+  hosts: APIC-Group
+  connection: local
+  gather_facts: no
+  
+  tasks: 
+  - name: Add a new tenant
+    aci_tenant:
+      <<: *apic_info
+      tenant: "{{item}}"
+      description: Tenant created by Ansible
+      state: present
+    with_items:
+      - "{{tenant}}"  
