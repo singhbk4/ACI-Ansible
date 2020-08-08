@@ -15,12 +15,12 @@
     - tenantName: BIGM
       
 tasks: 
-  - name: Add a new tenant "{{tenant}}"
-    aci_tenant:
-      <<: *apic_info
-      tenant: "{{item.tenantName}}"
-      description: Tenant created by Ansible
-      state: present
-    delegate_to: localhost
-    with_items:
-      - "{{tenant}}"
+- name: Add a new tenant "{{tenant}}"
+  aci_tenant:
+    <<: *apic_info
+    tenant: "{{item.tenantName}}"
+    description: Tenant created by Ansible
+    state: present
+  delegate_to: localhost
+  with_items:
+    - "{{tenant}}"  
