@@ -14,7 +14,7 @@
     BDs:
     - tenant: Outer-DMZ
       vrf: Outer-VRF
-      BD: 
+    - BD: 
       - VLAN10
       - VLAN20
       - VLAN30
