@@ -13,7 +13,7 @@
       
     DMZ-vrf:
     - vrf: Outer-VRF
-    - tenant: Outer-DMZ
+      tenant: Outer-DMZ
 
   tasks: 
   - name: Add a new VRF "{{apic_vrf}}" to a tenant
