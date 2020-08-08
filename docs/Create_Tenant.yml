@@ -10,6 +10,6 @@
       <<: *apic_info
       tenant: "{{item}}"
       description: Tenant created by Ansible
-      state: present
+      state: absent
     with_items:
       - "{{tenant}}"  
