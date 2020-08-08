@@ -5,14 +5,14 @@
   gather_facts: no
   
   vars:
-    apic_info:        &apic_info
+    apic_info: &apic_info
       host:           '{{ inventory_hostname }}'
       username:       '{{ lookup("env", "ANSIBLE_NET_USERNAME") }}'
       password:       '{{ lookup("env", "ANSIBLE_NET_PASSWORD") }}'
       validate_certs: "false"
       
     DMZ-vrf:
-    - vrf: Outer-DMZ
+    - vrf: Outer-VRF
       tenant: Outer-DMZ
 
   tasks: 
