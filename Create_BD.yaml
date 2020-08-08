@@ -26,9 +26,7 @@
       <<: *apic_info
       state: present
       tenant: "{{item.tenant}}"
-      bd: "{{item}}"
+      bd: "{{BDs}}"
       vrf: "{{item.vrf}}"
     with_items:
        - "{{DMZ_Cons}}"
-       - "{{BDs}}"
-
