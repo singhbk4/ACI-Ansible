@@ -30,5 +30,7 @@
       tenant: "{{item.tenant}}"
       bd: "{{item.BD}}"
       vrf: "{{item.vrf}}"
+      arpFlood: yes
+      unkMacUcastAct: flood
     with_items:
        - "{{BD_Constructs}}"
