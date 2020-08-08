@@ -1,20 +1,29 @@
-# Create VRF
 ---
 - name: ACI Configuration
-  hosts: apic
+  hosts: APIC-Group
   connection: local
   gather_facts: no
+  
+  vars:
+    apic_info:        &apic_info
+      host:           '{{ inventory_hostname }}'
+      username:       '{{ lookup("env", "ANSIBLE_NET_USERNAME") }}'
+      password:       '{{ lookup("env", "ANSIBLE_NET_PASSWORD") }}'
+      validate_certs: "false"
+      
+    vrf:
+    - vrf: Outer-DMZ
+    - tenant: Outer-DMZ
 
   tasks: 
   - name: Add a new VRF "{{apic_vrf}}" to a tenant
     aci_vrf:
-      host: "{{ inventory_hostname }}"
-      username: "{{ username }}"
-      password: "{{ password }}"
-      vrf: "{{apic_vrf}}"
-      tenant: "{{apic_tenant}}"
-      validate_certs: no
+      <<: *apic_info
+      vrf: "{{item.vrf}}"
+      tenant: "{{item.tenant}}"
       descr: VRF creaded by Ansible
       policy_control_preference: enforced
       policy_control_direction: ingress
       state: present
+    with_items:
+      - "{{vrf}}"
