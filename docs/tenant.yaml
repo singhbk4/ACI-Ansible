@@ -3,6 +3,7 @@
   hosts: APIC-Group
   connection: local
   gather_facts: no
+  
   vars:
     apic_info:        &apic_info
       host:           '{{ inventory_hostname }}'
@@ -11,15 +12,15 @@
       validate_certs: "false"
       
     tenant:
-    - tenantName: BIGM
+    - BIGM
       
 tasks: 
 - name: Add a new tenant
   aci_tenant:
     <<: *apic_info
-    tenant: "{{tenantName}}"
+    tenant: "{{item}}"
     description: Tenant created by Ansible
     state: present
   delegate_to: localhost
   with_items:
-    - "{{tenantName}}"  
+    - "{{tenant}}"  
