@@ -12,7 +12,7 @@
       validate_certs: "false"
       
     DMZ-vrf:
-    - vrf: Outer-VRF
+    - vrf: Outer-DMZ
       tenant: Outer-DMZ
 
   tasks: 
