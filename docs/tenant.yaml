@@ -4,6 +4,18 @@
   connection: local
   gather_facts: no
   
+  vars:
+  apic_info: &apic_info
+    host: "{{inventory_hostname}}"
+    username: "{{ lookup("env", "ANSIBLE_NET_USERNAME") }}"
+    password: "{{ lookup("env", "ANSIBLE_NET_PASSWORD") }}"
+    validate_certs: "false" 
+      
+  tenant:
+  - tenantName: BIGM
+    
+  app_profile:
+  - app_pr: app_dmz
   tasks: 
   - name: Add a new tenant
     aci_tenant:
