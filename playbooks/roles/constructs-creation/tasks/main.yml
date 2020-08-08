@@ -12,8 +12,8 @@
       validate_certs: no
 	  
     app_pr:
-    - app_pr: app_dmz	
-
+    - "app_dmz"	
+    
     intf_policies:
     - "ESX_Hosts"
     - "Linux_Hosts"
