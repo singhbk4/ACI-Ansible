@@ -14,10 +14,7 @@
     BDs:
     - tenant: Outer-DMZ
       vrf: Outer-VRF
-    - BD: 
-      - VLAN10
-      - VLAN20
-      - VLAN30
+      BD: VLAN10
 
   tasks: 
   - name: Add Bridge Domain "{{item.BD}}"
