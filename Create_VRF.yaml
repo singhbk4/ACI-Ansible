@@ -11,7 +11,7 @@
       password:       '{{ lookup("env", "ANSIBLE_NET_PASSWORD") }}'
       validate_certs: "false"
       
-    vrf:
+    DMZ-vrf:
     - vrf: Outer-VRF
     - tenant: Outer-DMZ
 
@@ -26,4 +26,4 @@
       policy_control_direction: ingress
       state: present
     with_items:
-      - "{{vrf}}"
+      - "{{DMZ-vrf}}"
