@@ -13,6 +13,7 @@
       
     tenant:
     - BIGM-02
+    - BIGM
    
   tasks: 
   - name: Add a new tenant
@@ -20,7 +21,7 @@
       <<: *apic_info
       tenant: "{{item}}"
       description: Tenant created by Ansible
-      state: present
+      state: absent
     with_items:
       - "{{tenant}}"
           
