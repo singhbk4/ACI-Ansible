@@ -12,8 +12,7 @@
       validate_certs: "false"
       
     tenant:
-    - BIGM-02
-    - BIGM
+    - Outer-DMZ
    
   tasks: 
   - name: Add a new tenant
