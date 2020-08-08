@@ -10,10 +10,17 @@
       username: "{{ username }}"
       password: "{{ password }}"
       validate_certs: no 
-      
-    app_pr:
-    - "app_dmz"	
+ 
+    tenant:
+    - tenantName: BIGM
     
+    app_profile:
+    - app_pr: app_dmz	
+
+    vrfs:
+    - tenantName: BIGM
+      vrfName: vrf-01
+      
     intf_policies:
     - "ESX_Hosts"
     - "Linux_Hosts"
@@ -46,10 +53,6 @@
       leafName: Leaf-102
       leafId: '102'
 
-    vrfs:
-    - tenantName: BIGM
-      vrfName: vrf-01
-
     bridgeDomains:
     - bdName: 192.168.100.0_24
       tenantName: BIGM
@@ -67,9 +70,6 @@
       tenantName: BIGM
       gwAddress: 192.168.101.1
       mask: 24
-
-    tenant:
-    - tenantName: BIGM
 
     appProfiles:
     - apName: AProfile
