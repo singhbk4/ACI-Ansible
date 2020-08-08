@@ -14,7 +14,7 @@
     Bds:
     - tenant: Outer-DMZ
       vrf: Outer-VRF
-    - BD: 
+      BD: 
       - VLAN10
       - VLAN20
       - VLAN30
@@ -28,5 +28,5 @@
       bd: "{{item.BD}}"
       vrf: "{{item.vrf}}"
     with_items:
-       - "{{BD}}"
+       - "{{BDs}}"
 
