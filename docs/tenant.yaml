@@ -3,7 +3,6 @@
   hosts: APIC-Group
   connection: local
   gather_facts: no
-
   vars:
     apic_info:        &apic_info
       host:           '{{ inventory_hostname }}'
@@ -18,9 +17,9 @@ tasks:
 - name: Add a new tenant "{{tenant}}"
   aci_tenant:
     <<: *apic_info
-    tenant: "{{item.tenantName}}"
+    tenant: "{{tenantName}}"
     description: Tenant created by Ansible
     state: present
   delegate_to: localhost
   with_items:
-    - "{{tenant}}"  
+    - "{{tenantName}}"  
