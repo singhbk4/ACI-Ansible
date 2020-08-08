@@ -20,7 +20,7 @@
       aci_vrf:
         <<: *apic_info
         vrf: "{{item.vrf}}"
-       tenant: "{{item.tenant}}"
+        tenant: "{{item.tenant}}"
         descr: VRF creaded by Ansible
         policy_control_preference: enforced
         policy_control_direction: ingress
