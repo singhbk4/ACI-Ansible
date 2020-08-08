@@ -5,17 +5,15 @@
   gather_facts: no
   
   vars:
-  apic_info: &apic_info
-    host: "{{inventory_hostname}}"
-    username: "{{ lookup("env", "ANSIBLE_NET_USERNAME") }}"
-    password: "{{ lookup("env", "ANSIBLE_NET_PASSWORD") }}"
-    validate_certs: "false" 
+    apic_info:        &apic_info
+      host:           '{{ inventory_hostname }}'
+      username:       '{{ lookup("env", "ANSIBLE_NET_USERNAME") }}'
+      password:       '{{ lookup("env", "ANSIBLE_NET_PASSWORD") }}'
+      validate_certs: "false"
       
-  tenant:
-  - tenantName: BIGM
-    
-  app_profile:
-  - app_pr: app_dmz
+    tenant:
+    - BIGM
+   
   tasks: 
   - name: Add a new tenant
     aci_tenant:
@@ -24,4 +22,4 @@
       description: Tenant created by Ansible
       state: present
     with_items:
-      - "{{tenant}}"  
+      - "{{tenant}}"
