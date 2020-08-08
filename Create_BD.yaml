@@ -11,10 +11,13 @@
       password:       '{{ lookup("env", "ANSIBLE_NET_PASSWORD") }}'
       validate_certs: "false"
       
-    Bds:
+    BDs:
     - tenant: Outer-DMZ
       vrf: Outer-VRF
-      BD: VLAN10
+      BD: 
+      - VLAN10
+      - VLAN20
+      - VLAN30
 
   tasks: 
   - name: Add Bridge Domain "{{item.BD}}"
