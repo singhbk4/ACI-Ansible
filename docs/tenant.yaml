@@ -14,7 +14,7 @@
     - tenantName: BIGM
       
 tasks: 
-- name: Add a new tenant "{{tenant}}"
+- name: Add a new tenant
   aci_tenant:
     <<: *apic_info
     tenant: "{{tenantName}}"
