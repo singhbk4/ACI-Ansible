@@ -11,14 +11,13 @@
       password:       '{{ lookup("env", "ANSIBLE_NET_PASSWORD") }}'
       validate_certs: "false"
       
-    DMZ_Cons:
+    BD_Constructs:
     - tenant: Outer-DMZ
       vrf: Outer-VRF
-      
-    BDs:
-    - VLAN10
-    - VLAN20
-    - VLAN30
+      BDs:
+      - VLAN10
+      - VLAN20
+      - VLAN30
 
   tasks: 
   - name: Add Bridge Domain "{{item.BD}}"
@@ -26,7 +25,7 @@
       <<: *apic_info
       state: present
       tenant: "{{item.tenant}}"
-      bd: "{{BDs}}"
+      bd: "{{item.BDs}}"
       vrf: "{{item.vrf}}"
     with_items:
-       - "{{DMZ_Cons}}"
+       - "{{BD_Constructs}}"
