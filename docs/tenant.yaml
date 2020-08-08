@@ -10,7 +10,7 @@
       username: "{{ lookup("env", "ANSIBLE_NET_USERNAME") }}"
       password: "{{ lookup("env", "ANSIBLE_NET_PASSWORD") }}"
       validate_certs: "false" 
- 
+      
     tenant:
     - tenantName: BIGM
     
@@ -70,10 +70,6 @@
       tenantName: BIGM
       gwAddress: 192.168.101.1
       mask: 24
-
-    appProfiles:
-    - apName: AProfile
-      tenantName: BIGM
 
     epgs:
     - epgName: WebServers
