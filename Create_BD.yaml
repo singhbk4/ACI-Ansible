@@ -14,18 +14,17 @@
     BD_Constructs:
     - tenant: Outer-DMZ
       vrf: Outer-VRF
-      BDs:
-      - VLAN10
-      - VLAN20
-      - VLAN30
+      BD: VLAN10
+      BD: VLAN20
+      BD: VLAN30
 
   tasks: 
-  - name: Add Bridge Domain "{{item.BD}}"
+  - name: Add Bridge Domain "{{BDs}}"
     aci_bd:
       <<: *apic_info
       state: present
       tenant: "{{item.tenant}}"
-      bd: "{{item.BDs}}"
+      bd: "{{item.BD}}"
       vrf: "{{item.vrf}}"
     with_items:
        - "{{BD_Constructs}}"
