@@ -1,18 +1,33 @@
-# Create BD
 ---
 - name: ACI Configuration
-  hosts: apic
+  hosts: APIC-Group
   connection: local
   gather_facts: no
 
+  vars:
+    apic_info:        &apic_info
+      host:           '{{ inventory_hostname }}'
+      username:       '{{ lookup("env", "ANSIBLE_NET_USERNAME") }}'
+      password:       '{{ lookup("env", "ANSIBLE_NET_PASSWORD") }}'
+      validate_certs: "false"
+      
+    Bds:
+    - tenant: Outer-DMZ
+      vrf: Outer-VRF
+      BD: 
+      - VLAN10
+      - VLAN20
+      - VLAN30
+
   tasks: 
-  - name: Add Bridge Domain "{{apic_bd}}"
+  - name: Add Bridge Domain "{{item.BD}}"
     aci_bd:
-      host: "{{ inventory_hostname }}"
-      username: "{{ username }}"
-      password: "{{ password }}"
+      <<: *apic_info
       validate_certs: false
       state: present
-      tenant: "{{apic_tenant}}"
-      bd: "{{apic_bd}}"
-      vrf: "{{apic_vrf}}"
+      tenant: "{{item.tenant}}"
+      bd: "{{item.BD}}"
+      vrf: "{{item.vrf}}"
+    with_items:
+       - "{{BD}}"
+
