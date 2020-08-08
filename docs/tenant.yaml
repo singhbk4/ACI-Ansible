@@ -1,6 +1,6 @@
 ---
 - name: ACI Configuration
-  hosts: apic
+  hosts: APIC-Group
   connection: local
   gather_facts: no
 
