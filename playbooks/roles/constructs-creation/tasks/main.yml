@@ -9,9 +9,9 @@
       host: "{{ inventory_hostname }}"
       username: "{{ username }}"
       password: "{{ password }}"
-	  validate_certs: no
+      validate_certs: no
 	  
-	app_pr:
+    app_pr:
     - app_pr: app_dmz	
 
     intf_policies:
