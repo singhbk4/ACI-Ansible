@@ -5,10 +5,14 @@
   gather_facts: no
 
   vars:
-    apic_info:        &apic_info
-      host:           "{{ inventory_hostname }}"
-      username:       "{{ username }}"
-      password:       "{{ password }}"
+    apic_info: &apic_info
+      host: "{{ inventory_hostname }}"
+      username: "{{ username }}"
+      password: "{{ password }}"
+	  validate_certs: no
+	  
+	app_pr:
+    - app_pr: app_dmz	
 
     intf_policies:
     - "ESX_Hosts"
@@ -64,7 +68,7 @@
       gwAddress: 192.168.101.1
       mask: 24
 
-    tenants:
+    tenant:
     - tenantName: BIGM
 
     appProfiles:
@@ -82,21 +86,21 @@
       bdName: 192.168.101.0_24
 
   tasks: 
-  - name: Add a new tenant "{{apic_tenant}}"
+  - name: Add a new tenant "{{tenant}}"
     aci_tenant:
       <<: *apic_info
-      tenant: "{{apic_tenant}}"
-      validate_certs: no
+      tenant: "{{tenant}}"
+      app_pr
       description: Tenant created by Ansible
       state: present
     delegate_to: localhost
  
-  - name: Add a new AP "{{apic_ap}}"
+  - name: Add a new AP "{{app_pr}}"
     aci_ap:
       <<: *apic_info
-      tenant: "{{apic_tenant}}"
-      ap: "{{apic_ap}}"
-      validate_certs: no
+      tenant: "{{tenant}}"
+      ap: "{{app_pr}}"
+      app_pr
       description: AP creaded by Ansible
       state: present
 
@@ -104,8 +108,8 @@
     aci_vrf:
       <<: *apic_info
       vrf: "{{apic_vrf}}"
-      tenant: "{{apic_tenant}}"
-      validate_certs: no
+      tenant: "{{tenant}}"
+      app_pr
       descr: VRF creaded by Ansible
       policy_control_preference: enforced
       policy_control_direction: ingress
@@ -116,7 +120,7 @@
       <<: *apic_info
       validate_certs: false
       state: present
-      tenant: "{{apic_tenant}}"
+      tenant: "{{tenant}}"
       bd: "{{item}}"
       vrf: "{{apic_vrf}}"
     with_items:
@@ -127,12 +131,12 @@
   - name: Add a new EPG "{{apic_epg_01}}"
     aci_epg:
       <<: *apic_info
-      tenant: "{{apic_tenant}}"
-      ap: "{{apic_ap}}"
+      tenant: "{{tenant}}"
+      ap: "{{app_pr}}"
       epg: "{{apic_epg_01}}"
       description: Web EPG creaded by Ansible
       bd: "{{apic_bd00}}"
-      validate_certs: no
+      app_pr
       preferred_group: yes
       state: present
     delegate_to: localhost
@@ -140,12 +144,12 @@
   - name: Add a new EPG "{{apic_epg_02}}"
     aci_epg:
       <<: *apic_info
-      tenant: "{{apic_tenant}}"
-      ap: "{{apic_ap}}"
+      tenant: "{{tenant}}"
+      ap: "{{app_pr}}"
       epg: "{{apic_epg_02}}"
       description: Web EPG creaded by Ansible
       bd: "{{apic_bd02}}"
-      validate_certs: no
+      app_pr
       preferred_group: yes
       state: present
     delegate_to: localhost 
@@ -153,9 +157,9 @@
   - name: Add a new contract "{{apic_contract}}"
     aci_contract:
       <<: *apic_info
-      tenant: "{{apic_tenant}}"
+      tenant: "{{tenant}}"
       contract: "{{apic_contract}}"
-      validate_certs: no
+      app_pr
       state: present
 
   - name: Add a new physical domain "{{apic_domain}}"
@@ -163,7 +167,7 @@
       <<: *apic_info
       domain: "{{apic_domain}}"
       domain_type: phys
-      validate_certs: no
+      app_pr
       state: present       
 
   - name: Add a new AEP "{{apic_aep}}" 
@@ -171,7 +175,7 @@
       <<: *apic_info
       aep: "{{apic_aep}}"
       description: created by ansible
-      validate_certs: no
+      app_pr
       state: present 
 
   - name: Add AEP to domain binding 
@@ -180,25 +184,25 @@
       aep: "{{apic_aep}}"
       domain: "{{apic_domain}}"
       domain_type: phys
-      validate_certs: no
+      app_pr
       state: present       
   
   - name: Add a physical domain to EPG
     aci_epg_to_domain:
       <<: *apic_info
-      tenant: "{{apic_tenant}}"
-      ap: "{{apic_ap}}"
+      tenant: "{{tenant}}"
+      ap: "{{app_pr}}"
       epg: "{{apic_epg_01}}"
       domain: "{{apic_domain}}"
       domain_type: phys
-      validate_certs: no
+      app_pr
       state: present    
 
   - name: Add subnet in "{{apic_bd00}}"
     aci_bd_subnet:
       <<: *apic_info
-      validate_certs: no
-      tenant: "{{apic_tenant}}"
+      app_pr
+      tenant: "{{tenant}}"
       bd: "{{apic_bd00}}"
       subnet_name: "{{apic_subnet1}}"
       gateway: "{{apic_subnet1_gw}}"
@@ -210,7 +214,7 @@
       <<: *apic_info
       leaf_interface_profile: "{{item}}"
       description: created by Ansible
-      validate_certs: no
+      app_pr
       state: present 
     with_items:
       "{{ifPolicyLeafProfileNames}}"  
@@ -226,7 +230,7 @@
       from_port: 41
       to_port: 46
       description: created by Ansible
-      validate_certs: no
+      app_pr
       state: present   
 
   - name: Create a leaf access port policy group
@@ -238,7 +242,7 @@
       cdp_policy: disable_cdp
       aep: "{{apic_aep}}"
       description: created by Ansible
-      validate_certs: no
+      app_pr
       state: present      
 
   - name: Associate policy group to interface selector 
@@ -248,7 +252,7 @@
       access_port_selector: Port_Selector
       policy_group: Access_Port_Policy
       description: created by Ansible
-      validate_certs: no
+      app_pr
       state: present        
  
   - name: Create a switch leaf profile 
@@ -256,7 +260,7 @@
       <<: *apic_info
       leaf_profile: SW_Leaf_101_102
       description: created by Ansible
-      validate_certs: no
+      app_pr
       state: present        
     
   - name: Adding switch policy leaf profile selector associated Node Block range
@@ -267,7 +271,7 @@
       leaf_node_blk: L_101_102
       from: 101
       to: 102
-      validate_certs: no
+      app_pr
       state: present
 
   - name: Associate interface selector profile to switch policy leaf profile 
@@ -275,14 +279,14 @@
       <<: *apic_info
       leaf_profile: "{{apic_leaf_profile}}"
       interface_selector: "{{apic_int_sel01}}"
-      validate_certs: no
+      app_pr
       state: present  
  
   - name: Static path binding for given EPG 
     aci_static_binding_to_epg:
       <<: *apic_info
-      tenant: "{{apic_tenant}}"
-      ap: "{{apic_ap}}"
+      tenant: "{{tenant}}"
+      ap: "{{app_pr}}"
       epg: "{{apic_epg_01}}"  
       encap_id: 3001
       deploy_immediacy: lazy
@@ -291,5 +295,5 @@
       pod_id: 1
       leafs: 101
       interface: '1/41'  
-      validate_certs: no
+      app_pr
       state: present
