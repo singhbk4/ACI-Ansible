@@ -14,13 +14,13 @@
       path: /api/mo/.json
       method: post
       
-    - tenant: Outer-DMZ
-    - app_pr: app-DMZ
-    - bd: VLAN100
-    - epg: VLAN100
-    - EPG_Des: EPG for VLAN100
-    - tag: VLAN100 
-    - ph-dom: phd-dmz
+    tenant: Outer-DMZ
+    app_pr: app-DMZ
+    bd: VLAN100
+    epg: VLAN100
+    EPG_Des: EPG for VLAN100
+    tag: VLAN100 
+    ph-dom: phd-dmz
       
   tasks:	  
   - name: Create EPGs
