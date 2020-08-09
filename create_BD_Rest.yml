@@ -1,0 +1,64 @@
+---
+- name: ACI Configuration
+  hosts: APIC-Group
+  connection: local
+  gather_facts: no
+  
+  vars:
+    apic_info:        &apic_info
+      host:           '{{ inventory_hostname }}'
+      username:       '{{ lookup("env", "ANSIBLE_NET_USERNAME") }}'
+      password:       '{{ lookup("env", "ANSIBLE_NET_PASSWORD") }}'
+      validate_certs: "false"
+      
+    BD_Constructs:
+    - tenant: Outer-DMZ
+      vrf: Outer-VRF
+      BD: VLAN10
+	  BD_Description: BD for VLAN10
+	  tag: VLAN10
+    - tenant: Outer-DMZ
+      vrf: Outer-VRF
+      BD: VLAN20
+	  BD_Description: BD for VLAN20
+	  tag: VLAN20
+    - tenant: Outer-DMZ
+      vrf: Outer-VRF
+      BD: VLAN30   
+	  BD_Description: BD for VLAN30
+	  tag: VLAN30
+
+- name: Create Physical Domain
+  aci_rest:
+    <<: *apic_info
+    use_proxy: no
+    path: /api/mo/.json
+    method: post
+    content:
+      fvBD:
+        attributes:
+          descr: "{{BD_Description}}"
+          dn: uni/tn-{{item.tenant}}/BD-{{item.BD}}
+          mac: 00:22:BD:F8:19:FF
+          name: "{{item.BD}}"
+          rn: BD-{{item.BD}}
+          nameAlias: "{{item.tag}}"
+          arpFlood: 'yes'
+          unicastRoute: 'no'
+          unkMacUcastAct: flood
+          unkMcastAct: flood
+          multiDstPktAct: bd-flood
+          status: created
+        children:
+        - tagInst:
+            attributes:
+              annotation: ''
+              name: ""
+              nameAlias: ''
+        - fvRsCtx:
+            attributes:
+              tnFvCtxName: "{{item.vrf}}"
+              status: created,modified
+            children: []
+  with_items:
+    - "{{BD_Constructs}}"  
