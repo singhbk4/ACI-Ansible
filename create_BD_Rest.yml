@@ -39,12 +39,12 @@
         {
           "fvBD": {
             "attributes": {
-              "descr": "{{BD_Description}}",
-              "dn": "uni/tn-{{tenant}}/BD-{{bd}}",
+              "descr": "{{item.BD_Description}}",
+              "dn": "uni/tn-{{item.tenant}}/BD-{{item.BD}}",
               "mac": "00:22:BD:F8:19:FF", 
-              "name": "{{bd}}",
-              "rn": "BD-{{bd}}",
-              "nameAlias": "{{tag}}",
+              "name": "{{item.BD}}",
+              "rn": "BD-{{item.BD}}",
+              "nameAlias": "{{item.tag}}",
               "arpFlood": "yes",
               "unicastRoute": "no",
               "unkMacUcastAct": "flood",
@@ -57,7 +57,7 @@
                 "tagInst": {
                   "attributes": {
                     "annotation": "",
-                    "name": "{{tag}}",
+                    "name": "{{item.tag}}",
                     "nameAlias": ""
                   }
                 }  
@@ -65,7 +65,7 @@
               {
                 "fvRsCtx": {
                   "attributes": {
-                    "tnFvCtxName": "{{vrf}}",
+                    "tnFvCtxName": "{{item.vrf}}",
                     "status": "created,modified"
                   },
                   "children": [
