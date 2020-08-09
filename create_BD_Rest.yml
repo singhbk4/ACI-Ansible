@@ -28,12 +28,12 @@
       BD_Description: BD for VLAN30
       tag: VLAN30
 
-  tasks:	  
+  tasks:
   - name: Create BD
     aci_rest:
       <<: *apic_info
       use_proxy: no
-      path: /api/mo/.json
+      path: /api/mo/uni.json
       method: post
       content:
         fvBD:
