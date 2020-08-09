@@ -28,38 +28,54 @@
       BD_Description: BD for VLAN30
       tag: VLAN30
 
-  tasks:
+  tasks:	  
   - name: Create BD
     aci_rest:
       <<: *apic_info
       use_proxy: no
-      path: /api/mo/uni.json
+      path: /api/mo/.json
       method: post
       content:
-        fvBD:
-          attributes:
-            descr: "{{item.BD_Description}}"
-            dn: "uni/tn-{{item.tenant}}/BD-{{item.BD}}"
-            mac: 00:22:BD:F8:19:FF
-            name: "{{item.BD}}"
-            rn: BD-{{item.BD}}
-            nameAlias: "{{item.tag}}"
-            arpFlood: 'yes'
-            unicastRoute: 'no'
-            unkMacUcastAct: flood
-            unkMcastAct: flood
-            multiDstPktAct: bd-flood
-            status: created
-          children:
-          - tagInst:
-              attributes:
-                annotation: ''
-                name: ""
-                nameAlias: ''
-          - fvRsCtx:
-              attributes:
-                tnFvCtxName: "{{item.vrf}}"
-                status: created,modified
-              children: []
+        {
+          "fvBD": {
+            "attributes": {
+              "descr": "{{BD_Description}}",
+              "dn": "uni/tn-{{tenant}}/BD-{{bd}}",
+              "mac": "00:22:BD:F8:19:FF", 
+              "name": "{{bd}}",
+              "rn": "BD-{{bd}}",
+              "nameAlias": "{{tag}}",
+              "arpFlood": "yes",
+              "unicastRoute": "no",
+              "unkMacUcastAct": "flood",
+              "unkMcastAct": "flood",
+              "multiDstPktAct": "bd-flood",
+              "status": "created"
+            },
+            "children": [
+              {
+                "tagInst": {
+                  "attributes": {
+                    "annotation": "",
+                    "name": "{{tag}}",
+                    "nameAlias": ""
+                  }
+                }  
+              },
+              {
+                "fvRsCtx": {
+                  "attributes": {
+                    "tnFvCtxName": "{{vrf}}",
+                    "status": "created,modified"
+                  },
+                  "children": [
+                    
+                  ]
+                }
+              }
+            ]
+          }
+        }
+    delegate_to: localhost    
     with_items:
       - "{{BD_Constructs}}"  
