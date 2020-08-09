@@ -22,8 +22,7 @@
       EPG_Des: EPG for VLAN100
       tag: VLAN100 
       ph-dom: phd-dmz
-
-
+      
   tasks:	  
   - name: Create EPGs
     aci_rest:
