@@ -53,7 +53,7 @@
                 "attributes": {
                   "annotation": "",
                   "descr": "{{item.EPG_Description}}",
-                  "dn": "uni/tn-{{item.tenant}}/ap-{{item.app-pr}}/epg-{{item.EPG}}",
+                  "dn": "uni/tn-{{item.tenant}}/ap-{{item.app_pr}}/epg-{{item.EPG}}",
                   "exceptionTag": "{{item.tag}}",
                   "floodOnEncap": "disabled",
                   "fwdCtrl": "",
