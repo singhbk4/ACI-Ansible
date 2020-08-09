@@ -15,18 +15,18 @@
     - tenant: Outer-DMZ
       vrf: Outer-VRF
       BD: VLAN10
-	  BD_Description: BD for VLAN10
-	  tag: VLAN10
+      BD_Description: BD for VLAN10
+      tag: VLAN10
     - tenant: Outer-DMZ
       vrf: Outer-VRF
       BD: VLAN20
-	  BD_Description: BD for VLAN20
-	  tag: VLAN20
+      BD_Description: BD for VLAN20
+      tag: VLAN20
     - tenant: Outer-DMZ
       vrf: Outer-VRF
       BD: VLAN30   
-	  BD_Description: BD for VLAN30
-	  tag: VLAN30
+      BD_Description: BD for VLAN30
+      tag: VLAN30
 
 - name: Create Physical Domain
   aci_rest:
