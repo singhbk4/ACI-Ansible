@@ -17,7 +17,6 @@
     EPG_Constructs:
     - tenant: Outer-DMZ
       app_pr: app-DMZ
-      vrf: Outer-VRF
       BD: VLAN100
       EPG: VLAN100
       EPG_Description: EPG for VLAN10
@@ -25,7 +24,6 @@
       ph-dom: phd-dmz
     - tenant: Outer-DMZ 
       app_pr: app-DMZ
-      vrf: Outer-VRF
       BD: VLAN200
       EPG: VLAN200
       EPG_Description: EPG for VLAN20
@@ -33,7 +31,6 @@
       ph-dom: phd-dmz
     - tenant: Outer-DMZ 
       app_pr: app-DMZ 
-      vrf: Outer-VRF
       BD: VLAN300  
       EPG: VLAN300	  
       EPG_Description: EPG for VLAN30
