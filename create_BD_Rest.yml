@@ -27,8 +27,9 @@
       BD: VLAN30   
       BD_Description: BD for VLAN30
       tag: VLAN30
-
-- name: Create Physical Domain
+      
+tasks:
+- name: Create BD
   aci_rest:
     <<: *apic_info
     use_proxy: no
