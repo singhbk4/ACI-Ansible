@@ -39,7 +39,7 @@
         fvBD:
           attributes:
             descr: "{{item.BD_Description}}"
-            dn: uni/tn-{{item.tenant}}/BD-{{item.BD}}
+            dn: "uni/tn-{{item.tenant}}/BD-{{item.BD}}"
             mac: 00:22:BD:F8:19:FF
             name: "{{item.BD}}"
             rn: BD-{{item.BD}}
