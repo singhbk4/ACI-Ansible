@@ -1,7 +1,7 @@
 # Add Application Profile 
 ---
 - name: ACI Configuration
-  hosts: APIC-Group
+  hosts: aci
   connection: local
   gather_facts: no
   
