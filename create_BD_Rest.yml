@@ -17,19 +17,19 @@
     BD_Constructs:
     - tenant: Outer-DMZ
       vrf: Outer-VRF
-      BD: VLAN10
+      BD: VLAN100
       BD_Description: BD for VLAN10
-      tag: VLAN10
+      tag: VLAN100
     - tenant: Outer-DMZ
       vrf: Outer-VRF
-      BD: VLAN20
+      BD: VLAN200
       BD_Description: BD for VLAN20
-      tag: VLAN20
+      tag: VLAN200
     - tenant: Outer-DMZ
       vrf: Outer-VRF
-      BD: VLAN30   
+      BD: VLAN300   
       BD_Description: BD for VLAN30
-      tag: VLAN30
+      tag: VLAN300
 
   tasks:	  
   - name: Create BD
