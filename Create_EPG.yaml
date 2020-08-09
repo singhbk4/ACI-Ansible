@@ -13,29 +13,6 @@
       use_proxy: no
       path: /api/mo/.json
       method: post
-      
-    EPG_Constructs:
-    - tenant: Outer-DMZ
-      app_pr: app-DMZ
-      BD: VLAN100
-      EPG: VLAN100
-      EPG_Description: EPG for VLAN10
-      tag: VLAN100 
-      ph-dom: phd-dmz
-    - tenant: Outer-DMZ 
-      app_pr: app-DMZ
-      BD: VLAN200
-      EPG: VLAN200
-      EPG_Description: EPG for VLAN20
-      tag: VLAN200
-      ph-dom: phd-dmz
-    - tenant: Outer-DMZ 
-      app_pr: app-DMZ 
-      BD: VLAN300  
-      EPG: VLAN300	  
-      EPG_Description: EPG for VLAN30
-      tag: VLAN300
-      ph-dom: phd-dmz
 
   tasks:	  
   - name: Create EPGs
