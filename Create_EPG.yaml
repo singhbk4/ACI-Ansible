@@ -13,6 +13,16 @@
       use_proxy: no
       path: /api/mo/.json
       method: post
+      
+    EPG_Constructs:
+    - tenant: Outer-DMZ
+      app_pr: app-DMZ
+      bd: VLAN100
+      epg: VLAN100
+      EPG_Des: EPG for VLAN100
+      tag: VLAN100 
+      ph-dom: phd-dmz
+
 
   tasks:	  
   - name: Create EPGs
@@ -23,15 +33,15 @@
           "fvAEPg": {
             "attributes": {
               "annotation": "",
-              "descr": "{{item.EPG_Description}}",
-              "dn": "uni/tn-{{item.tenant}}/ap-{{item.app_pr}}/epg-{{item.EPG}}",
+              "descr": "{{item.EPG_Des}}",
+              "dn": "uni/tn-{{item.tenant}}/ap-{{item.app_pr}}/epg-{{item.epg}}",
               "exceptionTag": "{{item.tag}}",
               "floodOnEncap": "disabled",
               "fwdCtrl": "",
               "hasMcastSource": "no",
               "isAttrBasedEPg": "no",
               "matchT": "AtleastOne",
-              "name": "{{item.EPG}}",
+              "name": "{{item.epg}}",
               "nameAlias": "{{item.tag}}",
               "pcEnfPref": "unenforced",
               "prefGrMemb": "include",
@@ -86,7 +96,7 @@
                 "fvRsBd": {
                   "attributes": {
                     "annotation": "",
-                    "tnFvBDName": "{{item.BD}}"
+                    "tnFvBDName": "{{item.bd}}"
                   }
                 }
               }
