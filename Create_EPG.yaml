@@ -1,22 +1,129 @@
-# Create EPG
 ---
 - name: ACI Configuration
-  hosts: apic
+  hosts: aci
   connection: local
   gather_facts: no
+  
+  vars:
+    apic_info:        &apic_info
+      host:           '{{ inventory_hostname }}'
+      username:       '{{ lookup("env", "ANSIBLE_NET_USERNAME") }}'
+      password:       '{{ lookup("env", "ANSIBLE_NET_PASSWORD") }}'
+      validate_certs: "false"
+      use_proxy: no
+      path: /api/mo/.json
+      method: post
+      
+    EPG_Constructs:
+    - tenant: Outer-DMZ
+	  app_pr: app-DMZ
+      vrf: Outer-VRF
+      BD: VLAN100
+	  EPG: VLAN100
+      EPG_Description: EPG for VLAN10
+      tag: VLAN100
+	  ph-dom: phd-dmz
+    - tenant: Outer-DMZ
+	  app_pr: app-DMZ
+      vrf: Outer-VRF
+      BD: VLAN200
+	  EPG: VLAN200
+      EPG_Description: EPG for VLAN20
+      tag: VLAN200
+	  ph-dom: phd-dmz
+    - tenant: Outer-DMZ
+	  app_pr: app-DMZ 
+      vrf: Outer-VRF
+      BD: VLAN300  
+      EPG: VLAN300	  
+      EPG_Description: EPG for VLAN30
+      tag: VLAN300
+	  ph-dom: phd-dmz
 
-  tasks: 
-  - name: Add a new EPG "{{apic_epg_01}}"
-    aci_epg:
-      host: "{{ inventory_hostname }}"
-      username: "{{ username }}"
-      password: "{{ password }}"
-      tenant: "{{apic_tenant}}"
-      ap: "{{apic_ap}}"
-      epg: "{{apic_epg_01}}"
-      description: Web EPG creaded by Ansible
-      bd: "{{apic_bd}}"
-      validate_certs: no
-      preferred_group: yes
-      state: present
-    delegate_to: localhost
+  tasks:	  
+  - name: Create EPGs
+    aci_rest:
+      <<: *apic_info
+      content:
+        {
+          "totalCount": "1",
+          "imdata": [
+            {
+              "fvAEPg": {
+                "attributes": {
+                  "annotation": "",
+                  "descr": "{{item.EPG_Description}}",
+                  "dn": "uni/tn-{{item.tenant}}/ap-{{item.app-pr}}/epg-{{item.EPG}}",
+                  "exceptionTag": "{{item.tag}}",
+                  "floodOnEncap": "disabled",
+                  "fwdCtrl": "",
+                  "hasMcastSource": "no",
+                  "isAttrBasedEPg": "no",
+                  "matchT": "AtleastOne",
+                  "name": "{{item.EPG}}",
+                  "nameAlias": "{{item.tag}}",
+                  "pcEnfPref": "unenforced",
+                  "prefGrMemb": "include",
+                  "prio": "unspecified",
+                  "shutdown": "no"
+                },
+                "children": [
+                  {
+                    "fvRsDomAtt": {
+                      "attributes": {
+                        "annotation": "",
+                        "bindingType": "none",
+                        "classPref": "encap",
+                        "delimiter": "",
+                        "encap": "unknown",
+                        "encapMode": "auto",
+                        "epgCos": "Cos0",
+                        "epgCosPref": "disabled",
+                        "instrImedcy": "lazy",
+                        "lagPolicyName": "",
+                        "netflowDir": "both",
+                        "netflowPref": "disabled",
+                        "numPorts": "0",
+                        "portAllocation": "none",
+                        "primaryEncap": "unknown",
+                        "primaryEncapInner": "unknown",
+                        "resImedcy": "lazy",
+                        "secondaryEncapInner": "unknown",
+                        "switchingMode": "native",
+                        "tDn": "uni/phys-{{item.ph-dom}}"
+                      }
+                    }
+                  },
+                  {
+                    "tagInst": {
+                      "attributes": {
+                        "annotation": "",
+                        "name": "{{item.tag}}",
+                        "nameAlias": ""
+                      }
+                    }
+                  },
+                  {
+                    "fvRsCustQosPol": {
+                      "attributes": {
+                        "annotation": "",
+                        "tnQosCustomPolName": ""
+                      }
+                    }
+                  },
+                  {
+                    "fvRsBd": {
+                      "attributes": {
+                        "annotation": "",
+                        "tnFvBDName": "{{item.BD}}"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+    delegate_to: localhost    
+    with_items:
+      - "{{EPG_Constructs}}"
