@@ -23,7 +23,7 @@
           attributes:
             annotation: ''
             descr: "{{EPG_Description}}"
-            dn: uni/tn-{{tenant}}/ap-{{app-pr}}/epg-{{epg}}
+            dn: "uni/tn-{{tenant}}/ap-{{app-pr}}/epg-{{epg}}"
             exceptionTag: "{{tag}}"
             floodOnEncap: disabled
             fwdCtrl: ''
@@ -58,7 +58,7 @@
                 resImedcy: lazy
                 secondaryEncapInner: unknown
                 switchingMode: native
-                tDn: uni/phys-"{{ph-dom}}"
+                tDn: "uni/phys-{{ph-dom}}"
           - tagInst:
               attributes:
                 annotation: ''
