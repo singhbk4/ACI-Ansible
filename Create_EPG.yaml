@@ -107,5 +107,5 @@
             }
           ]
         }	  
-	with_items:
+    with_items:
       - "{{EPG_Constructs}}"	
