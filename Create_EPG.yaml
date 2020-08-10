@@ -14,7 +14,7 @@
       path: /api/mo/.json
       method: post
       
-    EPG_Constructs
+    EPG_Constructs:
     - tenant: Outer-DMZ
       app_pr: app-DMZ
       bd: VLAN10
