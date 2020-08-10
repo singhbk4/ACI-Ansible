@@ -58,7 +58,7 @@
                 resImedcy: lazy
                 secondaryEncapInner: unknown
                 switchingMode: native
-                tDn: uni/phys-{{ph-dom}}
+                tDn: uni/phys-"{{ph-dom}}"
           - tagInst:
               attributes:
                 annotation: ''
