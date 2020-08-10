@@ -10,98 +10,56 @@
       username:       '{{ lookup("env", "ANSIBLE_NET_USERNAME") }}'
       password:       '{{ lookup("env", "ANSIBLE_NET_PASSWORD") }}'
       validate_certs: "false"
+      
+    BD_Constructs:
+    - tenant: Outer-DMZ
+      vrf: Outer-VRF
+      BD: VLAN10
+      BD_Description: BD for VLAN10
+      tag: VLAN10
+    - tenant: Outer-DMZ
+      vrf: Outer-VRF
+      BD: VLAN20
+      BD_Description: BD for VLAN20
+      tag: VLAN20
+    - tenant: Outer-DMZ
+      vrf: Outer-VRF
+      BD: VLAN30   
+      BD_Description: BD for VLAN30
+      tag: VLAN30
+
+  tasks:	  
+  - name: Create BD
+    aci_rest:
+      <<: *apic_info
       use_proxy: no
       path: /api/mo/.json
       method: post
-      
-    EPG_Constructs:
-      - tenant: Outer-DMZ
-        app_pr: app-DMZ
-        bd: VLAN100
-        epg: VLAN100
-        EPG_Des: EPG for VLAN100
-        tag: VLAN100 
-        ph-dom: phd-dmz
-      
-  tasks:	  
-  - name: Create EPGs
-    aci_rest:
-      <<: *apic_info
       content:
-        {
-          "fvAEPg": {
-            "attributes": {
-              "annotation": "",
-              "descr": "{{item.EPG_Des}}",
-              "dn": "uni/tn-{{item.tenant}}/ap-{{item.app_pr}}/epg-{{item.epg}}",
-              "exceptionTag": "{{item.tag}}",
-              "floodOnEncap": "disabled",
-              "fwdCtrl": "",
-              "hasMcastSource": "no",
-              "isAttrBasedEPg": "no",
-              "matchT": "AtleastOne",
-              "name": "{{item.epg}}",
-              "nameAlias": "{{item.tag}}",
-              "pcEnfPref": "unenforced",
-              "prefGrMemb": "include",
-              "prio": "unspecified",
-              "shutdown": "no"
-            },
-            "children": [
-              {
-                "fvRsDomAtt": {
-                  "attributes": {
-                    "annotation": "",
-                    "bindingType": "none",
-                    "classPref": "encap",
-                    "delimiter": "",
-                    "encap": "unknown",
-                    "encapMode": "auto",
-                    "epgCos": "Cos0",
-                    "epgCosPref": "disabled",
-                    "instrImedcy": "lazy",
-                    "lagPolicyName": "",
-                    "netflowDir": "both",
-                    "netflowPref": "disabled",
-                    "numPorts": "0",
-                    "portAllocation": "none",
-                    "primaryEncap": "unknown",
-                    "primaryEncapInner": "unknown",
-                    "resImedcy": "lazy",
-                    "secondaryEncapInner": "unknown",
-                    "switchingMode": "native",
-                    "tDn": "uni/phys-{{item.ph-dom}}"
-                  }
-                }
-              },
-              {
-                "tagInst": {
-                  "attributes": {
-                    "annotation": "",
-                    "name": "{{item.tag}}",
-                    "nameAlias": ""
-                  }
-                }
-              },
-              {
-                "fvRsCustQosPol": {
-                  "attributes": {
-                    "annotation": "",
-                    "tnQosCustomPolName": ""
-                  }
-                }
-              },
-              {
-                "fvRsBd": {
-                  "attributes": {
-                    "annotation": "",
-                    "tnFvBDName": "{{item.bd}}"
-                  }
-                }
-              }
-            ]
-          }
-        }                  
-    delegate_to: localhost 
+        fvBD:
+          attributes:
+            descr: "{{BD_Description}}"
+            dn: uni/tn-{{item.tenant}}/BD-{{item.BD}}
+            mac: 00:22:BD:F8:19:FF
+            name: "{{item.BD}}"
+            rn: BD-{{item.BD}}
+            nameAlias: "{{item.tag}}"
+            arpFlood: 'yes'
+            unicastRoute: 'no'
+            unkMacUcastAct: flood
+            unkMcastAct: flood
+            multiDstPktAct: bd-flood
+            status: created
+          children:
+          - tagInst:
+              attributes:
+                annotation: ''
+                name: ""
+                nameAlias: ''
+          - fvRsCtx:
+              attributes:
+                tnFvCtxName: "{{item.vrf}}"
+                status: created,modified
+              children: []
     with_items:
-      -	"{{EPG_Constructs}}"
+      - "{{BD_Constructs}}"  
