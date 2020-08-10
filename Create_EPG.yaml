@@ -12,8 +12,7 @@
       validate_certs: "false"
       use_proxy: no
       path: /api/mo/.json
-      method: post
-      
+      method: post   
     EPG_Constructs:
     - tenant: Outer-DMZ
       app_pr: app-DMZ
