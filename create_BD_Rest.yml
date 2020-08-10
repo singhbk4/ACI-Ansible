@@ -14,45 +14,66 @@
       path: /api/mo/.json
       method: post
       
-    BD_Constructs:
-    - tenant: Outer-DMZ
-      vrf: Outer-VRF
-      BD: VLAN100
-      BD_Description: BD for VLAN10
-      tag: VLAN100
-    - tenant: Outer-DMZ
-      vrf: Outer-VRF
-      BD: VLAN200
-      BD_Description: BD for VLAN20
-      tag: VLAN200
-    - tenant: Outer-DMZ
-      vrf: Outer-VRF
-      BD: VLAN300   
-      BD_Description: BD for VLAN30
-      tag: VLAN300
-
+    EPG_Constructs:
+	  - tenant: Outer-DMZ
+        app_pr: app-DMZ
+        bd: VLAN100
+        epg: VLAN100
+        EPG_Des: EPG for VLAN100
+        tag: VLAN100 
+        ph-dom: phd-dmz
+      
   tasks:	  
-  - name: Create BD
+  - name: Create EPGs
     aci_rest:
       <<: *apic_info
       content:
         {
-          "fvBD": {
+          "fvAEPg": {
             "attributes": {
-              "descr": "{{item.BD_Description}}",
-              "dn": "uni/tn-{{item.tenant}}/BD-{{item.BD}}",
-              "mac": "00:22:BD:F8:19:FF", 
-              "name": "{{item.BD}}",
-              "rn": "BD-{{item.BD}}",
+              "annotation": "",
+              "descr": "{{item.EPG_Des}}",
+              "dn": "uni/tn-{{item.tenant}}/ap-{{item.app_pr}}/epg-{{item.epg}}",
+              "exceptionTag": "{{item.tag}}",
+              "floodOnEncap": "disabled",
+              "fwdCtrl": "",
+              "hasMcastSource": "no",
+              "isAttrBasedEPg": "no",
+              "matchT": "AtleastOne",
+              "name": "{{item.epg}}",
               "nameAlias": "{{item.tag}}",
-              "arpFlood": "yes",
-              "unicastRoute": "no",
-              "unkMacUcastAct": "flood",
-              "unkMcastAct": "flood",
-              "multiDstPktAct": "bd-flood",
-              "status": "created"
+              "pcEnfPref": "unenforced",
+              "prefGrMemb": "include",
+              "prio": "unspecified",
+              "shutdown": "no"
             },
             "children": [
+              {
+                "fvRsDomAtt": {
+                  "attributes": {
+                    "annotation": "",
+                    "bindingType": "none",
+                    "classPref": "encap",
+                    "delimiter": "",
+                    "encap": "unknown",
+                    "encapMode": "auto",
+                    "epgCos": "Cos0",
+                    "epgCosPref": "disabled",
+                    "instrImedcy": "lazy",
+                    "lagPolicyName": "",
+                    "netflowDir": "both",
+                    "netflowPref": "disabled",
+                    "numPorts": "0",
+                    "portAllocation": "none",
+                    "primaryEncap": "unknown",
+                    "primaryEncapInner": "unknown",
+                    "resImedcy": "lazy",
+                    "secondaryEncapInner": "unknown",
+                    "switchingMode": "native",
+                    "tDn": "uni/phys-{{item.ph-dom}}"
+                  }
+                }
+              },
               {
                 "tagInst": {
                   "attributes": {
@@ -60,22 +81,27 @@
                     "name": "{{item.tag}}",
                     "nameAlias": ""
                   }
-                }  
+                }
               },
               {
-                "fvRsCtx": {
+                "fvRsCustQosPol": {
                   "attributes": {
-                    "tnFvCtxName": "{{item.vrf}}",
-                    "status": "created,modified"
-                  },
-                  "children": [
-                    
-                  ]
+                    "annotation": "",
+                    "tnQosCustomPolName": ""
+                  }
+                }
+              },
+              {
+                "fvRsBd": {
+                  "attributes": {
+                    "annotation": "",
+                    "tnFvBDName": "{{item.bd}}"
+                  }
                 }
               }
             ]
           }
-        }
-    delegate_to: localhost    
+        }                  
+    delegate_to: localhost 
     with_items:
-      - "{{BD_Constructs}}"  
+      -	"{{EPG_Constructs}}"
