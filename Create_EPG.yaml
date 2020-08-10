@@ -2,7 +2,7 @@
 - name: ACI Configuration
   hosts: aci
   connection: local
-  gather_facts: no
+  gather_facts: False
   
   vars:
     apic_info:        &apic_info
