@@ -15,7 +15,7 @@
       method: post
       
     EPG_Constructs:
-	  - tenant: Outer-DMZ
+      - tenant: Outer-DMZ
         app_pr: app-DMZ
         bd: VLAN100
         epg: VLAN100
