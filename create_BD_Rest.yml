@@ -61,5 +61,4 @@
                 tnFvCtxName: "{{item.vrf}}"
                 status: created,modified
               children: []
-    with_items:
-      - "{{BD_Constructs}}"  
+    loop: "{{BD_Constructs}}"  
