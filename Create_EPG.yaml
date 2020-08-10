@@ -22,8 +22,7 @@
       EPG_Description: EPG for VLAN10
       tag: VLAN10 
       ph-dom: phd-dmz
-	  
-  
+	    
   tasks:	  
   - name: Create EPGs
     aci_rest:
