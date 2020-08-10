@@ -17,20 +17,20 @@
     BD_Constructs:
     - tenant: Outer-DMZ
       vrf: Outer-VRF
-      BD: VLAN10
+      bd: VLAN10
       BD_Description: BD for VLAN10
       tag: VLAN10
     - tenant: Outer-DMZ
       vrf: Outer-VRF
-      BD: VLAN20
+      bd: VLAN20
       BD_Description: BD for VLAN20
       tag: VLAN20
     - tenant: Outer-DMZ
       vrf: Outer-VRF
-      BD: VLAN30   
+      bd: VLAN30   
       BD_Description: BD for VLAN30
       tag: VLAN30
-
+  
   tasks:	  
   - name: Create BD
     aci_rest:
@@ -39,10 +39,10 @@
         fvBD:
           attributes:
             descr: "{{item.BD_Description}}"
-            dn: uni/tn-{{item.tenant}}/BD-{{item.BD}}
+            dn: uni/tn-{{item.tenant}}/BD-{{item.bd}}
             mac: 00:22:BD:F8:19:FF
-            name: "{{item.BD}}"
-            rn: BD-{{item.BD}}
+            name: "{{item.bd}}"
+            rn: BD-{{item.bd}}
             nameAlias: "{{item.tag}}"
             arpFlood: 'yes'
             unicastRoute: 'no'
@@ -54,11 +54,12 @@
           - tagInst:
               attributes:
                 annotation: ''
-                name: ""
+                name: "{{item.tag}}"
                 nameAlias: ''
           - fvRsCtx:
               attributes:
                 tnFvCtxName: "{{item.vrf}}"
                 status: created,modified
               children: []
-    loop: "{{BD_Constructs}}"  
+    with_items:
+	  - "{{BD_Constructs}}"
