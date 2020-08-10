@@ -1,5 +1,5 @@
 --- 
-  name: ACI Configuration
+- name: ACI Configuration
   hosts: aci
   connection: local
   gather_facts: no
