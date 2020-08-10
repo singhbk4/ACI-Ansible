@@ -18,7 +18,7 @@
     - tenant: Outer-DMZ
       app_pr: app-DMZ
       bd: VLAN10
-      epg: VLAN10
+      epg: epg-VLAN10
       EPG_Description: EPG for VLAN10
       tag: VLAN10 
       ph-dom: phd-dmz
@@ -82,4 +82,4 @@
                 annotation: ''
                 tnFvBDName: "{{item.bd}}"
     with_items:
-      - "{{EPG_Constructs}}"    
+      - "{{EPG_Constructs}}"
