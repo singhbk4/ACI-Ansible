@@ -10,6 +10,9 @@
       username:       '{{ lookup("env", "ANSIBLE_NET_USERNAME") }}'
       password:       '{{ lookup("env", "ANSIBLE_NET_PASSWORD") }}'
       validate_certs: "false"
+      use_proxy: no
+      path: /api/mo/.json
+      method: post      
       
     BD_Constructs:
     - tenant: Outer-DMZ
@@ -32,9 +35,6 @@
   - name: Create BD
     aci_rest:
       <<: *apic_info
-      use_proxy: no
-      path: /api/mo/.json
-      method: post
       content:
         fvBD:
           attributes:
