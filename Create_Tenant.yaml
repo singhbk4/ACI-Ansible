@@ -2,22 +2,19 @@
 - name: ACI Configuration
   hosts: aci
   connection: local
-  gather_facts: no  
+  gather_facts: no
   
   vars:
-    apic_info: &apic_info
-      host: "{{inventory_hostname}}"
-      username: "{{ lookup("env", "ANSIBLE_NET_USERNAME") }}"
-      password: "{{ lookup("env", "ANSIBLE_NET_PASSWORD") }}"
+    apic_info:        &apic_info
+      host:           '{{ inventory_hostname }}'
+      username:       '{{ lookup("env", "ANSIBLE_NET_USERNAME") }}'
+      password:       '{{ lookup("env", "ANSIBLE_NET_PASSWORD") }}'
       validate_certs: "false"
-      use_proxy: no
-      path: /api/mo/.json
-      method: post
-
+ 
   tasks: 
   - name: Add a new tenant
     aci_tenant:
       <<: *apic_info
       tenant: "{{tenant}}"
-      description: Tenant created by Ansible Tower
+      description: Tenant created by Ansible
       state: present
