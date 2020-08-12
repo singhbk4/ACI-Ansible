@@ -32,16 +32,16 @@
         - fvAEPg:
             attributes:
               annotation: ''
-              descr: "{{item.EPG_Description}}"
-              dn: uni/tn-{{item.tenant}}/ap-{{item.app-pr}}/epg-{{item.epg}}
-              exceptionTag: "{{item.tag}}"
+              descr: "{{ item.EPG_Description }}"
+              dn: uni/tn-{{ item.tenant }}/ap-{{ item.app-pr }}/epg-{{ item.epg }}
+              exceptionTag: "{{ item.tag }}"
               floodOnEncap: disabled
               fwdCtrl: ''
               hasMcastSource: 'no'
               isAttrBasedEPg: 'no'
               matchT: AtleastOne
-              name: "{{item.epg}}"
-              nameAlias: "{{item.tag}}"
+              name: "{{ item.epg }}"
+              nameAlias: "{{ item.tag }}"
               pcEnfPref: unenforced
               prefGrMemb: include
               prio: unspecified
@@ -68,11 +68,11 @@
                   resImedcy: lazy
                   secondaryEncapInner: unknown
                   switchingMode: native
-                  tDn: uni/phys-{{item.ph-dom}}
+                  tDn: uni/phys-{{ item.ph-dom }}
             - tagInst:
                 attributes:
                   annotation: ''
-                  name: "{{item.tag}}"
+                  name: "{{ item.tag }}"
                   nameAlias: ''
             - fvRsCustQosPol:
                 attributes:
@@ -81,6 +81,6 @@
             - fvRsBd:
                 attributes:
                   annotation: ''
-                  tnFvBDName: "{{item.bd}}"
+                  tnFvBDName: "{{ item.bd }}"
     with_items:
-      - "{{EPG_Constructs}}"	
+      - "{{ EPG_Constructs }}"	
