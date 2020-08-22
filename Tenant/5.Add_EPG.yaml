@@ -16,15 +16,20 @@
       
   tasks:	  
   - name: Create EPGs
-    aci_epg:
+    aci_rest:
       <<: *apic_info
-      tenant: "{{item.tenant}}"
-      ap: "{{item.app_pr}}"
-      epg: "{{item.epg}}"
-      description: "{{item.EPG_Description}}"
-      bd: "{{item.bd}}"
-      preferred_group: yes
-      state: present
-    delegate_to: localhost
-    with_items:
-      - "{{EPG_Constructs}}"
+      content:
+        fvAEPg:
+          attributes:
+            dn: uni/tn-{{item.tenant}}/ap-{{item.app-pr}}/epg-{{item.epg}}
+            name: "{{item.epg}}"
+            rn: epg-{{item.epg}}
+            status: created
+          children:
+          - fvRsBd:
+              attributes:
+                tnFvBDName: "{{item.bd}}"
+                status: created,modified
+              children: []	  
+	with_itemas:
+	  - "{{EPG_Constructs}}"
