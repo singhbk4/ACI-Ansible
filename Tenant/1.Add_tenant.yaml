@@ -16,7 +16,7 @@
     aci_tenant:
       <<: *apic_info
       tenant: "{{tenant}}"
-      description: Tenant created by Ansible
+      description: {{description}}
       state: present
 
           
