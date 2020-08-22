@@ -11,16 +11,12 @@
       password:       '{{ lookup("env", "ANSIBLE_NET_PASSWORD") }}'
       validate_certs: "false"
       
-    tenant:
-    - Outer-DMZ
-   
   tasks: 
   - name: Add a new tenant
     aci_tenant:
       <<: *apic_info
-      tenant: "{{item}}"
+      tenant: "{{tenant}}"
       description: Tenant created by Ansible
       state: present
-    with_items:
-      - "{{tenant}}"
+
           
