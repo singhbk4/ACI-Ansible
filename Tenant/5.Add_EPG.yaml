@@ -25,7 +25,7 @@
             attributes:
               annotation: ''
               descr: "{{item.EPG_Description}}"
-              dn: uni/tn-{{item.tenant}}/ap-{{item.app-pr}}/epg-{{item.epg}}
+              dn: uni/tn-{{item.tenant}}/ap-{{item.app_pr}}/epg-{{item.epg}}
               exceptionTag: "{{item.tag}}"
               floodOnEncap: disabled
               fwdCtrl: ''
