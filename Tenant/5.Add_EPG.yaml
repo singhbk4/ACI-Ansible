@@ -24,7 +24,7 @@
         - fvAEPg:
             attributes:
               annotation: ''
-              descr: "{{item.des}}"
+              descr: "{{item.EPG_Description}}"
               dn: uni/tn-{{item.tenant}}/ap-{{item.app-pr}}/epg-{{item.epg}}
               exceptionTag: "{{item.tag}}"
               floodOnEncap: disabled
@@ -33,7 +33,7 @@
               isAttrBasedEPg: 'no'
               matchT: AtleastOne
               name: "{{item.epg}}"
-              nameAlias: "{{item.tag}}"
+              nameAlias: ""
               pcEnfPref: unenforced
               prefGrMemb: include
               prio: unspecified
