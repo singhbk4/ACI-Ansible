@@ -21,7 +21,7 @@
       tenant: "{{item.tenant}}"
       ap: "{{item.app_pr}}"
       epg: "{{item.epg}}"
-      description: "{{EPG_Description}}"
+      description: "{{item.EPG_Description}}"
       bd: "{{item.bd}}"
       preferred_group: yes
       state: present
