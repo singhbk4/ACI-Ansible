@@ -10,20 +10,15 @@
       username:       '{{ lookup("env", "ANSIBLE_NET_USERNAME") }}'
       password:       '{{ lookup("env", "ANSIBLE_NET_PASSWORD") }}'
       validate_certs: "false"
-      
-    vrfs:
-    - tenant: Outer-DMZ
-      vrf: Outer-VRF
 
   tasks: 
-    - name: Add a new VRF "{{apic_vrf}}" to a tenant
+    - name: Add a new VRF "{{vrf}}" to a tenant
       aci_vrf:
         <<: *apic_info
-        vrf: "{{item.vrf}}"
-        tenant: "{{item.tenant}}"
-        descr: VRF creaded by Ansible
+        vrf: "{{vrf}}"
+        tenant: "{{tenant}}"
+        descr: "{{description}}"
         policy_control_preference: enforced
         policy_control_direction: ingress
         state: present
-      with_items:
-        - "{{vrfs}}"
+
