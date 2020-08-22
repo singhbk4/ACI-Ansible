@@ -19,17 +19,28 @@
     aci_rest:
       <<: *apic_info
       content:
-        fvAEPg:
-          attributes:
-            dn: uni/tn-{{item.tenant}}/ap-{{item.app-pr}}/epg-{{item.epg}}
-            name: "{{item.epg}}"
-            rn: epg-{{item.epg}}
-            status: created
-          children:
-          - fvRsBd:
-              attributes:
-                tnFvBDName: "{{item.bd}}"
-                status: created,modified
-              children: []	  
+        {
+          "fvAEPg": {
+            "attributes": {
+              "dn": "uni/tn-{{tenant}}/ap-{{app-pr}}/epg-{{epg}}",
+              "name": "{{epg}}",
+              "rn": "epg-{{epg}}",
+              "status": "created"
+            },
+            "children": [
+              {
+                "fvRsBd": {
+                  "attributes": {
+                    "tnFvBDName": "{{bd}}",
+                    "status": "created,modified"
+                  },
+                  "children": [
+                    
+                  ]
+                }
+              }
+            ]
+          }
+        }	  
     with_items:
       - "{{EPG_Constructs}}"
