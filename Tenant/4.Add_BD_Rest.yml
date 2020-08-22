@@ -13,24 +13,7 @@
       use_proxy: no
       path: /api/mo/.json
       method: post      
-      
-    BD_Constructs:
-    - tenant: Outer-DMZ
-      vrf: Outer-VRF
-      bd: VLAN10
-      BD_Description: BD for VLAN10
-      tag: VLAN10
-    - tenant: Outer-DMZ
-      vrf: Outer-VRF
-      bd: VLAN20
-      BD_Description: BD for VLAN20
-      tag: VLAN20
-    - tenant: Outer-DMZ
-      vrf: Outer-VRF
-      bd: VLAN30   
-      BD_Description: BD for VLAN30
-      tag: VLAN30
-  
+
   tasks:	  
   - name: Create BD
     aci_rest:
@@ -42,7 +25,7 @@
             dn: uni/tn-{{item.tenant}}/BD-{{item.bd}}
             mac: 00:22:BD:F8:19:FF
             name: "{{item.bd}}"
-            rn: BD-{{item.bd}}
+            rn: BD-{{item.bd}
             nameAlias: "{{item.tag}}"
             arpFlood: 'yes'
             unicastRoute: 'no'
