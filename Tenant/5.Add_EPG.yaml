@@ -19,7 +19,7 @@
     aci_epg:
       <<: *apic_info
       tenant: "{{item.tenant}}"
-      ap: "{{apic_ap}}"
+      ap: "{{item.app_pr}}"
       epg: "{{item.epg}}"
       description: "{{EPG_Description}}"
       bd: "{{item.bd}}"
