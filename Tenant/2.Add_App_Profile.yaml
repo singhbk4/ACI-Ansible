@@ -11,19 +11,14 @@
       username:       '{{ lookup("env", "ANSIBLE_NET_USERNAME") }}'
       password:       '{{ lookup("env", "ANSIBLE_NET_PASSWORD") }}'
       validate_certs: "false"
-      
-    app_profile:
-    - app_pr: app-DMZ
-      tenant: Outer-DMZ
 
   tasks: 
   - name: Add a new AP "{{apic_ap}}"
     aci_ap:
       <<: *apic_info
-      tenant: "{{item.tenant}}"
-      ap: "{{item.app_pr}}"
-      description: AP creaded by Ansible
+      tenant: "{{tenant}}"
+      ap: "{{app_pr}}"
+      description: "{{description}}"
       state: present
-    with_items:
-      - "{{app_profile}}"
+
     
