@@ -27,4 +27,4 @@
       state: present
     delegate_to: localhost
     with_items:
-      - "EPG_Constructs"
+      - "{{EPG_Constructs}}"
