@@ -31,5 +31,5 @@
                 tnFvBDName: "{{item.bd}}"
                 status: created,modified
               children: []	  
-    with_itemas:
+    with_items:
       - "{{EPG_Constructs}}"
