@@ -75,10 +75,4 @@
                   annotation: ''
                   tnFvBDName: "{{item.bd}}"
     with_items:
-      - tenant: ABC
-        app_pr: app_ABC
-        bd: bd_VLAN10
-        epg: epg_VLAN10
-        des: EPG_VLAN10
-        tag: VLAN10
-        ph_dom: phd_dmz
+      - "{{EPG_Constructs}}"
