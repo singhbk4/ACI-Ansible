@@ -3,8 +3,6 @@
   hosts: localhost
   connection: local
   gather_facts: no
-  vars_files:
-    - aci_vars.yml
 
   tasks: 
   - name: Add a new tenant
