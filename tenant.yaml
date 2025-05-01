@@ -8,6 +8,8 @@
   - name: Add a new tenant
     aci_tenant:
       host : https://192.168.6.111
+      username: admin
+      password: Python@123
       tenant: TEN-01
       description: Tenant created by Ansible
       state: present
