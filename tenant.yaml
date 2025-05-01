@@ -6,12 +6,11 @@
   vars_files:
     - aci_vars.yml
 
-  tasks:
-    - name: Create ACI tenant
-      cisco.aci.aci_tenant:
-        host: "{{ aci_url }}"
-        username: "{{ aci_username }}"
-        password: "{{ aci_password }}"
-        tenant: "{{ tenant_name }}"
-        state: present
-        validate_certs: no
+  tasks: 
+  - name: Add a new tenant
+    aci_tenant:
+      host : "{{ aci_url }}"
+      tenant: "{{tenant}}"
+      description: Tenant created by Ansible
+      state: present
+      validate_certs: no
