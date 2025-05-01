@@ -7,8 +7,8 @@
   tasks: 
   - name: Add a new tenant
     aci_tenant:
-      host : "{{ aci_url }}"
-      tenant: "{{tenant}}"
+      host : https://192.168.6.111
+      tenant: TEN-01
       description: Tenant created by Ansible
       state: present
       validate_certs: no
