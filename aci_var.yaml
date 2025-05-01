@@ -1,0 +1,11 @@
+# aci_vars.yml
+
+# APIC credentials
+aci_username: "admin"
+aci_password: "Python@123"
+aci_url: "https://192.168.6.111"
+
+# Tenant information
+tenant_name: "TEN-01"
+vrf_name: "ExampleVRF"
+

@@ -1,20 +1,17 @@
 ---
-- name: Get ACI tenants
-  hosts: aci
+- name: Configure Cisco ACI Tenant
+  hosts: localhost
   connection: local
   gather_facts: no
+  vars_files:
+    - aci_vars.yml
 
   tasks:
-    - name: Query all tenants from ACI
+    - name: Create ACI tenant
       cisco.aci.aci_tenant:
-        host: 192.168.6.111
-        username: admin
-        password: Python@123
+        host: "{{ aci_url }}"
+        username: "{{ aci_username }}"
+        password: "{{ aci_password }}"
+        tenant: "{{ tenant_name }}"
+        state: present
         validate_certs: no
-        state: query
-      register: tenant_output
-
-    - name: Print tenant names
-      debug:
-        msg: "Tenant found: {{ item.fvTenant.attributes.name }}"
-      loop: "{{ tenant_output.aci_tenant }}"
