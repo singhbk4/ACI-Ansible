@@ -1,0 +1,20 @@
+---
+- name: Get ACI tenants
+  hosts: aci
+  connection: local
+  gather_facts: no
+
+  tasks:
+    - name: Query all tenants from ACI
+      cisco.aci.aci_tenant:
+        host: 192.168.6.111
+        username: admin
+        password: Python@123
+        validate_certs: no
+        state: query
+      register: tenant_output
+
+    - name: Print tenant names
+      debug:
+        msg: "Tenant found: {{ item.fvTenant.attributes.name }}"
+      loop: "{{ tenant_output.aci_tenant }}"
