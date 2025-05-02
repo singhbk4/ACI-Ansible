@@ -10,7 +10,7 @@
       host : "{{ aci_url }}"
       username: "{{ aci_username }}"
       password: "{{ aci_password }}"
-      tenant: "{{ Tenant }}"
+      tenant: "{{ tenant }}"
       description: Tenant created by Ansible
       state: present
       validate_certs: no
