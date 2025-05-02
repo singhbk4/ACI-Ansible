@@ -1,0 +1,22 @@
+# playbook.yml
+- name: Use CSV in Ansible Tower and AWX
+  hosts: localhost
+  gather_facts: no
+  vars:
+    csv_file_path: "{{ playbook_dir }}/data.csv"
+
+  tasks:
+    - name: Read CSV data
+      set_fact:
+        csv_data: "{{ lookup('file', csv_file_path) | from_csv }}"
+
+    - name: Show CSV parsed output
+      debug:
+        var: csv_data
+
+    - name: Iterate through CSV rows
+      debug:
+        msg: "Tenant: {{ item.tenant }}, App_Pr: {{ item.app-profile }}, VRF: {{ item.vrf }}, Epg: {{ item.epg }}, BD: {{ item.bd }}"
+      loop: "{{ csv_data }}"
+
+
