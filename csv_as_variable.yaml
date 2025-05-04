@@ -5,18 +5,15 @@
   vars:
     csv_file_path: "{{ playbook_dir }}/data.csv"
 
-  tasks:
-    - name: Read CSV data
-      set_fact:
-        csv_data: "{{ lookup('file', csv_file_path) | from_csv }}"
+  - name: create users from csv file
+    hosts: all
+    tasks:
+    - name: reading the csv file
+      read_csv:
+        csv_file_path: data.csv
+      register: user_list
+      delegate_to: localhost
 
-    - name: Show CSV parsed output
+    - name: display user_list data
       debug:
-        var: csv_data
-
-    - name: Iterate through CSV rows
-      debug:
-        msg: "Tenant: {{ item.tenant }}, App_Pr: {{ item.app-profile }}, VRF: {{ item.vrf }}, Epg: {{ item.epg }}, BD: {{ item.bd }}"
-      loop: "{{ csv_data }}"
-
-
+        var: user_list.list
