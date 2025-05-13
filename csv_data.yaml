@@ -1,15 +1,20 @@
 ---
 - name: Read data from CSV file
-  host: all
-  become: true
+  hosts: all
+  gather_facts: no
   tasks:
     - name: reading the csv file
       read_csv:
-        path: file/data.csv
+       path: data.csv
       delegate_to: localhost
       register: data_list
 
     - name: display CSV data
       debug:
-        msg: "{{ data_list }}"
-        
+       msg: "{{ data_list.list }}"
+
+    - name: print dictionaries
+      debug:
+        msg: "{{ item.tenant }}"
+      loop: "{{ data_list.list }}"
+
