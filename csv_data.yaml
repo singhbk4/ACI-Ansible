@@ -33,14 +33,15 @@
       loop: "{{data_list.list}}"
       
     - name: Add a new Application Profile
-      cisco.aci.aci_ap:
+      aci_ap:
         host: "{{aci_url}}"
         username: "{{aci_username}}"
         password: "{{aci_password}}"
         tenant: "{{item.tenant}}"
-        ap: "{{app-profile}}"
+        ap: "{{item.app_pr}}"
         description: AP Created by Ansible
         monitoring_policy: default
         state: present
+        validate_certs: no
       loop: "{{data_list.list}}"
 

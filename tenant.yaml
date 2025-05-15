@@ -30,5 +30,18 @@
         description: Tenant created by Ansible
         state: present
         validate_certs: no
-      loop: "{{ data_list.list }}"
+      loop: "{{data_list.list}}"
       
+    - name: Add a new Application Profile
+      aci_ap:
+        host: "{{aci_url}}"
+        username: "{{aci_username}}"
+        password: "{{aci_password}}"
+        tenant: "{{item.tenant}}"
+        ap: "{{item.app_pr}}"
+        description: AP Created by Ansible
+        monitoring_policy: default
+        state: present
+        validate_certs: no
+      loop: "{{data_list.list}}"
+
