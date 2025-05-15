@@ -45,3 +45,29 @@
         validate_certs: no
       loop: "{{data_list.list}}"
 
+    - name: Add a VRF 
+      aci_vrf:
+        host: "{{aci_url}}"
+        username: "{{aci_username}}"
+        password: "{{aci_password}}"
+        tenant: "{{item.tenant}}"
+        vrf: "{{item.vrf}}"
+        description: VRF Created by Ansible
+        policy_control_preference: enforced
+        policy_control_direction: ingress
+        state: present
+        validate_certs: no
+      loop: "{{data_list.list}}"
+
+    - name: Create Bridge Domain 
+      aci_bd:
+        host: "{{aci_url}}"
+        username: "{{aci_username}}"
+        password: "{{aci_password}}"
+        tenant: "{{item.tenant}}"
+        bd: "{{item.bd}}"
+        description: BD Created by Ansible
+        vrf: "{{item.vrf}}"
+        state: present
+        validate_certs: no
+      loop: "{{data_list.list}}"
