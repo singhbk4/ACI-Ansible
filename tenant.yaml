@@ -1,16 +1,18 @@
 ---
 - name: Configure Cisco ACI Tenant
-  hosts: localhost
+  hosts: all
   connection: local
   gather_facts: no
+  vars_files:
+   - my_variables.yml
 
-  tasks: 
+  tasks:
   - name: Add a new tenant
     aci_tenant:
-      host : "{{ aci_url }}"
-      username: "{{ aci_username }}"
-      password: "{{ aci_password }}"
-      tenant: "{{ tenant }}"
+      host: "{{aci_url}}"
+      username: "{{aci_username}}"
+      password: "{{aci_password}}"
+      tenant: "{{aci_tenant}}"
       description: Tenant created by Ansible
       state: present
       validate_certs: no

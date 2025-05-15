@@ -1,7 +1,10 @@
----
-- name: Read data from CSV file
+- name: Configure Cisco ACI Tenant
   hosts: all
+  connection: local
   gather_facts: no
+  vars_files:
+   - my_variables.yml
+
   tasks:
     - name: reading the csv file
       read_csv:
@@ -18,3 +21,14 @@
         msg: "{{ item.tenant }}"
       loop: "{{ data_list.list }}"
 
+    - name: Add a new tenant
+      aci_tenant:
+        host: "{{aci_url}}"
+        username: "{{aci_username}}"
+        password: "{{aci_password}}"
+        tenant: "{{item.tenant}}"
+        description: Tenant created by Ansible
+        state: present
+        validate_certs: no
+      loop: "{{ data_list.list }}"
+      
