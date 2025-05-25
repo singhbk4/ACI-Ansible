@@ -1,0 +1,82 @@
+- name: Create ACI objects from CSV
+  hosts: localhost
+  connection: local
+  gather_facts: no
+
+  vars_prompt:
+    - name: "apic_password"
+      prompt: "Enter your APIC password"
+      private: yes
+
+  vars:
+    apic_url: https://192.168.6.111
+    apic_username: admin
+    aci_objects: "{{ lookup('community.general.read_csv', 'aci_vars.csv') }}"
+
+  tasks:
+    - name: Create Tenant
+      cisco.aci.aci_tenant:
+        host: "{{ apic_url }}"
+        username: "{{ apic_username }}"
+        password: "{{ apic_password }}"
+        validate_certs: no
+        tenant: "{{ item.tenant | trim }}"
+        state: present
+      loop: "{{ aci_objects }}"
+      loop_control:
+        label: "{{ item.tenant | trim }}"
+
+    - name: Create VRF
+      cisco.aci.aci_vrf:
+        host: "{{ apic_url }}"
+        username: "{{ apic_username }}"
+        password: "{{ apic_password }}"
+        validate_certs: no
+        tenant: "{{ item.tenant | trim }}"
+        vrf: "{{ item.vrf | trim }}"
+        state: present
+      loop: "{{ aci_objects }}"
+      loop_control:
+        label: "{{ item.tenant | trim }}-{{ item.vrf | trim }}"
+
+    - name: Create Application Profile
+      cisco.aci.aci_ap:
+        host: "{{ apic_url }}"
+        username: "{{ apic_username }}"
+        password: "{{ apic_password }}"
+        validate_certs: no
+        tenant: "{{ item.tenant | trim }}"
+        ap: "{{ item.app_profile | trim }}"
+        state: present
+      loop: "{{ aci_objects }}"
+      loop_control:
+        label: "{{ item.tenant | trim }}-{{ item.app_profile | trim }}"
+
+    - name: Create Bridge Domain
+      cisco.aci.aci_bd:
+        host: "{{ apic_url }}"
+        username: "{{ apic_username }}"
+        password: "{{ apic_password }}"
+        validate_certs: no
+        tenant: "{{ item.tenant | trim }}"
+        bd: "{{ item.bd | trim }}"
+        vrf: "{{ item.vrf | trim }}"
+        state: present
+      loop: "{{ aci_objects }}"
+      loop_control:
+        label: "{{ item.tenant | trim }}-{{ item.bd | trim }}"
+
+    - name: Create EPG
+      cisco.aci.aci_epg:
+        host: "{{ apic_url }}"
+        username: "{{ apic_username }}"
+        password: "{{ apic_password }}"
+        validate_certs: no
+        tenant: "{{ item.tenant | trim }}"
+        ap: "{{ item.app_profile | trim }}"
+        epg: "{{ item.epg | trim }}"
+        bd: "{{ item.bd | trim }}"
+        state: present
+      loop: "{{ aci_objects }}"
+      loop_control:
+        label: "{{ item.tenant | trim }}-{{ item.app_profile | trim }}-{{ item.epg | trim }}"
