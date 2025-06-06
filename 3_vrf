@@ -1,0 +1,21 @@
+- name: Create ACI objects from CSV
+  hosts: all
+  connection: local
+  gather_facts: no
+
+  tasks:
+    - name: reading the csv file
+      read_csv:
+       path: aci_vars.csv
+      delegate_to: localhost
+      register: aci_objects
+
+    - name: Create VRF
+      cisco.aci.aci_vrf:
+        host: "{{ apic_url }}"
+        username: "{{ apic_username }}"
+        password: "{{ apic_password }}"
+        validate_certs: no
+        tenant: "{{ aci_objects.list[0].tenant | trim }}"
+        vrf: "{{ aci_objects.list[0].vrf | trim }}"
+        state: present
