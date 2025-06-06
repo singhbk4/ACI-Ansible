@@ -1,0 +1,26 @@
+- name: Create ACI objects from CSV
+  hosts: all
+  connection: local
+  gather_facts: no
+
+  tasks:
+    - name: reading the csv file
+      read_csv:
+       path: aci_vars.csv
+      delegate_to: localhost
+      register: aci_objects
+
+    - name: Create EPG
+      cisco.aci.aci_epg:
+        host: "{{ apic_url }}"
+        username: "{{ apic_username }}"
+        password: "{{ apic_password }}"
+        validate_certs: no
+        tenant: "{{ item.tenant | trim }}"
+        ap: "{{ item.app_profile | trim }}"
+        epg: "{{ item.epg | trim }}"
+        bd: "{{ item.bd | trim }}"
+        state: present
+      loop: "{{ aci_objects.list }}"
+      loop_control:
+        label: "{{ item.tenant | trim }}-{{ item.app_profile | trim }}-{{ item.epg | trim }}"
