@@ -3,7 +3,7 @@
   hosts: localhost
   gather_facts: no
   vars:
-    csv_file_path: "{{ playbook_dir }}/data.csv"
+    csv_file_path: "data.csv"
 
   - name: create users from csv file
     hosts: all

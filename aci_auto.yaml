@@ -1,0 +1,237 @@
+- name: Create ACI objects from CSV
+  hosts: all
+  connection: local
+  gather_facts: no
+
+  #vars_prompt:
+  #  - name: "apic_password"
+  #    prompt: "Enter your APIC password"
+  #    private: yes
+
+  vars:
+    apic_url: 192.168.6.111
+    apic_username: admin
+    apic_password: Python@123
+    #aci_objects: "{{ lookup('community.general.read_csv', 'aci_vars.csv') }}"
+
+  tasks:
+    - name: reading the csv file
+      read_csv:
+       path: aci_vars.csv
+      delegate_to: localhost
+      register: aci_objects
+
+    - name: Create Tenant
+      cisco.aci.aci_tenant:
+        host: "{{ apic_url }}"
+        username: "{{ apic_username }}"
+        password: "{{ apic_password }}"
+        validate_certs: no
+        tenant: "{{ aci_objects.list[0].tenant | trim }}"
+        state: present
+
+    - name: Pause after Tenant creation
+      pause:
+        seconds: 1
+      when: aci_objects.list | length > 1
+      loop: "{{ aci_objects.list }}"
+      loop_control:
+        label: "{{ item.tenant | trim }}"
+
+    - name: Create VRF
+      cisco.aci.aci_vrf:
+        host: "{{ apic_url }}"
+        username: "{{ apic_username }}"
+        password: "{{ apic_password }}"
+        validate_certs: no
+        tenant: "{{ aci_objects.list[0].tenant | trim }}"
+        vrf: "{{ aci_objects.list[0].vrf | trim }}"
+        state: present
+
+    - name: Pause after VRF creation
+      pause:
+        seconds: 1
+      when: aci_objects.list | length > 1
+      loop: "{{ aci_objects.list }}"
+      loop_control:
+        label: "{{ item.vrf | trim }}"
+
+    - name: Create Application Profile
+      cisco.aci.aci_ap:
+        host: "{{ apic_url }}"
+        username: "{{ apic_username }}"
+        password: "{{ apic_password }}"
+        validate_certs: no
+        tenant: "{{ aci_objects.list[0].tenant | trim }}"
+        ap: "{{ aci_objects.list[0].app_profile | trim }}"
+        state: present
+
+    - name: Pause after Application Profile creation
+      pause:
+        seconds: 1
+      when: aci_objects.list | length > 1
+      loop: "{{ aci_objects.list }}"
+      loop_control:
+        label: "{{ item.app_profile | trim }}"
+
+    - name: Create Bridge Domain
+      cisco.aci.aci_bd:
+        host: "{{ apic_url }}"
+        username: "{{ apic_username }}"
+        password: "{{ apic_password }}"
+        validate_certs: no
+        tenant: "{{ item.tenant | trim }}"
+        bd: "{{ item.bd | trim }}"
+        vrf: "{{ item.vrf | trim }}"
+        state: present
+      loop: "{{ aci_objects.list }}"
+      loop_control:
+        label: "{{ item.tenant | trim }}-{{ item.bd | trim }}"
+
+    - name: Pause after Bridge Domain creation
+      pause:
+        seconds: 1
+      when: aci_objects.list | length > 1
+      loop: "{{ aci_objects.list }}"
+      loop_control:
+        label: "{{ item.bd | trim }}"
+
+    - name: Create EPG
+      cisco.aci.aci_epg:
+        host: "{{ apic_url }}"
+        username: "{{ apic_username }}"
+        password: "{{ apic_password }}"
+        validate_certs: no
+        tenant: "{{ item.tenant | trim }}"
+        ap: "{{ item.app_profile | trim }}"
+        epg: "{{ item.epg | trim }}"
+        bd: "{{ item.bd | trim }}"
+        state: present
+      loop: "{{ aci_objects.list }}"
+      loop_control:
+        label: "{{ item.tenant | trim }}-{{ item.app_profile | trim }}-{{ item.epg | trim }}"
+
+    - name: Pause after EPG creation
+      pause:
+        seconds: 1
+      when: aci_objects.list | length > 1
+      loop: "{{ aci_objects.list }}"
+      loop_control:
+        label: "{{ item.epg | trim }}"
+
+
+    - name: Create VLAN Pool (only once, from first row in CSV)
+      cisco.aci.aci_vlan_pool:
+        host: "{{ apic_url }}"
+        username: "{{ apic_username }}"
+        password: "{{ apic_password }}"
+        validate_certs: no
+        pool: "{{ aci_objects.list[0].vlan_pool | trim }}"
+        pool_allocation_mode: static
+        state: present
+        #vlan_start: "{{ aci_objects.list[0].vlan_start | trim }}"
+        #vlan_end: "{{ aci_objects.list[0].vlan_end | trim }}"
+      delegate_to: localhost
+
+    - name: Create AEP
+      cisco.aci.aci_aep:
+        host: "{{ apic_url }}"
+        username: "{{ apic_username }}"
+        password: "{{ apic_password }}"
+        validate_certs: no
+        aep: "{{ aci_objects.list[0].aep | trim }}"
+        #domain: "{{ aci_objects.list[0].phys_domain | trim }}"
+        #domain_type: phys
+        state: present
+      delegate_to: localhost
+
+    - name: Create Physical Domain
+      aci_domain:
+        host: "{{ apic_url }}"
+        username: "{{ apic_username }}"
+        password: "{{ apic_password }}"
+        validate_certs: no
+        domain: "{{ aci_objects.list[0].phys_domain | trim }}"
+        domain_type: phys
+        #aep: "{{ aci_objects.list[0].aep | trim }}"
+        state: present
+      delegate_to: localhost
+
+    - name: Create Leaf Interface Profile e.g lip-1001 
+      aci_interface_policy_leaf_profile:
+        host: "{{ apic_url }}"
+        username: "{{ apic_username }}"
+        password: "{{ apic_password }}"
+        validate_certs: no
+        leaf_interface_profile: "{{ aci_objects.list[0].leaf_interface_profile | trim }}"
+        state: present
+      delegate_to: localhost
+
+    - name: Create Leaf/Switch Profile e.g spr-1001
+      cisco.aci.aci_switch_policy_leaf_profile:
+        host: "{{ apic_url }}"
+        username: "{{ apic_username }}"
+        password: "{{ apic_password }}"
+        validate_certs: no
+        leaf_profile: "{{ aci_objects.list[0].leaf_profile | trim }}"
+        #ifpolgrp: "{{ aci_objects.list[0].ifpolgrp | trim }}"
+        state: present
+      delegate_to: localhost
+
+    - name: Add vPC Protection Group
+      cisco.aci.aci_switch_policy_vpc_protection_group:
+        host: "{{ apic_url }}"
+        username: "{{ apic_username }}"
+        password: "{{ apic_password }}"
+        validate_certs: no
+        protection_group: leafPair101-vpcGrp
+        protection_group_id: 6
+        switch_1_id: 1001
+        switch_2_id: 1002
+        state: present
+      delegate_to: localhost
+
+    - name: Create a Leaf Access Port Policy Group
+      cisco.aci.aci_interface_policy_leaf_policy_group:
+        host: "{{ apic_url }}"
+        username: "{{ apic_username }}"
+        password: "{{ apic_password }}"
+        validate_certs: no
+        lag_type: leaf
+        policy_group: "{{ aci_objects.list[0].access_ifpolgrp | trim }}"
+        link_level_policy: linklevelpolicy
+        cdp_policy: cdppolicy
+        lldp_policy: lldppolicy
+        state: present
+      delegate_to: localhost
+
+    - name: Create a Virtual Port Channel (VPC) Interface Policy Group
+      cisco.aci.aci_interface_policy_leaf_policy_group:
+        host: "{{ apic_url }}"
+        username: "{{ apic_username }}"
+        password: "{{ apic_password }}"
+        validate_certs: no
+        lag_type: node
+        policy_group: "{{ aci_objects.list[0].vpc_ifpolgrp | trim }}"
+        link_level_policy: linklevelpolicy
+        cdp_policy: cdppolicy
+        lldp_policy: lldppolicy
+        port_channel_policy: lacppolicy
+        state: present
+      delegate_to: localhost
+
+    - name: Create a Port Channel (PC) Interface Policy Group
+      cisco.aci.aci_interface_policy_leaf_policy_group:
+        host: "{{ apic_url }}"
+        username: "{{ apic_username }}"
+        password: "{{ apic_password }}"
+        validate_certs: no
+        lag_type: link
+        policy_group: "{{ aci_objects.list[0].pc_ifpolgrp | trim }}"
+        description: policygroupname description
+        link_level_policy: linklevelpolicy
+        cdp_policy: cdppolicy
+        lldp_policy: lldppolicy
+        port_channel_policy: lacppolicy
+        state: present
+
