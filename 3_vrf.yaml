@@ -11,7 +11,7 @@
       register: aci_objects
 
     - name: Create VRF
-      cisco.aci.aci_vrf:
+      aci_vrf:
         host: "{{ apic_url }}"
         username: "{{ apic_username }}"
         password: "{{ apic_password }}"

@@ -11,7 +11,7 @@
       register: aci_objects
 
     - name: Create Bridge Domain
-      cisco.aci.aci_bd:
+      aci_bd:
         host: "{{ apic_url }}"
         username: "{{ apic_username }}"
         password: "{{ apic_password }}"
