@@ -1,15 +1,88 @@
----
-- name: Read data from CSV file
-  host: all
-  become: true
+- name: Configure Cisco ACI Tenant
+  hosts: all
+  connection: local
+  gather_facts: no
+  vars_files:
+   - my_variables.yml
+
   tasks:
     - name: reading the csv file
       read_csv:
-        path: file/data.csv
+       path: data.csv
       delegate_to: localhost
       register: data_list
 
     - name: display CSV data
       debug:
-        msg: "{{ data_list }}"
-        
+       msg: "{{ data_list.list }}"
+
+    - name: print dictionaries
+      debug:
+        msg: "{{ item.tenant }}"
+      loop: "{{ data_list.list }}"
+
+    - name: Add a new tenant
+      aci_tenant:
+        host: "{{aci_url}}"
+        username: "{{aci_username}}"
+        password: "{{aci_password}}"
+        tenant: "{{aci_tenant}}"
+        description: Tenant created by Ansible
+        state: present
+        validate_certs: no
+     #loop: "{{data_list.list}}"
+      
+    - name: Add a new Application Profile
+      aci_ap:
+        host: "{{aci_url}}"
+        username: "{{aci_username}}"
+        password: "{{aci_password}}"
+        tenant: "{{aci_tenant}}"
+        ap: "{{aci_ap}}"
+        description: AP Created by Ansible
+        monitoring_policy: default
+        state: present
+        validate_certs: no
+     #loop: "{{data_list.list}}"
+
+    - name: Add a VRF 
+      aci_vrf:
+        host: "{{aci_url}}"
+        username: "{{aci_username}}"
+        password: "{{aci_password}}"
+        tenant: "{{aci_tenant}}"
+        vrf: "{{aci_vrf}}"
+        description: VRF Created by Ansible
+        policy_control_preference: enforced
+        policy_control_direction: ingress
+        state: present
+        validate_certs: no
+     #loop: "{{data_list.list}}"
+
+    - name: Create Bridge Domain 
+      aci_bd:
+        host: "{{aci_url}}"
+        username: "{{aci_username}}"
+        password: "{{aci_password}}"
+        tenant: "{{aci_tenant}}"
+        bd: "{{item.bd}}"
+        description: BD Created by Ansible
+        vrf: "{{aci_vrf}}"
+        state: present
+        validate_certs: no
+      loop: "{{data_list.list}}"
+
+    - name: Create EPGs
+      aci_epg:
+        host: "{{aci_url}}"
+        username: "{{aci_username}}"
+        password: "{{aci_password}}"
+        tenant: "{{aci_tenant}}"
+        ap: "{{aci_ap}}"
+        bd: "{{item.bd}}"
+        epg: "{{item.epg}}"
+        description: EPG created by Ansible
+        preferred_group: yes 
+        state: present
+        validate_certs: no
+      loop: "{{data_list.list}}"

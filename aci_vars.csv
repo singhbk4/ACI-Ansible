@@ -1,0 +1,6 @@
+tenant,app_profile,vrf,bd,epg
+TenantA,AppProfileA,VRFA,BD1,EPG1
+TenantA,AppProfileA,VRFA,BD2,EPG2
+TenantB,AppProfileB,VRFB,BD3,EPG3
+TenantA,AppProfileA,VRFA,BD3,EPG3
+TenantA,AppProfileA,VRFA,BD4,EPG4
