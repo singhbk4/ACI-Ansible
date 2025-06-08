@@ -19,7 +19,6 @@
             password: "{{ apic_password }}"
             validate_certs: no
             tenant: "{{ item.tenant | trim }}"
-            ap: "{{ item.app_profile | trim }}"
             epg: "{{ item.epg | trim }}"
             bd: "{{ item.bd | trim }}"
             state: present
