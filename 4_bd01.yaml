@@ -22,8 +22,12 @@
           bd: "{{ item.bd | trim }}"
           vrf: "{{ item.vrf | trim }}"
           state: present
-        loop: "{{ aci_objects.list }}"
-        loop_control:
-          label: "{{ item.tenant | trim }}-{{ item.bd | trim }}"
-        pause: 
+
+      - name: Pause after Bridge Domain creation
+        pause:
           seconds: 3
+        when: aci_objects.list | length > 1
+
+      loop: "{{ aci_objects.list }}"
+      loop_control:
+        label: "{{ item.tenant | trim }}-{{ item.bd | trim }}"
