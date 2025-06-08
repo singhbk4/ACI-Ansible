@@ -25,5 +25,5 @@
         loop: "{{ aci_objects.list }}"
         loop_control:
           label: "{{ item.tenant | trim }}-{{ item.bd | trim }}"
-          pause: 
-            seconds: 3
+        pause: 
+          seconds: 3
