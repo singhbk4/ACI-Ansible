@@ -27,9 +27,6 @@
         pause:
           seconds: 1
         when: aci_objects.list | length > 1
-        loop: "{{ aci_objects.list }}"
-        loop_control:
-          label: "{{ item.bd | trim }}"
 
       loop: "{{ aci_objects.list }}"
       loop_control:
