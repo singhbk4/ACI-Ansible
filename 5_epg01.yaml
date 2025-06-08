@@ -29,7 +29,7 @@
 
       - name: Pause after EPG creation
         pause:
-          seconds: 1
+          seconds: 3
         when: aci_objects.list | length > 1
         loop: "{{ aci_objects.list }}"
         loop_control:
