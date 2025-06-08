@@ -13,7 +13,7 @@
     - name: Create Bridge Domains with pause between each
       block:
         - name: Create Bridge Domain
-          cisco.aci.aci_bd:
+          aci_bd:
             host: "{{ apic_url }}"
             username: "{{ apic_username }}"
             password: "{{ apic_password }}"
