@@ -74,50 +74,46 @@
       loop_control:
         label: "{{ item.app_profile | trim }}"
 
-    - name: Create Bridge Domain
-      cisco.aci.aci_bd:
-        host: "{{ apic_url }}"
-        username: "{{ apic_username }}"
-        password: "{{ apic_password }}"
-        validate_certs: no
-        tenant: "{{ item.tenant | trim }}"
-        bd: "{{ item.bd | trim }}"
-        vrf: "{{ item.vrf | trim }}"
-        state: present
+    - name: Create Bridge Domains with pause between each
+      block:
+        - name: Create Bridge Domain
+          cisco.aci.aci_bd:
+            host: "{{ apic_url }}"
+            username: "{{ apic_username }}"
+            password: "{{ apic_password }}"
+            validate_certs: no
+            tenant: "{{ item.tenant | trim }}"
+            bd: "{{ item.bd | trim }}"
+            vrf: "{{ item.vrf | trim }}"
+            state: present
+
+        - name: Pause between Bridge Domain creations
+          pause:
+            seconds: 2
       loop: "{{ aci_objects.list }}"
       loop_control:
         label: "{{ item.tenant | trim }}-{{ item.bd | trim }}"
 
-    - name: Pause after Bridge Domain creation
-      pause:
-        seconds: 1
-      when: aci_objects.list | length > 1
-      loop: "{{ aci_objects.list }}"
-      loop_control:
-        label: "{{ item.bd | trim }}"
+    - name: Create EPGs with pause between each
+      block:
+        - name: Create EPG
+          cisco.aci.aci_epg:
+            host: "{{ apic_url }}"
+            username: "{{ apic_username }}"
+            password: "{{ apic_password }}"
+            validate_certs: no
+            tenant: "{{ item.tenant | trim }}"
+            ap: "{{ item.app_profile | trim }}"
+            epg: "{{ item.epg | trim }}"
+            bd: "{{ item.bd | trim }}"
+            state: present
 
-    - name: Create EPG
-      cisco.aci.aci_epg:
-        host: "{{ apic_url }}"
-        username: "{{ apic_username }}"
-        password: "{{ apic_password }}"
-        validate_certs: no
-        tenant: "{{ item.tenant | trim }}"
-        ap: "{{ item.app_profile | trim }}"
-        epg: "{{ item.epg | trim }}"
-        bd: "{{ item.bd | trim }}"
-        state: present
+        - name: Pause between EPG creations
+          pause:
+            seconds: 2
       loop: "{{ aci_objects.list }}"
       loop_control:
         label: "{{ item.tenant | trim }}-{{ item.app_profile | trim }}-{{ item.epg | trim }}"
-
-    - name: Pause after EPG creation
-      pause:
-        seconds: 1
-      when: aci_objects.list | length > 1
-      loop: "{{ aci_objects.list }}"
-      loop_control:
-        label: "{{ item.epg | trim }}"
 
 
     - name: Create VLAN Pool (only once, from first row in CSV)
