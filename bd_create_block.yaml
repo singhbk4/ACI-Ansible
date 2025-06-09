@@ -1,0 +1,14 @@
+- name: Create Bridge Domain
+  aci_bd:
+    host: "{{ apic_url }}"
+    username: "{{ apic_username }}"
+    password: "{{ apic_password }}"
+    validate_certs: no
+    tenant: "{{ item.tenant | trim }}"
+    bd: "{{ item.bd | trim }}"
+    vrf: "{{ item.vrf | trim }}"
+    state: present
+
+- name: Pause after Bridge Domain creation
+  pause:
+    seconds: 3

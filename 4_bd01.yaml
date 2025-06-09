@@ -11,22 +11,7 @@
       register: aci_objects
 
     - name: Create Bridge Domain with pause between each
-      block:
-        - name: Create Bridge Domain
-          aci_bd:
-            host: "{{ apic_url }}"
-            username: "{{ apic_username }}"
-            password: "{{ apic_password }}"
-            validate_certs: no
-            tenant: "{{ aci_objects.list[0].tenant | trim }}"
-            bd: "{{ item.bd | trim }}"
-            vrf: "{{ aci_objects.list[0].vrf | trim }}"
-            state: present
-
-        - name: Pause after Bridge Domain creation
-          pause:
-            seconds: 3
+      include_tasks: bd_create_block.yaml
       loop: "{{ aci_objects.list }}"
       loop_control:
-        label: "{{ item.bd | trim }}"
-
+        label: "{{ item.tenant | trim }}-{{ item.bd | trim }}"
