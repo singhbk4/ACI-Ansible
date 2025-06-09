@@ -11,5 +11,5 @@
 
 - name: Pause after Bridge Domain creation
   pause:
-    seconds: 3
+    seconds: 1
 
