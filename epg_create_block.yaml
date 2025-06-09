@@ -1,4 +1,4 @@
-- name: Create End Point Groups (EPGs)
+- name: Create End Point Groups (EPGs) "{{ item.epg | trim }}"
   aci_epg:
     host: "{{ apic_url }}"
     username: "{{ apic_username }}"
