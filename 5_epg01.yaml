@@ -6,31 +6,12 @@
   tasks:
     - name: reading the csv file
       read_csv:
-       path: aci_vars.csv
+        path: aci_vars.csv
       delegate_to: localhost
       register: aci_objects
 
-    - name: Create Bridge Domains with pause between each
-      block:
-      - name: Create EPG
-        aci_epg:
-          host: "{{ apic_url }}"
-          username: "{{ apic_username }}"
-          password: "{{ apic_password }}"
-          validate_certs: no
-          tenant: "{{ item.tenant | trim }}"
-          ap: "{{ item.app_profile | trim }}"
-          epg: "{{ item.epg | trim }}"
-          bd: "{{ item.bd | trim }}"
-          state: present
-        loop: "{{ aci_objects.list }}"
-        loop_control:
-          label: "{{ item.tenant | trim }}-{{ item.app_profile | trim }}-{{ item.epg | trim }}"
-
-      - name: Pause after EPG creation
-        pause:
-          seconds: 3
-        when: aci_objects.list | length > 1
-        loop: "{{ aci_objects.list }}"
-        loop_control:
-          label: "{{ item.epg | trim }}"
+    - name: Create End Point Groups (EPGs) with pause between each
+      include_tasks: epg_create_block.yaml
+      loop: "{{ aci_objects.list }}"
+      loop_control:
+        label: "{{ item.tenant | trim }}-{{ item.bd | trim }}-{{ item.epg | trim }}-{{ item.ap | trim }}"

@@ -1,15 +1,15 @@
-- name: Create Bridge Domain
-  aci_bd:
+- name: Create End Point Groups (EPGs)
+  aci_epg:
     host: "{{ apic_url }}"
     username: "{{ apic_username }}"
     password: "{{ apic_password }}"
     validate_certs: no
     tenant: "{{ item.tenant | trim }}"
+    ap: "{{ item.app_profile | trim }}"
+    epg: "{{ item.epg | trim }}"
     bd: "{{ item.bd | trim }}"
-    vrf: "{{ item.vrf | trim }}"
     state: present
 
 - name: Pause after Bridge Domain creation
   pause:
     seconds: 3
-
