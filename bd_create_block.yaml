@@ -1,4 +1,4 @@
-- name: Create Bridge Domain
+- name: Create Bridge Domain "{{ item.bd | trim }}"
   aci_bd:
     host: "{{ apic_url }}"
     username: "{{ apic_username }}"
