@@ -22,5 +22,5 @@
         state: present
       loop: "{{ aci_objects.list }}"
       loop_control:
-        label: "{{ item.tenant | trim }}-{{ item.bd | trim }}"
+        label: "{{ item.tenant | trim }}-{{ item.bd | trim }}-{{ item.vrf | trim }}"
 
