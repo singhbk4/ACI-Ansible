@@ -8,6 +8,21 @@
     state: present
   when: (item.switch_profile | trim) != ""
 
+
+- name: adding leaf profile selector associated Node Block range (w/ policy group)
+  cisco.aci.aci_switch_leaf_selector:
+    host: "{{ apic_url }}"
+    username: "{{ apic_username }}"
+    password: "{{ apic_password }}"
+    leaf_profile: "{{ item.switch_profile | trim }}"
+    leaf: leaf_selector_name
+    leaf_node_blk: node_blk_name
+    from: 1001
+    to: 1002
+    policy_group: lpg
+    state: present
+  delegate_to: localhost
+
 - name: Pause after End Point Group creation
   pause:
     seconds: 1
