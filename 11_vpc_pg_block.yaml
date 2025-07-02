@@ -1,0 +1,19 @@
+- name: Create VPC policy_group "{{ item.access_ifpolgrp | trim }}"
+  aci_interface_policy_leaf_policy_group:
+    host: "{{ apic_url }}"
+    username: "{{ apic_username }}"
+    password: "{{ apic_password }}"
+    validate_certs: no
+    lag_type: node
+    policy_group: "{{ item.vpc_ifpolgrp | trim }}"
+    link_level_policy: system-link-level-1G-auto
+    cdp_policy: system-cdp-enabled
+    lldp_policy: system-lldp-disabled
+    port_channel_policy: system-lacp-enabled
+    state: present
+  when: (item.vpc_ifpolgrp | trim) != ""
+
+- name: Pause after End Point Group creation
+  pause:
+    seconds: 1
+  when: (item.vpc_ifpolgrp | trim) != ""

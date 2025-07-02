@@ -1,0 +1,17 @@
+- name: Create ACI objects from CSV
+  hosts: all
+  connection: local
+  gather_facts: no
+
+  tasks:
+    - name: reading the csv file
+      read_csv:
+        path: aci_vars.csv
+      delegate_to: localhost
+      register: aci_objects
+
+    - name: Create VPC policy_group "{{ item.vpc_ifpolgrp | trim }}"
+      include_tasks: 11_vpc_pg_block.yaml
+      loop: "{{ aci_objects.list }}"
+      loop_control:
+        label: "{{ item.vpc_ifpolgrp | trim }}"
