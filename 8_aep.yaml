@@ -1,0 +1,23 @@
+- name: Create ACI objects from CSV
+  hosts: all
+  connection: local
+  gather_facts: no
+
+  tasks:
+    - name: reading the csv file
+      read_csv:
+       path: aci_vars.csv
+      delegate_to: localhost
+      register: aci_objects
+
+    - name: Create AEP
+      aci_aep:
+        host: "{{ apic_url }}"
+        username: "{{ apic_username }}"
+        password: "{{ apic_password }}"
+        validate_certs: no
+        aep: "{{ aci_objects.list[0].aep | trim }}"
+        description: "{{ aci_objects.list[0].aep_desc | trim }}"
+        domain: "{{ aci_objects.list[0].phys_domain | trim }}"
+        state: present
+      delegate_to: localhost
