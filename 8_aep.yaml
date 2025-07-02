@@ -18,6 +18,6 @@
         validate_certs: no
         aep: "{{ aci_objects.list[0].aep | trim }}"
         description: "{{ aci_objects.list[0].aep_desc | trim }}"
-        domain: "{{ aci_objects.list[0].phys_domain | trim }}"
+        #domain: "{{ aci_objects.list[0].phys_domain | trim }}"
         state: present
       delegate_to: localhost
