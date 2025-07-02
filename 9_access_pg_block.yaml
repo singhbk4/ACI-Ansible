@@ -1,0 +1,16 @@
+- name: Create Access policy_group "{{ item.access_ifpolgrp | trim }}"
+  aci_interface_policy_leaf_policy_group:
+    host: "{{ apic_url }}"
+    username: "{{ apic_username }}"
+    password: "{{ apic_password }}"
+    validate_certs: no
+    lag_type: leaf
+    policy_group: "{{ item.access_ifpolgrp | trim }}"
+    link_level_policy: system-link-level-1G-auto
+    cdp_policy: system-cdp-enabled
+    lldp_policy: system-lldp-disabled
+    state: present
+
+- name: Pause after End Point Group creation
+  pause:
+    seconds: 1
