@@ -6,7 +6,7 @@
     validate_certs: no
     leaf_profile: "{{ item.switch_profile | trim }}"
     leaf: "{{ item.switch_profile | trim }}"
-    #leaf_node_blk: node_blk_name
+    leaf_node_blk: node_blk_name
     from: "{{ item.from_node | int }}"
     to: "{{ item.to_node | int }}"
     policy_group: lpg
