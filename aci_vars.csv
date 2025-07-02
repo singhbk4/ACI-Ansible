@@ -1,12 +1,12 @@
 tenant,app_profile,vrf,bd,epg,vlan_pool,vlan_block_start,vlan_block_end,vlan_pool_desc,phys_domain,vmm_domain,aep,aep_desc,access_ifpolgrp
 TenantA,AppProfileA,VRFA,BD1,EPG1,Pool_01,100,199,For Servers ,phy-domain01,vmm-domain01,aep-srv01,For SRV01,ipg-access-srv01
-TenantA,AppProfileA,VRFA,BD2,EPG2,,,,,,,,,ipg-access-srv02
+TenantA,AppProfileA,VRFA,BD2,EPG2,,,,,,,,,
 TenantA,AppProfileA,VRFA,BD3,EPG3,,,,,,,,,ipg-access-srv03
-TenantA,AppProfileA,VRFA,BD4,EPG4,,,,,,,,,ipg-access-srv04
+TenantA,AppProfileA,VRFA,BD4,EPG4,,,,,,,,,
 TenantA,AppProfileA,VRFA,BD5,EPG5,,,,,,,,,ipg-access-srv05
-TenantA,AppProfileA,VRFA,BD6,EPG6,,,,,,,,,ipg-access-srv06
+TenantA,AppProfileA,VRFA,BD6,EPG6,,,,,,,,,
 TenantA,AppProfileA,VRFA,BD7,EPG7,,,,,,,,,ipg-access-srv07
-TenantA,AppProfileA,VRFA,BD8,EPG8,,,,,,,,,ipg-access-srv08
+TenantA,AppProfileA,VRFA,BD8,EPG8,,,,,,,,,
 TenantA,AppProfileA,VRFA,BD9,EPG9,,,,,,,,,ipg-access-srv09
 TenantA,AppProfileA,VRFA,BD10,EPG10,,,,,,,,,
 TenantA,AppProfileA,VRFA,BD11,EPG11,,,,,,,,,
