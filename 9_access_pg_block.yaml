@@ -15,3 +15,4 @@
 - name: Pause after End Point Group creation
   pause:
     seconds: 1
+  when: (item.access_ifpolgrp | trim) != ""
