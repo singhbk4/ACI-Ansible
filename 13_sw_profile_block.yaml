@@ -1,0 +1,14 @@
+- name: Create Interface Selector Profile "{{ item.switch_profile | trim }}"
+  aci_switch_policy_leaf_profile:
+    host: "{{ apic_url }}"
+    username: "{{ apic_username }}"
+    password: "{{ apic_password }}"
+    validate_certs: no
+    leaf_profile: "{{ item.switch_profile | trim }}"
+    state: present
+  when: (item.switch_profile | trim) != ""
+
+- name: Pause after End Point Group creation
+  pause:
+    seconds: 1
+  when: (item.switch_profile | trim) != ""

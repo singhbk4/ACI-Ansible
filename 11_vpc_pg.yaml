@@ -10,7 +10,7 @@
       delegate_to: localhost
       register: aci_objects
 
-    - name: Create VPC policy_group "{{ item.vpc_ifpolgrp | trim }}"
+    - name: Create Switch Profile "{{ item.vpc_ifpolgrp | trim }}"
       include_tasks: 11_vpc_pg_block.yaml
       loop: "{{ aci_objects.list }}"
       loop_control:
