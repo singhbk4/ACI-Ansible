@@ -18,6 +18,6 @@
         validate_certs: no
         domain: "{{ aci_objects.list[0].phys_domain | trim }}"
         domain_type: phys
-        vlan_pool: "{{ aci_objects.list[0].vlan_pool | trim }}"
+        pool: "{{ aci_objects.list[0].vlan_pool | trim }}"
         state: present
       delegate_to: localhost
