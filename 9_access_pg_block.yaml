@@ -10,6 +10,7 @@
     cdp_policy: system-cdp-enabled
     lldp_policy: system-lldp-disabled
     state: present
+  when: (item.access_ifpolgrp | trim) != ""
 
 - name: Pause after End Point Group creation
   pause:
