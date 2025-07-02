@@ -17,6 +17,7 @@
         password: "{{ apic_password }}"
         validate_certs: no
         pool: "{{ aci_objects.list[0].vlan_pool | trim }}"
+        block_name: test_block
         pool_allocation_mode: static
         block_start: "{{ aci_objects.list[0].vlan_block_start | trim }}"
         block_end: "{{ aci_objects.list[0].vlan_block_end | trim }}"
