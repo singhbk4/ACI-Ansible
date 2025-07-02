@@ -1,0 +1,37 @@
+- name: Create ACI objects from CSV
+  hosts: all
+  connection: local
+  gather_facts: no
+
+  tasks:
+    - name: reading the csv file
+      read_csv:
+        path: aci_vars.csv
+      delegate_to: localhost
+      register: aci_objects
+
+    - name: Create Interface Selector Profile "{{ item.leaf_int_selector_profile | trim }}"
+      include_tasks: 12_int_sel_profile_block.yaml
+      loop: "{{ aci_objects.list }}"
+      loop_control:
+        label: "{{ item.leaf_int_selector_profile | trim }}"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
