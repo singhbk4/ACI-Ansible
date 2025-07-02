@@ -1,11 +1,17 @@
-- name: Create Interface Selector Profile "{{ item.switch_profile | trim }}"
-  aci_switch_policy_leaf_profile:
+- name: adding leaf profile selector associated Node Block range (w/ policy group)
+  aci_switch_leaf_selector:
     host: "{{ apic_url }}"
     username: "{{ apic_username }}"
     password: "{{ apic_password }}"
     validate_certs: no
     leaf_profile: "{{ item.switch_profile | trim }}"
+    leaf: "{{ item.switch_profile | trim }}"
+    leaf_node_blk: node_blk_name
+    from: "{{ item.from_node | trim }}"
+    to: "{{ item.to_node | trim }}"
+    policy_group: lpg
     state: present
+  delegate_to: localhost
   when: (item.switch_profile | trim) != ""
 
 - name: Pause after End Point Group creation
