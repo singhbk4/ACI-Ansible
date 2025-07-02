@@ -23,6 +23,7 @@
     policy_group: lpg
     state: present
   delegate_to: localhost
+  when: (item.switch_profile | trim) != ""
 
 - name: Pause after End Point Group creation
   pause:
