@@ -16,10 +16,10 @@
     password: "{{ apic_password }}"
     validate_certs: no
     leaf_profile: "{{ item.switch_profile | trim }}"
-    leaf: leaf_selector_name
+    leaf: "{{ item.switch_profile | trim }}"
     leaf_node_blk: node_blk_name
-    from: 1001
-    to: 1002
+    from: "{{ item.from_node | trim }}"
+    to: "{{ item.to_node | trim }}"
     policy_group: lpg
     state: present
   delegate_to: localhost
