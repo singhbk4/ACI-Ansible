@@ -7,8 +7,8 @@
     leaf_profile: "{{ item.switch_profile | trim }}"
     leaf: "{{ item.switch_profile | trim }}"
     leaf_node_blk: node_blk_name
-    from: "{{ item.from_node | trim }}"
-    to: "{{ item.to_node | trim }}"
+    from: "{{ item.from_node | int }}"
+    to: "{{ item.to_node | int }}"
     policy_group: lpg
     state: present
   delegate_to: localhost
