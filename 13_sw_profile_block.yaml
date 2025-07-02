@@ -14,6 +14,7 @@
     host: "{{ apic_url }}"
     username: "{{ apic_username }}"
     password: "{{ apic_password }}"
+    validate_certs: no
     leaf_profile: "{{ item.switch_profile | trim }}"
     leaf: leaf_selector_name
     leaf_node_blk: node_blk_name
