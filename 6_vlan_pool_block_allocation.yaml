@@ -10,14 +10,15 @@
       delegate_to: localhost
       register: aci_objects
 
-    - name: Create VLAN Pool
-      aci_vlan_pool:
+    - name: VLAN Pool Block Allocation
+      aci_vlan_pool_encap_block:
         host: "{{ apic_url }}"
         username: "{{ apic_username }}"
         password: "{{ apic_password }}"
         validate_certs: no
         pool: "{{ aci_objects.list[0].vlan_pool | trim }}"
         pool_allocation_mode: static
-        description: "{{ aci_objects.list[0].vlan_pool_desc | trim }}"
+        block_start: "{{ aci_objects.list[0].vlan_block_start | trim }}"
+        block_end: "{{ aci_objects.list[0].vlan_block_end | trim }}"
         state: present
       delegate_to: localhost
