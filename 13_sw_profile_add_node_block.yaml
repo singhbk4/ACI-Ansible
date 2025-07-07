@@ -1,4 +1,4 @@
-- name: adding leaf profile selector associated Node Block range (w/ policy group)
+- name: adding leaf profile selector associated Node Block range : ***"{{ item.switch_profile | trim }}"***
   aci_switch_leaf_selector:
     host: "{{ apic_url }}"
     username: "{{ apic_username }}"
@@ -7,8 +7,6 @@
     leaf_profile: "{{ item.switch_profile | trim }}"
     leaf: "{{ item.switch_profile | trim }}" # This is the name of the leaf selector, can be anything
     leaf_node_blk: node_blk_name
-    #from: 1001
-    #to: 1002
     from: "{{ item.from | trim }}"
     to: "{{ item.to | trim }}"
     policy_group: lpg
