@@ -5,10 +5,12 @@
     password: "{{ apic_password }}"
     validate_certs: no
     leaf_profile: "{{ item.switch_profile | trim }}"
-    leaf: "{{ item.switch_profile | trim }}"
-    #leaf_node_blk: node_blk_name
-    from: "{{ item.from_node | int }}"
-    to: "{{ item.to_node | int }}"
+    leaf: Leaf_Select # This is the name of the leaf selector, can be anything
+    leaf_node_blk: node_blk_name
+    #from: "{{ item.from_node | int }}"
+    #to: "{{ item.to_node | int }}"
+    from: 1001
+    to: 1002 
     policy_group: lpg
     state: present
   delegate_to: localhost
