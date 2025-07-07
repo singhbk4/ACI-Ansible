@@ -14,4 +14,4 @@
       include_tasks: 13_sw_profile_add_node_block.yaml
       loop: "{{ aci_objects.list }}"
       loop_control:
-        label: "{{ item.switch_profile | trim }}{{ item.NodeID_From | trim }}{{ item.NodeID_To | trim }}"
+        label: "{{ item.switch_profile | trim }}{{ item.from | trim }}{{ item.to | trim }}"
