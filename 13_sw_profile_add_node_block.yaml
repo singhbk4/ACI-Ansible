@@ -7,10 +7,10 @@
     leaf_profile: "{{ item.switch_profile | trim }}"
     leaf: "{{ item.switch_profile | trim }}" # This is the name of the leaf selector, can be anything
     leaf_node_blk: node_blk_name
-    from: 1001
-    to: 1002
-    #from: "{{ item.NodeID_From | trim }}"
-    #to: "{{ item.NodeID_To | trim }}" 
+    #from: 1001
+    #to: 1002
+    from: "{{ item.NodeID_From | trim }}"
+    to: "{{ item.NodeID_To | trim }}" 
     policy_group: lpg
     state: present
   delegate_to: localhost
@@ -20,3 +20,4 @@
   pause:
     seconds: 1
   when: (item.switch_profile | trim) != ""
+  
