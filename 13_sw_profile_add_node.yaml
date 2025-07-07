@@ -11,7 +11,7 @@
       register: aci_objects
 
     - name: Create VPC policy_group "{{ item.switch_profile | trim }}"
-      include_tasks: 13_sw_profile_node_block.yaml
+      include_tasks: 13_sw_profile_add_node_block.yaml
       loop: "{{ aci_objects.list }}"
       loop_control:
         label: "{{ item.switch_profile | trim }}{{ item.from_node | trim }}{{ item.to_node | trim }}"
