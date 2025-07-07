@@ -9,8 +9,8 @@
     leaf_node_blk: node_blk_name
     #from: "{{ item.from_node | int }}"
     #to: "{{ item.to_node | int }}"
-    from: 1001
-    to: 1002 
+    from: "{{ item.NodeID_From | trim }}"
+    to: "{{ item.NodeID_To | trim }}" 
     policy_group: lpg
     state: present
   delegate_to: localhost

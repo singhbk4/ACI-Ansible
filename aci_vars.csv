@@ -1,7 +1,7 @@
-tenant,app_profile,vrf,bd,epg,vlan_pool,vlan_block_start,vlan_block_end,vlan_pool_desc,phys_domain,vmm_domain,aep,aep_desc,access_ifpolgrp,vpc_ifpolgrp,leaf_int_selector_profile,switch_profile,from_node,to_node
+tenant,app_profile,vrf,bd,epg,vlan_pool,vlan_block_start,vlan_block_end,vlan_pool_desc,phys_domain,vmm_domain,aep,aep_desc,access_ifpolgrp,vpc_ifpolgrp,leaf_int_selector_profile,switch_profile,NodeID_From,NodeID_To
 TenantA,AppProfileA,VRFA,BD1,EPG1,Pool_01,100,199,For Servers ,phy-domain01,vmm-domain01,aep-srv01,For SRV01,ipg-access-srv01,ipg-vpc-srv01,ipr-1001,spr-1001,,
 TenantA,AppProfileA,VRFA,BD2,EPG2,,,,,,,,,,ipg-vpc-srv02,ipr-1002,spr-1002,,
-TenantA,AppProfileA,VRFA,BD3,EPG3,,,,,,,,,ipg-access-srv03,ipg-vpc-srv03,ipr-1001-1002,spr-1001-1002,1001,1002
+TenantA,AppProfileA,VRFA,BD3,EPG3,,,,,,,,,ipg-access-srv03,ipg-vpc-srv03,ipr-1001-1002,spr-1001-1002,,
 TenantA,AppProfileA,VRFA,BD4,EPG4,,,,,,,,,,ipg-vpc-srv04,ipr-1003,spr-1003,,
 TenantA,AppProfileA,VRFA,BD5,EPG5,,,,,,,,,ipg-access-srv05,ipg-vpc-srv05,ipr-1004,spr-1004,,
 TenantA,AppProfileA,VRFA,BD6,EPG6,,,,,,,,,,ipg-vpc-srv06,ipr-1003-1004,spr-1003-1004,,
