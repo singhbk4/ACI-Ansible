@@ -1,4 +1,4 @@
-- name: adding leaf profile selector associated Node Block range : ***"{{ item.switch_profile | trim }}"***
+- name: adding leaf profile selector associated Node Block range : "{{ item.switch_profile | trim }}"
   aci_switch_leaf_selector:
     host: "{{ apic_url }}"
     username: "{{ apic_username }}"
