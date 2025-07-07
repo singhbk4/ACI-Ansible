@@ -1,11 +1,11 @@
-- name: Create VPC Protection Group "{{ item.switch_profile | trim }}"
+- name: Create VPC Protection Group "{{ item.vpc_pair_id | trim }}"
   aci_switch_policy_vpc_protection_group:
     host: "{{ apic_url }}"
     username: "{{ apic_username }}"
     password: "{{ apic_password }}"
     validate_certs: no
     protection_group: "{{ item.switch_profile | trim }}"
-    protection_group_id: 6
+    protection_group_id: "{{ item.vpc_pair_id | trim }}"
     switch_1_id: "{{ item.switch_1_id | int }}"
     switch_2_id: "{{ item.switch_2_id | int }}"
     state: present
