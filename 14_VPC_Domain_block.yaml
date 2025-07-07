@@ -1,0 +1,17 @@
+- name: Create VPC Protection Group "{{ item.switch_profile | trim }}"
+  aci_switch_policy_vpc_protection_group:
+    host: "{{ apic_url }}"
+    username: "{{ apic_username }}"
+    password: "{{ apic_password }}"
+    validate_certs: no
+    protection_group: "{{ item.switch_profile | trim }}"
+    protection_group_id: 6
+    switch_1_id: "{{ item.switch_1_id | int }}"
+    switch_2_id: "{{ item.switch_2_id | int }}"
+    state: present
+  when: (item.switch_1_id | trim) != ""
+
+- name: Pause after End Point Group creation
+  pause:
+    seconds: 1
+  when: (item.switch_1_id | trim) != ""

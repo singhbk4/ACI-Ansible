@@ -10,7 +10,7 @@
       delegate_to: localhost
       register: aci_objects
 
-    - name: Create VPC policy_group "{{ item.switch_profile | trim }}"
+    - name: Associate Interface selector to the Switch Profile
       include_tasks: 13_sw_profile_Asso_int_sel_profile_block.yaml
       loop: "{{ aci_objects.list }}"
       loop_control:
