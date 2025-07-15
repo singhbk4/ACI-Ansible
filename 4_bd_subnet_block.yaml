@@ -1,4 +1,4 @@
-- name: Add subnet "{{ item.gateway | trim }}" in Bridge Domain
+- name: Adding subnet "{{ item.gateway | trim }}" in Bridge Domain
   aci_bd_subnet:
     host: "{{ apic_url }}"
     username: "{{ apic_username }}"
