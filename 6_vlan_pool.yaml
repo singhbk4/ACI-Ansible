@@ -10,8 +10,8 @@
       delegate_to: localhost
       register: aci_objects
 
-    - name: Create VLAN Pool "{{ item.vlan_pool | trim }}" with pause between each
+    - name: VLAN Pool "{{ item.vlan_pool | trim }}" creation
       include_tasks: 6_vlan_pool_block.yaml
       loop: "{{ aci_objects.list }}"
       loop_control:
-        label: "{{ item.vlan_pool | trim }}-{{ item.vlan_pool_desc | trim }}"
+        label: "{{ item.vlan_pool | trim }}--{{ item.vlan_pool_desc | trim }}"

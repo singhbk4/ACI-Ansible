@@ -1,29 +1,16 @@
-- name: Create ACI objects from CSV
-  hosts: all
-  connection: local
-  gather_facts: no
+- name: Adding Vlan Pool "{{ item.vlan_pool | trim }}"
+  aci_vlan_pool:
+    host: "{{ apic_url }}"
+    username: "{{ apic_username }}"
+    password: "{{ apic_password }}"
+    validate_certs: no
+    pool: "{{ item.vlan_pool | trim }}"
+    pool_allocation_mode: dynamic
+    description: "{{ item.vlan_pool_desc | trim }}"
+    state: present
+  when: (item.vlan_pool | trim) != ""
 
-  tasks:
-    - name: reading the csv file
-      read_csv:
-       path: aci_vars.csv
-      delegate_to: localhost
-      register: aci_objects
-
-    - name: Create VLAN Pool
-      aci_vlan_pool:
-        host: "{{ apic_url }}"
-        username: "{{ apic_username }}"
-        password: "{{ apic_password }}"
-        validate_certs: no
-        pool: "{{ item.vlan_pool | trim }}"
-        pool_allocation_mode: static
-        description: "{{ item.vlan_pool_desc | trim }}"
-        state: present
-      delegate_to: localhost
-      when: (item.vlan_pool | trim) != ""
-
-    - name: Pause after VLAN Pool creation
-      pause:
-        seconds: 1
-      when: (item.vlan_pool | trim) != ""
+- name: Pause after VLAN Pool creation
+  pause:
+    seconds: 1
+  when: (item.vlan_pool | trim) != ""
