@@ -6,18 +6,12 @@
   tasks:
     - name: reading the csv file
       read_csv:
-       path: aci_vars.csv
+        path: aci_vars.csv
       delegate_to: localhost
       register: aci_objects
 
-    - name: Create VLAN Pool
-      aci_vlan_pool:
-        host: "{{ apic_url }}"
-        username: "{{ apic_username }}"
-        password: "{{ apic_password }}"
-        validate_certs: no
-        pool: "{{ aci_objects.list[0].vlan_pool | trim }}"
-        pool_allocation_mode: static
-        description: "{{ aci_objects.list[0].vlan_pool_desc | trim }}"
-        state: present
-      delegate_to: localhost
+    - name: Create VLAN Pool "{{ item.vlan_pool | trim }}" with pause between each
+      include_tasks: 6_vlan_pool_block.yaml
+      loop: "{{ aci_objects.list }}"
+      loop_control:
+        label: "{{ item.vlan_pool | trim }}{{ item.vlan_pool_desc | trim }}"
