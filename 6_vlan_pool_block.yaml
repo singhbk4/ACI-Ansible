@@ -21,9 +21,9 @@
         description: "{{ item.vlan_pool_desc | trim }}"
         state: present
       delegate_to: localhost
-  when: (item.vlan_pool | trim) != ""
+      when: (item.vlan_pool | trim) != ""
 
-- name: Pause after VLAN Pool creation
-  pause:
-    seconds: 1
-  when: (item.vlan_pool | trim) != ""
+    - name: Pause after VLAN Pool creation
+      pause:
+        seconds: 1
+      when: (item.vlan_pool | trim) != ""
