@@ -1,4 +1,4 @@
-- name: Adding physical domain to "{{ item.epg | trim }}"
+- name: Adding VMM domain "{{ item.domain | trim }}" to EPG "{{ item.epg | trim }}"
   aci_epg_to_domain:
     host: "{{ apic_url }}"
     username: "{{ apic_username }}"
