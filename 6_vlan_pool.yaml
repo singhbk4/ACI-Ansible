@@ -14,4 +14,4 @@
       include_tasks: 6_vlan_pool_block.yaml
       loop: "{{ aci_objects.list }}"
       loop_control:
-        label: "{{ item.vlan_pool | trim }}{{ item.vlan_pool_desc | trim }}"
+        label: "{{ item.vlan_pool | trim }}-{{ item.vlan_pool_desc | trim }}"
