@@ -18,4 +18,5 @@
         validate_certs: no
         tenant: "{{ aci_objects.list[0].tenant | trim }}"
         vrf: "{{ aci_objects.list[0].vrf | trim }}"
+        descr: Created by Ansible
         state: present
