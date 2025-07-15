@@ -10,8 +10,8 @@
       delegate_to: localhost
       register: aci_objects
 
-    - name: Create Bridge Domain with pause between each
-      include_tasks: 4_bd_create_block.yaml
+    - name: Add subnet "{{ item.bd | trim }}" in Bridge Domain
+      include_tasks: 4_bd_subnet_block.yaml
       loop: "{{ aci_objects.list }}"
       loop_control:
-        label: "{{ item.tenant | trim }}-{{ item.bd | trim }}-{{ item.vrf | trim }}"
+        label: "{{ item.tenant | trim }}-{{ item.bd | trim }}-{{ item.gateway | trim }}{{ item.mask | trim }}"

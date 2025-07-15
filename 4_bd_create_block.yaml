@@ -8,8 +8,10 @@
     bd: "{{ item.bd | trim }}"
     vrf: "{{ item.vrf | trim }}"
     state: present
+  when: (item.bd | trim) != ""
 
 - name: Pause after Bridge Domain creation
   pause:
     seconds: 1
+  when: (item.bd | trim) != ""
 

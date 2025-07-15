@@ -1,0 +1,18 @@
+- name: Add subnet "{{ item.bd | trim }}" in Bridge Domain
+  aci_bd_subnet:
+    host: "{{ apic_url }}"
+    username: "{{ apic_username }}"
+    password: "{{ apic_password }}"
+    validate_certs: no
+    tenant: "{{ item.tenant | trim }}"
+    bd: "{{ item.bd | trim }}"
+    #vrf: "{{ item.vrf | trim }}"
+    gateway: "{{ item.gateway | trim }}"
+    mask: "{{ item.mask | trim }}"
+    state: present
+  when: (item.gateway | trim) != ""
+
+- name: Pause after Bridge Domain creation
+  pause:
+    seconds: 1
+  when: (item.gateway | trim) != ""
