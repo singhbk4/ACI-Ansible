@@ -9,7 +9,9 @@
     epg: "{{ item.epg | trim }}"
     bd: "{{ item.bd | trim }}"
     state: present
+  when: (item.epg | trim) != ""
 
 - name: Pause after End Point Group creation
   pause:
     seconds: 1
+  when: (item.epg | trim) != ""

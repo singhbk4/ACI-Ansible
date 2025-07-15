@@ -10,8 +10,8 @@
       delegate_to: localhost
       register: aci_objects
 
-    - name: Create End Point Groups "{{ item.epg | trim }}" with pause between each
-      include_tasks: 5_epg_create_block.yaml
+    - name: Add Physical Domain to  "{{ item.epg | trim }}" with pause between each
+      include_tasks: 5_epg01_phy_domain_block.yaml
       loop: "{{ aci_objects.list }}"
       loop_control:
-        label: "{{ item.tenant | trim }}-{{ item.bd | trim }}-{{ item.epg | trim }}-{{ item.app_profile | trim }}"
+        label: "{{ item.tenant | trim }}--{{ item.epg | trim }}-{{ item.app_profile | trim }}{{ item.domain | trim }}-{{ item.domain_type | trim }}"

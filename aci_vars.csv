@@ -1,16 +1,16 @@
-tenant,app_profile,vrf,bd,gateway,mask,epg,vlan_pool,vlan_block_start,vlan_block_end,vlan_pool_desc,phys_domain,vmm_domain,aep,aep_desc,access_ifpolgrp,vpc_ifpolgrp,leaf_int_selector_profile,switch_profile,from,to,switch_1_id,switch_2_id,vpc_pair_id
-TenantA,AppProfileA,VRFA,BD1,192.168.10.1,24,EPG1,Pool_01,100,199,For Servers ,phy-domain01,vmm-domain01,aep-srv01,For SRV01,ipg-access-srv01,ipg-vpc-srv01,ipr-1001,spr-1001,1001,1001,,,
-TenantA,AppProfileA,VRFA,BD2,192.168.20.1,25,EPG2,,,,,,,,,,ipg-vpc-srv02,ipr-1002,spr-1002,1002,1002,,,
-TenantA,AppProfileA,VRFA,BD3,192.168.30.1,26,EPG3,,,,,,,,,ipg-access-srv03,ipg-vpc-srv03,ipr-1001-1002,spr-1001-1002,1001,1002,1001,1002,101
-TenantA,AppProfileA,VRFA,BD4,192.168.40.1,24,EPG4,,,,,,,,,,ipg-vpc-srv04,ipr-1003,spr-1003,1003,1003,,,
-TenantA,AppProfileA,VRFA,BD5,192.168.50.1,23,EPG5,,,,,,,,,ipg-access-srv05,ipg-vpc-srv05,ipr-1004,spr-1004,1004,1004,,,
-TenantA,AppProfileA,VRFA,BD6,192.168.60.1,23,EPG6,,,,,,,,,,ipg-vpc-srv06,ipr-1003-1004,spr-1003-1004,1003,1004,1003,1004,103
-TenantA,AppProfileA,VRFA,BD7,192.168.70.1,24,EPG7,,,,,,,,,ipg-access-srv07,ipg-vpc-srv07,ipr-1005,spr-1005,1005,1005,,,
-TenantA,AppProfileA,VRFA,BD8,192.168.80.1,24,EPG8,,,,,,,,,,ipg-vpc-srv08,ipr-1006,spr-1006,1006,1006,,,
-TenantA,AppProfileA,VRFA,BD9,192.168.90.1,24,EPG9,,,,,,,,,ipg-access-srv09,ipg-vpc-srv09,ipr-1005-1006,spr-1005-1006,1005,1006,1005,1006,105
-TenantA,AppProfileA,VRFA,BD10,192.168.100.1,24,,,,,,,,,,,,ipr-1007,spr-1007,1007,1007,,,
-,,,,,,,,,,,,,,,,,ipr-1008,spr-1008,1008,1008,,,
-,,,,,,,,,,,,,,,,,ipr-1007-1008,spr-1007-1008,1007,1008,1007,1008,107
-,,,,,,,,,,,,,,,,,ipr-1009,spr-1009,1009,1009,,,
-,,,,,,,,,,,,,,,,,ipr-1010,spr-1010,1010,1010,,,
-,,,,,,,,,,,,,,,,,ipr-1009-1010,spr-1009-1010,1009,1010,1009,1010,109
+tenant,app_profile,vrf,bd,gateway,mask,epg,domain,domain_type,phys_domain,vmm_domain,vlan_pool,vlan_block_start,vlan_block_end,vlan_pool_desc,aep,aep_desc,access_ifpolgrp,vpc_ifpolgrp,leaf_int_selector_profile,switch_profile,from,to,switch_1_id,switch_2_id,vpc_pair_id
+TenantA,AppProfileA,VRFA,BD1,192.168.10.1,24,EPG1,phy-domain01,phys,phy-domain01,vmm-domain01,Pool_01,100,199,For Servers ,aep-srv01,For SRV01,ipg-access-srv01,ipg-vpc-srv01,ipr-1001,spr-1001,1001,1001,,,
+TenantA,AppProfileA,VRFA,BD2,192.168.20.1,25,EPG2,phy-domain01,phys,,,,,,,,,,ipg-vpc-srv02,ipr-1002,spr-1002,1002,1002,,,
+TenantA,AppProfileA,VRFA,BD3,192.168.30.1,26,EPG3,phy-domain01,phys,,,,,,,,,ipg-access-srv03,ipg-vpc-srv03,ipr-1001-1002,spr-1001-1002,1001,1002,1001,1002,101
+TenantA,AppProfileA,VRFA,BD4,192.168.40.1,24,EPG4,phy-domain01,phys,,,,,,,,,,ipg-vpc-srv04,ipr-1003,spr-1003,1003,1003,,,
+TenantA,AppProfileA,VRFA,BD5,192.168.50.1,23,EPG5,phy-domain01,phys,,,,,,,,,ipg-access-srv05,ipg-vpc-srv05,ipr-1004,spr-1004,1004,1004,,,
+TenantA,AppProfileA,VRFA,BD6,192.168.60.1,23,EPG6,vmm-domain01,vmm,,,,,,,,,,ipg-vpc-srv06,ipr-1003-1004,spr-1003-1004,1003,1004,1003,1004,103
+TenantA,AppProfileA,VRFA,BD7,192.168.70.1,24,EPG7,vmm-domain01,vmm,,,,,,,,,ipg-access-srv07,ipg-vpc-srv07,ipr-1005,spr-1005,1005,1005,,,
+TenantA,AppProfileA,VRFA,BD8,192.168.80.1,24,EPG8,vmm-domain01,vmm,,,,,,,,,,ipg-vpc-srv08,ipr-1006,spr-1006,1006,1006,,,
+TenantA,AppProfileA,VRFA,BD9,192.168.90.1,24,EPG9,vmm-domain01,vmm,,,,,,,,,ipg-access-srv09,ipg-vpc-srv09,ipr-1005-1006,spr-1005-1006,1005,1006,1005,1006,105
+TenantA,AppProfileA,VRFA,BD10,192.168.100.1,24,,,,,,,,,,,,,,ipr-1007,spr-1007,1007,1007,,,
+,,,,,,,,,,,,,,,,,,,ipr-1008,spr-1008,1008,1008,,,
+,,,,,,,,,,,,,,,,,,,ipr-1007-1008,spr-1007-1008,1007,1008,1007,1008,107
+,,,,,,,,,,,,,,,,,,,ipr-1009,spr-1009,1009,1009,,,
+,,,,,,,,,,,,,,,,,,,ipr-1010,spr-1010,1010,1010,,,
+,,,,,,,,,,,,,,,,,,,ipr-1009-1010,spr-1009-1010,1009,1010,1009,1010,109
