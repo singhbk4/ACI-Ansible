@@ -8,11 +8,12 @@
     ap: "{{ item.app_profile | trim }}"
     epg: "{{ item.epg | trim }}"
     domain: "{{ item.domain | trim }}"
-    domain_type: "{{ item.domain_type | trim }}"
+    domain_type: vmm
+    vm_provider: "{{ item.vm_provider | trim }}"
     state: present
-  when: (item.domain_type | trim) != ""
+  when: (item.vm_provider | trim) != ""
 
 - name: Pause after EPG to Domain association
   pause:
     seconds: 1
-  when: (item.domain_type | trim) != ""
+  when: (item.vm_provider | trim) != ""
