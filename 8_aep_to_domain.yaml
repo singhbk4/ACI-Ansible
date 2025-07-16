@@ -6,18 +6,12 @@
   tasks:
     - name: reading the csv file
       read_csv:
-       path: aci_vars.csv
+        path: 8_aep_to_epg.csv
       delegate_to: localhost
       register: aci_objects
 
-    - name: AEP to Domain binding 
-      aci_aep_to_domain:
-        host: "{{ apic_url }}"
-        username: "{{ apic_username }}"
-        password: "{{ apic_password }}"
-        validate_certs: no
-        aep: "{{ aci_objects.list[0].aep | trim }}"
-        domain: "{{ aci_objects.list[0].phys_domain | trim }}"
-        domain_type: phys
-        state: present
-      delegate_to: localhost
+    - name: Creating AEP "{{ item.aep | trim }}" to Domain "{{ item.domain | trim }}" mapping 
+      include_tasks: 8_aep_to_domain_block.yaml
+      loop: "{{ aci_objects.list }}"
+      loop_control:
+        label: "{{ item.aep | trim }}{{ item.domain | trim }}"

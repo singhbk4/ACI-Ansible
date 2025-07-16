@@ -1,0 +1,16 @@
+- name: Creating AEP "{{ item.aep | trim }}"
+  aci_aep:
+    host: "{{ apic_url }}"
+    username: "{{ apic_username }}"
+    password: "{{ apic_password }}"
+    validate_certs: no
+    aep: "{{ item.aep | trim }}"
+    description: AEP for "{{ item.aep | trim }}"
+    infra_vlan: true
+    state: present
+  when: (item.aep | trim) != ""
+
+- name: Pause after EPG to AEP association
+  pause:
+    seconds: 1
+  when: (item.aep | trim) != ""

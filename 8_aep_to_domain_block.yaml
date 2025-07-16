@@ -1,0 +1,16 @@
+- name: Mapping AEP "{{ item.aep | trim }}" to Domain "{{ item.domain | trim }}"
+  aci_aep_to_domain:
+    host: "{{ apic_url }}"
+    username: "{{ apic_username }}"
+    password: "{{ apic_password }}"
+    validate_certs: no
+    aep: "{{ item.aep | trim }}"
+    domain: "{{ item.domain | trim }}"
+    domain_type: phys
+    state: present
+  when: (item.aep | trim) != ""
+
+- name: Pause after EPG to AEP association
+  pause:
+    seconds: 1
+  when: (item.aep | trim) != ""
