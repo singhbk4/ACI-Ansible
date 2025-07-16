@@ -10,7 +10,7 @@
       delegate_to: localhost
       register: aci_objects
 
-    - name: Creating AEP "{{ item.aep | trim }}"
+    - name: Adding EPGs to AEP "{{ item.aep | trim }}"
       include_tasks: 8_aep_block.yaml
       loop: "{{ aci_objects.list }}"
       loop_control:
