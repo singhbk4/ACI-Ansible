@@ -1,5 +1,5 @@
 - name: Adding VLAN Pool "{{ item.vlan_pool | trim }}" to Physical Domain "{{ item.phys_domain | trim }}"
-  aci_domain:
+  aci_domain_to_vlan_pool:
     host: "{{ apic_url }}"
     username: "{{ apic_username }}"
     password: "{{ apic_password }}"
