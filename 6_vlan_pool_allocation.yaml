@@ -1,0 +1,17 @@
+- name: Create ACI objects from CSV
+  hosts: all
+  connection: local
+  gather_facts: no
+
+  tasks:
+    - name: reading the csv file
+      read_csv:
+        path: aci_vars.csv
+      delegate_to: localhost
+      register: aci_objects
+
+    - name: VLAN Pool "{{ item.vlan_pool | trim }}" creation
+      include_tasks: 6_vlan_pool_allocation_block.yaml
+      loop: "{{ aci_objects.list }}"
+      loop_control:
+        label: "{{ item.vlan_pool | trim }}--{{ item.vlan_block_start | trim }}-{{ item.vlan_block_end | trim }}-{{ item.vlan_pool_desc | trim }}"

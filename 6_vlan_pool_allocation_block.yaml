@@ -1,0 +1,18 @@
+- name: Adding Vlan Pool block "{{ item.vlan_pool | trim }}"
+  aci_vlan_pool_encap_block:
+    host: "{{ apic_url }}"
+    username: "{{ apic_username }}"
+    password: "{{ apic_password }}"
+    validate_certs: no
+    pool: "{{ item.vlan_pool | trim }}"
+    pool_allocation_mode: dynamic
+    block_start: "{{ item.vlan_block_start | trim }}"
+    block_end: "{{ item.vlan_block_end | trim }}"
+    description: "{{ item.vlan_pool_desc | trim }}"
+    state: present
+  when: (item.vlan_pool | trim) != ""
+
+- name: Pause after VLAN Pool creation
+  pause:
+    seconds: 1
+  when: (item.vlan_pool | trim) != ""
