@@ -6,7 +6,7 @@
   tasks:
     - name: reading the csv file
       read_csv:
-        path: 8_aep_to_epg.csv
+        path: aci_vars.csv
       delegate_to: localhost
       register: aci_objects
 
