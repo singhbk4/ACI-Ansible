@@ -10,7 +10,7 @@
       delegate_to: localhost
       register: aci_objects
 
-    - name: Physical Domain "{{ item.phys_domain | trim }}" creation
+    - name: VMM Domain "{{ item.vmm_domain | trim }}" creation
       include_tasks: 7_vmm_domain_block.yaml
       loop: "{{ aci_objects.list }}"
       loop_control:

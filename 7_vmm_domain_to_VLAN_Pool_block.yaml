@@ -1,0 +1,18 @@
+- name: Adding VLAN Pool "{{ item.vlan_pool | trim }}" to VMM Domain "{{ item.vmm_domain | trim }}"
+  aci_domain_to_vlan_pool:
+    host: "{{ apic_url }}"
+    username: "{{ apic_username }}"
+    password: "{{ apic_password }}"
+    validate_certs: no
+    domain: "{{ item.vmm_domain | trim }}"
+    domain_type: vmm
+    pool: "{{ item.vlan_pool | trim }}"
+    pool_allocation_mode: dynamic
+    vm_provider: vmware
+    state: present
+  when: (item.vmm_domain | trim) != ""
+
+- name: Pause after VMM Domain creation
+  pause:
+    seconds: 1
+  when: (item.vmm_domain | trim) != ""
