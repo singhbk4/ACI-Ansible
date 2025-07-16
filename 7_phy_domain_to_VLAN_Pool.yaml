@@ -6,19 +6,12 @@
   tasks:
     - name: reading the csv file
       read_csv:
-       path: aci_vars.csv
+        path: aci_vars.csv
       delegate_to: localhost
       register: aci_objects
 
-    - name: Bind a Physical Domain to VLAN Pool
-      aci_domain_to_vlan_pool:
-        host: "{{ apic_url }}"
-        username: "{{ apic_username }}"
-        password: "{{ apic_password }}"
-        validate_certs: no
-        domain: "{{ aci_objects.list[0].phys_domain | trim }}"
-        domain_type: phys
-        pool: "{{ aci_objects.list[0].vlan_pool | trim }}"
-        pool_allocation_mode: static
-        state: present
-      delegate_to: localhost
+    - name: Physical Domain "{{ item.phys_domain | trim }}" creation
+      include_tasks: 7_phy_domain_to_VLAN_Pool_block.yaml
+      loop: "{{ aci_objects.list }}"
+      loop_control:
+        label: "{{ item.phys_domain | trim }}{{ item.vlan_pool | trim }}"
