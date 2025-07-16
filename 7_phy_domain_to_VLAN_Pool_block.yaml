@@ -7,7 +7,7 @@
     domain: "{{ item.phys_domain | trim }}"
     domain_type: phys
     pool: "{{ item.vlan_pool | trim }}"
-    pool_allocation_mode: static
+    pool_allocation_mode: dynamic
     state: present
   when: (item.phys_domain | trim) != ""
 
