@@ -1,0 +1,17 @@
+- name: Create ACI objects from CSV
+  hosts: all
+  connection: local
+  gather_facts: no
+
+  tasks:
+    - name: reading the csv file
+      read_csv:
+        path: 8_aep_to_epg.csv
+      delegate_to: localhost
+      register: aci_objects
+
+    - name: Static Port binding to epg "{{ item.epg | trim }}" with pause between each
+      include_tasks: 5_epg01_port_binding_block.yaml
+      loop: "{{ aci_objects.list }}"
+      loop_control:
+        label: "{{ item.tenant | trim }}--{{ item.epg | trim }}-{{ item.app_profile | trim }}{{ item.aep | trim }}-{{ item.encap_id | trim }}-{{ item.interface | trim }}-{{ item.leafs | trim }}-{{ item.pod | trim }}-{{ item.interface_mode | trim }}"
