@@ -1,4 +1,4 @@
-- name: Mapping AEP "{{ item.aep | trim }}" to Domain "{{ item.domain | trim }}"
+- name: Creating AEP "{{ item.aep | trim }}"
   aci_aep_to_domain:
     host: "{{ apic_url }}"
     username: "{{ apic_username }}"

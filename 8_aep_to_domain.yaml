@@ -6,11 +6,11 @@
   tasks:
     - name: reading the csv file
       read_csv:
-        path: 8_aep_to_epg.csv
+        path: aci_vars.csv
       delegate_to: localhost
       register: aci_objects
 
-    - name: Creating AEP "{{ item.aep | trim }}" to Domain "{{ item.domain | trim }}" mapping 
+    - name: Adding EPGs to AEP "{{ item.aep | trim }}"
       include_tasks: 8_aep_to_domain_block.yaml
       loop: "{{ aci_objects.list }}"
       loop_control:
