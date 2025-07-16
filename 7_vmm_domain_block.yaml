@@ -1,0 +1,16 @@
+- name: Adding VMM Domain "{{ item.vmm_domain | trim }}"
+  aci_domain:
+    host: "{{ apic_url }}"
+    username: "{{ apic_username }}"
+    password: "{{ apic_password }}"
+    validate_certs: no
+    domain: "{{ item.vmm_domain | trim }}"
+    domain_type: vmm
+    vm_provider: vmware
+    state: present
+  when: (item.vmm_domain | trim) != ""
+
+- name: Pause after VMM Domain creation
+  pause:
+    seconds: 1
+  when: (item.vmm_domain | trim) != ""

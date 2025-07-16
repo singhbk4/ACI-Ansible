@@ -6,18 +6,12 @@
   tasks:
     - name: reading the csv file
       read_csv:
-       path: aci_vars.csv
+        path: aci_vars.csv
       delegate_to: localhost
       register: aci_objects
 
-    - name: Create VMM Domain 
-      aci_domain:
-        host: "{{ apic_url }}"
-        username: "{{ apic_username }}"
-        password: "{{ apic_password }}"
-        validate_certs: no
-        domain: "{{ aci_objects.list[0].vmm_domain | trim }}"
-        domain_type: vmm
-        vm_provider: vmware
-        state: present
-      delegate_to: localhost
+    - name: Physical Domain "{{ item.phys_domain | trim }}" creation
+      include_tasks: 7_vmm_domain_block.yaml
+      loop: "{{ aci_objects.list }}"
+      loop_control:
+        label: "{{ item.vmm_domain | trim }}"
