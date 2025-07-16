@@ -6,7 +6,6 @@
     validate_certs: no
     domain: "{{ item.phys_domain | trim }}"
     domain_type: phys
-    description: Created by Ansible
     state: present
   when: (item.phys_domain | trim) != ""
 
