@@ -1,0 +1,16 @@
+- name: Adding Physical Domain "{{ item.phys_domain | trim }}"
+  aci_domain:
+    host: "{{ apic_url }}"
+    username: "{{ apic_username }}"
+    password: "{{ apic_password }}"
+    validate_certs: no
+    domain: "{{ item.phys_domain | trim }}"
+    domain_type: phys
+    description: Created by Ansible
+    state: present
+  when: (item.phys_domain | trim) != ""
+
+- name: Pause after Physical Domain creation
+  pause:
+    seconds: 1
+  when: (item.phys_domain | trim) != ""
