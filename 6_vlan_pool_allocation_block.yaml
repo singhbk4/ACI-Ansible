@@ -4,6 +4,7 @@
     username: "{{ apic_username }}"
     password: "{{ apic_password }}"
     validate_certs: no
+    block_name : "{{ item.vlan_pool | trim }}-block"
     pool: "{{ item.vlan_pool | trim }}"
     pool_allocation_mode: dynamic
     block_start: "{{ item.vlan_block_start | trim }}"
