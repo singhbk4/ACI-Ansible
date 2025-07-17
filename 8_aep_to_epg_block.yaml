@@ -5,11 +5,11 @@
     password: "{{ apic_password }}"
     validate_certs: false
     method: post
-    path: "/api/node/mo/uni/tn-{{ item.tenant | trim }}/ap-{{ item.app_profile | trim }}/epg-{{ item.epg | trim }}/rsDomAtt-[uni/phys-{{ item.aep | trim }}].json"
+    path: /api/node/mo/uni/uni/infra/attentp-{{ item.aep | trim }}/gen-default.json
     content:
-      fvRsDomAtt:
+      infraRsFuncToEpg:
         attributes:
-          tDn: "uni/phys-{{ item.aep | trim }}"
+          tDn: uni/tn-{{ item.tenant | trim }}/ap-{{ item.aep | trim }}/epg-{{ item.epg | trim }}
           encap: "{{ item.encap_id | trim }}"
           status: "created,modified"
   delegate_to: localhost
