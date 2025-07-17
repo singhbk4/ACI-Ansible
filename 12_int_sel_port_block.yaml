@@ -1,30 +1,20 @@
-- name: Configure Port Block via REST
-  aci_rest:
+- name: Associate an Interface Access Port Selector to an Interface Policy Leaf Profile with a Policy Group
+  aci_access_port_to_interface_policy_leaf_profile:
     host: "{{ apic_url }}"
     username: "{{ apic_username }}"
     password: "{{ apic_password }}"
-    path: /api/node/mo/uni/infra/accportprof-"{{ item.leaf_int_selector_profile | trim }}"/hports-Eth01-typ-range.json
-    method: post
-    content:
-      infraHPortS:
-        attributes:
-          dn: uni/infra/accportprof-"{{ item.leaf_int_selector_profile | trim }}"/hports-Eth01-typ-range
-          name: Eth01
-          rn: hports-Eth01-typ-range
-          status: 'created,modified'
-        children:
-          - infraPortBlk:
-              attributes:
-                dn: uni/infra/accportprof-"{{ item.leaf_int_selector_profile | trim }}"/hports-Eth01-typ-range/portblk-block2
-                name: block2
-                rn: portblk-block2
-                status: 'created,modified'
-              children: []
-          - infraRsAccBaseGrp:
-              attributes:
-                tDn: uni/infra/funcprof/accbundle-ipg-vpc-srv01
-                status: 'created,modified'
-              children: []
     validate_certs: no
-  when: (item.leaf_int_selector_profile | trim) != ""
-  delegate_to: localhost  
+    lag_type: node
+    interface_profile: "{{ item.leaf_int_selector_profile | trim }}"
+    access_port_selector: "{{ item.interface_name | trim }}"
+    port_blk: "{{ item.port_blk_name | trim }}"
+    from_port: "{{ item.from_port | trim }}"
+    to_port: "{{ item.to_port | trim }}"
+    policy_group: "{{ item.policy_group | trim }}"
+    state: present
+  when: (item.vpc_ifpolgrp | trim) != ""
+
+- name: Pause after End Point Group creation
+  pause:
+    seconds: 1
+  when: (item.vpc_ifpolgrp | trim) != ""

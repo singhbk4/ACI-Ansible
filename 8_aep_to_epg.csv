@@ -1,16 +1,11 @@
-tenant,app_profile,epg,aep,aep_desc,encap_id,interface_mode,interface,leafs,pod,leaf_int_selector_profile,interface_name,from_port,to_port,port_blk_name
-TenantA,AppProfileA,EPG1,aep-srv01,For SRV01,100,trunk, 1/7,1001,1,ipr-1001,Eth_1,1,1,Eth
-TenantA,AppProfileA,EPG2,aep-srv01,For SRV01,101,trunk,,,,ipr-1002,Eth_1,1,1,Eth
-TenantA,AppProfileA,EPG3,aep-srv01,For SRV01,102,trunk,,,,ipr-1001-1002,Eth_2_3,2,3,Eth
-TenantA,AppProfileA,EPG4,aep-srv01,For SRV01,103,trunk,,,,,,,,
-TenantA,AppProfileA,EPG5,aep-srv01,For SRV01,104,trunk,,,,,,,,
-TenantA,AppProfileA,EPG6,aep-srv01,For SRV01,105,trunk,,,,,,,,
-TenantA,AppProfileA,EPG7,aep-srv01,For SRV01,106,trunk,,,,,,,,
-TenantA,AppProfileA,EPG8,aep-srv01,For SRV01,107,trunk,,,,,,,,
-TenantA,AppProfileA,EPG9,aep-srv01,For SRV01,108,trunk,,,,,,,,
-TenantA,AppProfileA,EPG9,aep-srv01,For SRV01,199,trunk, 1/7,1001,1,,,,,
-,,,,,,,,,,,,,,
-,,,,,,,,,,,,,,
-,,,,,,,,,,,,,,
-,,,,,,,,,,,,,,
-,,,,,,,,,,,,,,
+tenant,app_profile,epg,aep,aep_desc,encap_id,interface_mode,interface,leafs,pod,leaf_int_selector_profile,interface_name,from_port,to_port,port_blk_name,policy_group
+TenantA,AppProfileA,EPG1,aep-srv01,For SRV01,100,trunk, 1/7,1001,1,ipr-1001,Eth_1,1,1,Eth,ipg-access-srv01
+TenantA,AppProfileA,EPG2,aep-srv01,For SRV01,101,trunk,,,,ipr-1002,Eth_1,1,1,Eth,ipg-access-srv02
+TenantA,AppProfileA,EPG3,aep-srv01,For SRV01,102,trunk,,,,ipr-1001-1002,Eth_2_3,2,3,Eth,ipg-vpc-srv01
+TenantA,AppProfileA,EPG4,aep-srv01,For SRV01,103,trunk,,,,,,,,,
+TenantA,AppProfileA,EPG5,aep-srv01,For SRV01,104,trunk,,,,,,,,,
+TenantA,AppProfileA,EPG6,aep-srv01,For SRV01,105,trunk,,,,,,,,,
+TenantA,AppProfileA,EPG7,aep-srv01,For SRV01,106,trunk,,,,,,,,,
+TenantA,AppProfileA,EPG8,aep-srv01,For SRV01,107,trunk,,,,,,,,,
+TenantA,AppProfileA,EPG9,aep-srv01,For SRV01,108,trunk,,,,,,,,,
+TenantA,AppProfileA,EPG9,aep-srv01,For SRV01,199,trunk, 1/7,1001,1,,,,,,
