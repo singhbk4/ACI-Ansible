@@ -10,7 +10,7 @@
       delegate_to: localhost
       register: aci_objects
 
-    - name: Adding Port "{{ item.interface_name | trim }}" in Interface Selector Profile "{{ item.leaf_int_selector_profile | trim }}"
+    - name: Adding Port 
       include_tasks: 12_int_sel_port_block.yaml
       loop: "{{ aci_objects.list }}"
       loop_control:

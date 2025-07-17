@@ -12,7 +12,7 @@
     state: present
   when: (item.leaf_int_selector_profile | trim) != ""
 
-- name: Pause after End Point Group creation
+- name: Pause after adding port
   pause:
     seconds: 1
   when: (item.leaf_int_selector_profile | trim) != ""
