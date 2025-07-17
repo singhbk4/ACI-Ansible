@@ -5,7 +5,7 @@
     password: "{{ apic_password }}"
     validate_certs: false
     method: post
-    path: /api/node/mo/uni/uni/infra/attentp-{{ item.aep | trim }}/gen-default.json
+    path: /api/node/mo/uni/infra/attentp-{{ item.aep | trim }}/gen-default.json
     content:
       infraRsFuncToEpg:
         attributes:
