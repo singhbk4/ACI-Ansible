@@ -1,18 +1,30 @@
-- name: Adding Port in Interface Selector 
-  aci_access_port_block_to_access_port:
-    host: "{{ apic_url }}"
-    username: "{{ apic_username }}"
-    password: "{{ apic_password }}"
+- name: Configure Port Block via REST
+  cisco.aci.aci_rest:
+    host: "{{ aci_url }}"
+    username: "{{ aci_username }}"
+    password: "{{ aci_password }}"
+    path: /api/node/mo/uni/infra/accportprof-ipr-1001/hports-Eth01-typ-range.json
+    method: post
+    content:
+      infraHPortS:
+        attributes:
+          dn: uni/infra/accportprof-ipr-1001/hports-Eth01-typ-range
+          name: Eth01
+          rn: hports-Eth01-typ-range
+          status: 'created,modified'
+        children:
+          - infraPortBlk:
+              attributes:
+                dn: uni/infra/accportprof-ipr-1001/hports-Eth01-typ-range/portblk-block2
+                name: block2
+                rn: portblk-block2
+                status: 'created,modified'
+              children: []
+          - infraRsAccBaseGrp:
+              attributes:
+                tDn: uni/infra/funcprof/accbundle-ipg-vpc-srv01
+                status: 'created,modified'
+              children: []
     validate_certs: no
-    leaf_interface_profile: "{{ item.leaf_int_selector_profile | trim }}"
-    access_port_selector: "{{ item.interface_name | trim }}"
-    leaf_port_blk: block2
-    from_port: "{{ item.from_port | int }}"
-    to_port: "{{ item.to_port | int }}"
-    state: present
   when: (item.leaf_int_selector_profile | trim) != ""
-
-- name: Pause after adding port
-  pause:
-    seconds: 1
-  when: (item.leaf_int_selector_profile | trim) != ""
+  delegate_to: localhost  
