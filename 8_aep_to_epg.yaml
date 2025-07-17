@@ -1,6 +1,7 @@
 - name: Create ACI objects from CSV
   hosts: all
   connection: local
+  collection: cisco.aci
   gather_facts: no
 
   tasks:
