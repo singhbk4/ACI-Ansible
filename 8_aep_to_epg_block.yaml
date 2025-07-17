@@ -1,5 +1,5 @@
 - name: Adding epg "{{ item.epg | trim }}" to AEP "{{ item.aep | trim }}"
-  aci_aep_to_epg:
+  cisco.aci.aci_aep_to_epg:
     host: "{{ apic_url }}"
     username: "{{ apic_username }}"
     password: "{{ apic_password }}"
