@@ -7,7 +7,7 @@
     #lag_type: node
     leaf_interface_profile: "{{ item.leaf_int_selector_profile | trim }}"
     access_port_selector: "{{ item.interface_name | trim }}"
-    leaf_port_blk: "{{ item.port_blk_name | trim }}"
+    leaf_port_blk: block
     from_port: "{{ item.from_port | trim }}"
     to_port: "{{ item.to_port | trim }}"
     policy_group: "{{ item.policy_group | trim }}"

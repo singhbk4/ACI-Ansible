@@ -14,5 +14,5 @@
       include_tasks: 12_int_sel_port_block.yaml
       loop: "{{ aci_objects.list }}"
       loop_control:
-        label: "{{ item.leaf_int_selector_profile | trim }}{{ item.interface_name | trim }}{{ item.from_port | int }}{{ item.to_port | int }}{{ item.port_blk_name | trim }}{{ item.policy_group | int }}"
+        label: "{{ item.leaf_int_selector_profile | trim }}{{ item.interface_name | trim }}{{ item.from_port | int }}{{ item.to_port | int }}{{ item.policy_group | int }}"
         
