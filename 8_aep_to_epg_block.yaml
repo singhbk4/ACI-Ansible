@@ -1,4 +1,4 @@
-- name: Adding epg "{{ item.domain | trim }}" to AEP "{{ item.aep | trim }}"
+- name: Adding epg "{{ item.epg | trim }}" to AEP "{{ item.aep | trim }}"
   aci_aep_to_epg:
     host: "{{ apic_url }}"
     username: "{{ apic_username }}"
