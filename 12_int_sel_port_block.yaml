@@ -1,6 +1,6 @@
 - name: Configure Port Block via REST
   aci_rest:
-    host: "{{ aci_url }}"
+    host: "{{ apic_url }}"
     username: "{{ aci_username }}"
     password: "{{ aci_password }}"
     path: /api/node/mo/uni/infra/accportprof-"{{ item.leaf_int_selector_profile | trim }}"/hports-Eth01-typ-range.json
