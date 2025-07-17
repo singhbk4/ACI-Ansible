@@ -1,10 +1,10 @@
 - name: Adding Port in Interface Selector 
-  aci_access_port_block_to_access_port:
+  cisco.aci.aci_access_port_block_to_access_port:
     host: "{{ apic_url }}"
     username: "{{ apic_username }}"
     password: "{{ apic_password }}"
     validate_certs: no
-    leaf_interface_profile: "{{ item.leaf_int_selector_profile | trim }}"
+    interface_profile: "{{ item.leaf_int_selector_profile | trim }}"
     access_port_selector: "{{ item.interface_name | trim }}"
     leaf_port_blk: block2
     from_port: "{{ item.from_port | int }}"
