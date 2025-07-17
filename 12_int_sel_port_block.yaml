@@ -3,19 +3,19 @@
     host: "{{ aci_url }}"
     username: "{{ aci_username }}"
     password: "{{ aci_password }}"
-    path: /api/node/mo/uni/infra/accportprof-ipr-1001/hports-Eth01-typ-range.json
+    path: /api/node/mo/uni/infra/accportprof-"{{ item.leaf_int_selector_profile | trim }}"/hports-Eth01-typ-range.json
     method: post
     content:
       infraHPortS:
         attributes:
-          dn: uni/infra/accportprof-ipr-1001/hports-Eth01-typ-range
+          dn: uni/infra/accportprof-"{{ item.leaf_int_selector_profile | trim }}"/hports-Eth01-typ-range
           name: Eth01
           rn: hports-Eth01-typ-range
           status: 'created,modified'
         children:
           - infraPortBlk:
               attributes:
-                dn: uni/infra/accportprof-ipr-1001/hports-Eth01-typ-range/portblk-block2
+                dn: uni/infra/accportprof-"{{ item.leaf_int_selector_profile | trim }}"/hports-Eth01-typ-range/portblk-block2
                 name: block2
                 rn: portblk-block2
                 status: 'created,modified'
