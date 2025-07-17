@@ -1,5 +1,5 @@
 - name: Adding EPGs to AEP 
-  cisco.aci.aci_aep_to_epg:
+  aci_aep_to_epg:
     host: "{{ apic_url }}"
     username: "{{ apic_username }}"
     password: "{{ apic_password }}"
