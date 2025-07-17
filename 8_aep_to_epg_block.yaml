@@ -1,5 +1,5 @@
 - name: Adding epg "{{ item.epg | trim }}" to AEP "{{ item.aep | trim }}"
-  cisco.aci.aci_aep_to_epg:
+  aci_aep_to_epg:
     host: "{{ apic_url }}"
     username: "{{ apic_username }}"
     password: "{{ apic_password }}"
@@ -11,6 +11,7 @@
     encap_id: "{{ item.encap_id | trim }}"
     interface_mode: "{{ item.interface_mode | trim }}"
     state: present
+  delegate_to: localhost
   when: (item.encap_id | trim) != ""
 
 - name: Pause after EPG to AEP association
