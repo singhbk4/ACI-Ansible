@@ -4,9 +4,9 @@
     username: "{{ apic_username }}"
     password: "{{ apic_password }}"
     validate_certs: no
-    interface_profile: "{{ item.leaf_int_selector_profile | trim }}"
+    leaf_interface_profile: "{{ item.leaf_int_selector_profile | trim }}"
     access_port_selector: "{{ item.interface_name | trim }}"
-    port_blk: "{{ item.interface_name | trim }}"
+    leaf_port_blk: "{{ item.interface_name | trim }}"
     from_port: "{{ item.from_port | int }}"
     to_port: "{{ item.to_port | int }}"
     state: present
