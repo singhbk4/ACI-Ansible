@@ -9,6 +9,7 @@
     link_level_policy: system-link-level-1G-auto
     cdp_policy: system-cdp-enabled
     lldp_policy: system-lldp-disabled
+    aep : "{{ item.aep | trim }}"
     state: present
   when: (item.access_ifpolgrp | trim) != ""
 
