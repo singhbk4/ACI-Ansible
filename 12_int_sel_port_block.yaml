@@ -1,4 +1,4 @@
-- name: Adding Port in Interface Selector "{{ item.leaf_int_selector_profile | trim }}"
+- name: Adding Port in Interface Selector 
   aci_access_port_block_to_access_port:
     host: "{{ apic_url }}"
     username: "{{ apic_username }}"
@@ -7,8 +7,8 @@
     leaf_interface_profile: "{{ item.leaf_int_selector_profile | trim }}"
     access_port_selector: "{{ item.interface_name | trim }}"
     leaf_port_blk: "{{ item.port_blk_name | trim }}"
-    from_port: "{{ item.from_port | int }}"
-    to_port: "{{ item.to_port | int }}"
+    from_port: 1
+    to_port: 1
     state: present
   when: (item.leaf_int_selector_profile | trim) != ""
 
