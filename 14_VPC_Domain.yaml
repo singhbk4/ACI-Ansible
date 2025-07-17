@@ -11,7 +11,7 @@
       register: aci_objects
 
     - name: Create VPC policy_group "{{ item.switch_profile | trim }}"
-      include_tasks: 13_sw_profile_block.yaml
+      include_tasks: 14_VPC_Domain_block.yaml
       loop: "{{ aci_objects.list }}"
       loop_control:
-        label: "{{ item.switch_1_id | trim }}{{ item.switch_2_id | trim }}{{ item.vpc_pair_id | trim }}"
+        label: "{{ item.switch_1_id | trim }}{{ item.switch_2_id | trim }}{{ item.vpc_group | trim }}{{ item.vpc_pair_id | trim }}"
