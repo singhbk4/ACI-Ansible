@@ -1,25 +1,26 @@
-- name: Adding EPGs to AEP using REST API
-  uri:
-    url: "{{ apic_url }}/api/node/mo/uni/tn-{{ item.tenant | trim }}/ap-{{ item.app_profile | trim }}/epg-{{ item.epg | trim }}/rsDomAtt-[uni/phys-{{ item.aep | trim }}].json"
-    method: POST
-    user: "{{ apic_username }}"
+- name: Adding EPGs in AEP using JSON string
+  aci_rest:
+    host: "{{ apic_url }}"
+    username: "{{ apic_username }}"
     password: "{{ apic_password }}"
-    validate_certs: no
-    force_basic_auth: yes
-    headers:
-      Content-Type: application/json
-    body_format: json
-    body:
-      fvRsDomAtt:
-        attributes:
-          tDn: "uni/phys-{{ item.aep | trim }}"
-          encap: "{{ item.encap_id | trim }}"
-          instrImedcy: "{{ item.interface_mode | trim }}"
-          status: "created,modified"
-    status_code: 200
-  when: (item.epg | trim) != ""
+    validate_certs: false
+    path: uni/infra/attentp-"{{ item.aep | trim }}"/gen-default.json
+    method: post
+    content:
+      {
+        "infraRsFuncToEpg": {
+          "attributes": {
+            "tDn": "uni/tn-{{ item.tenant | trim }}/ap-{{ item.app_profile | trim }}/epg-{{ item.epg | trim }}",
+            "status": "created,modified",
+            "encap": "{{ item.encap_id | trim }}"
+          },
+          "children": []
+        }
+      }
+  delegate_to: localhost
+  when: (item.aep | trim) != ""
 
 - name: Pause after EPG creation
   pause:
     seconds: 1
-  when: (item.epg | trim) != ""
+  when: (item.aep | trim) != ""
