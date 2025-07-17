@@ -12,9 +12,9 @@
     to_port: "{{ item.to_port | trim }}"
     policy_group: "{{ item.policy_group | trim }}"
     state: present
-  when: (item.vpc_ifpolgrp | trim) != ""
+  when: (item.leaf_int_selector_profile | trim) != ""
 
 - name: Pause after End Point Group creation
   pause:
     seconds: 1
-  when: (item.vpc_ifpolgrp | trim) != ""
+  when: (item.leaf_int_selector_profile | trim) != ""
