@@ -1,5 +1,5 @@
 - name: Configure Port Block via REST
-  cisco.aci.aci_rest:
+  aci_rest:
     host: "{{ aci_url }}"
     username: "{{ aci_username }}"
     password: "{{ aci_password }}"
