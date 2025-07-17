@@ -1,20 +1,18 @@
-- name: Adding EPGs in AEP using JSON string
+- name: Associate EPG to AEP (Domain) using aci_rest
   aci_rest:
     host: "{{ apic_url }}"
     username: "{{ apic_username }}"
     password: "{{ apic_password }}"
     validate_certs: false
-    path: uni/infra/attentp-{{ item.aep | trim }}/gen-default.json
     method: post
+    path: "/api/node/mo/uni/tn-{{ item.tenant | trim }}/ap-{{ item.app_profile | trim }}/epg-{{ item.epg | trim }}/rsDomAtt-[uni/phys-{{ item.aep | trim }}].json"
     content:
-      infraRsFuncToEpg:
+      fvRsDomAtt:
         attributes:
-          tDn: uni/tn-{{ item.tenant | trim }}/ap-{{ item.app_profile | trim }}/epg-{{ item.epg | trim }}
-          status: created,modified
+          tDn: "uni/phys-{{ item.aep | trim }}"
           encap: "{{ item.encap_id | trim }}"
-        children: []
+          status: "created,modified"
   delegate_to: localhost
-
   when: (item.aep | trim) != ""
 
 - name: Pause after EPG creation
