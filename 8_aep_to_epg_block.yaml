@@ -4,20 +4,17 @@
     username: "{{ apic_username }}"
     password: "{{ apic_password }}"
     validate_certs: false
-    path: uni/infra/attentp-"{{ item.aep | trim }}"/gen-default.json
+    path: uni/infra/attentp-{{ item.aep | trim }}/gen-default.json
     method: post
     content:
-      {
-        "infraRsFuncToEpg": {
-          "attributes": {
-            "tDn": "uni/tn-{{ item.tenant | trim }}/ap-{{ item.app_profile | trim }}/epg-{{ item.epg | trim }}",
-            "status": "created,modified",
-            "encap": "{{ item.encap_id | trim }}"
-          },
-          "children": []
-        }
-      }
+      infraRsFuncToEpg:
+        attributes:
+          tDn: uni/tn-{{ item.tenant | trim }}/ap-{{ item.app_profile | trim }}/epg-{{ item.epg | trim }}
+          status: created,modified
+          encap: "{{ item.encap_id | trim }}"
+        children: []
   delegate_to: localhost
+
   when: (item.aep | trim) != ""
 
 - name: Pause after EPG creation
