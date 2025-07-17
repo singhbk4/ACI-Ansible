@@ -15,23 +15,3 @@
       loop: "{{ aci_objects.list }}"
       loop_control:
         label: "{{ item.leaf_int_selector_profile | trim }}"
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
