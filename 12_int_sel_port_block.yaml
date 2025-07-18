@@ -5,11 +5,11 @@
     password: "{{ apic_password }}"
     validate_certs: false
     method: post
-    path: /api/node/mo/uni/infra/accportprof-{{ leaf_int_selector_profile | trim}}/hports-{{interface_name | trim}}-typ-range.json
+    path: /api/node/mo/uni/infra/accportprof-{{ leaf_int_selector_profile | trim }}/hports-{{ interface_name | trim }}-typ-range.json
     content:
       infraHPortS:
         attributes:
-          dn: uni/infra/accportprof-{{ leaf_int_selector_profile | trim }}/hports-{{ interface_name | trim}}-typ-range
+          dn: uni/infra/accportprof-{{ leaf_int_selector_profile | trim }}/hports-{{ interface_name | trim }}-typ-range
           name: "{{ interface_name | trim }}"
           rn: hports-{{ interface_name | trim }}-typ-range
           status: created,modified
