@@ -30,9 +30,9 @@
                 status: created,modified
               children: []
   delegate_to: localhost
-  when: (item.aep | trim) != ""
+  when: (item.leaf_int_selector_profile | trim) != ""
 
 - name: Pause after EPG creation
   pause:
     seconds: 1
-  when: (item.aep | trim) != ""
+  when: (item.leaf_int_selector_profile | trim) != ""
