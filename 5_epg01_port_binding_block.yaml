@@ -1,24 +1,27 @@
-- name: Static Port binding to epg 
-  aci_bulk_static_binding_to_epg:
+- name: Static Port Binding in EPG using aci_rest
+  aci_rest:
     host: "{{ apic_url }}"
     username: "{{ apic_username }}"
     password: "{{ apic_password }}"
-    validate_certs: no
-    tenant: "{{ item.tenant | trim }}"
-    ap: "{{ item.app_profile | trim }}"
-    epg: "{{ item.epg | trim }}"
-    encap_id: "{{ item.encap_id | trim }}"
-    interface_mode: "{{ item.interface_mode | trim }}"
-    deploy_immediacy: lazy  
-    description: Deployed by Ansible
-    interface_configs:
-      - interface: "{{ item.interface | trim }}"
-        leafs: "{{ item.leafs | trim }}"
-        pod: "{{ item.pod | trim }}"
-    state: present
-  when: (item.interface | trim) != ""
+    validate_certs: false
+    method: post
+    path: /api/node/mo/uni/tn-{{ item.tenant | trim }}/ap-{{ item.app_profile | trim }}/epg-{{ item.epg | trim }}/rspathAtt-[topology/{{ item.pod | trim }}/paths-{{ item.node | trim }}/pathep-[{{ item.port | trim }}]].json
+    content:
+      fvRsPathAtt:
+        attributes:
+          dn: >-
+            uni/tn-{{ item.tenant | trim }}/ap-{{ item.app_profile | trim }}/epg-{{ item.epg | trim }}/rspathAtt-[topology/{{ item.pod | trim }}/paths-{{ item.node | trim }}/pathep-[{{ item.port | trim }}]]
+          encap: "{{ item.encap_id | trim }}"
+          instrImedcy: immediate
+          mode: untagged
+          tDn: topology/{{ item.pod | trim }}/paths-{{ item.node | trim }}/pathep-[{{ item.port | trim }}]
+          rn: rspathAtt-[topology/{{ item.pod | trim }}/paths-{{ item.node | trim }}/pathep-[{{ item.port | trim }}]]
+          status: created
+        children: []
+  delegate_to: localhost
+  when: (item.node | trim) != ""
 
-- name: Pause after EPG to AEP association
+- name: Pause after EPG creation
   pause:
     seconds: 1
-  when: (item.interface | trim) != ""
+  when: (item.node | trim) != ""

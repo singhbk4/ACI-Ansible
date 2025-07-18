@@ -14,4 +14,4 @@
       include_tasks: 5_epg01_port_binding_block.yaml
       loop: "{{ aci_objects.list }}"
       loop_control:
-        label: "{{ item.tenant | trim }}--{{ item.epg | trim }}-{{ item.app_profile | trim }}{{ item.aep | trim }}-{{ item.encap_id | trim }}-{{ item.interface | trim }}-{{ item.leafs | trim }}-{{ item.pod | trim }}-{{ item.interface_mode | trim }}"
+        label: "{{ item.tenant | trim }}--{{ item.epg | trim }}-{{ item.node | trim }}-{{ item.pod | trim }}-{{ item.port | trim }}-{{ item.encap_id | trim }}"
