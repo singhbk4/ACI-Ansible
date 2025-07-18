@@ -1,20 +1,38 @@
-- name: Associate an Interface Access Port Selector to an Interface Policy Leaf Profile with a Policy Group
-  aci_access_port_to_interface_policy_leaf_profile:
+- name: Adding Ethernet Port in Interface Selector Profile using aci_rest
+  aci_rest:
     host: "{{ apic_url }}"
     username: "{{ apic_username }}"
     password: "{{ apic_password }}"
-    validate_certs: no
-    #lag_type: node
-    leaf_interface_profile: "{{ item.leaf_int_selector_profile | trim }}"
-    access_port_selector: "{{ item.interface_name | trim }}"
-    leaf_port_blk: block
-    from_port: "{{ item.from_port | trim }}"
-    to_port: "{{ item.to_port | trim }}"
-    policy_group: "{{ item.policy_group | trim }}"
-    state: present
-  when: (item.leaf_int_selector_profile | trim) != ""
+    validate_certs: false
+    method: post
+    path: /api/node/mo/uni/infra/accportprof-{{ leaf_int_selector_profile | trim}}/hports-{{interface_name | trim}}-typ-range.json
+    content:
+      infraHPortS:
+        attributes:
+          dn: uni/infra/accportprof-{{ leaf_int_selector_profile | trim }}/hports-{{ interface_name | trim}}-typ-range
+          name: "{{ interface_name | trim }}"
+          rn: hports-{{ interface_name | trim }}-typ-range
+          status: created,modified
+        children:
+          - infraPortBlk:
+              attributes:
+                dn: >-
+                  uni/infra/accportprof-{{ leaf_int_selector_profile | trim }}/hports-{{ interface_name | trim }}-typ-range/portblk-block2
+                fromPort: "{{ from_port | int }}"
+                toPort: "{{ to_port | int }}"
+                name: block2
+                rn: portblk-block2
+                status: created,modified
+              children: []
+          - infraRsAccBaseGrp:
+              attributes:
+                tDn: uni/infra/funcprof/brkoutportgrp-{{ policy_group | trim }}
+                status: created,modified
+              children: []
+  delegate_to: localhost
+  when: (item.aep | trim) != ""
 
-- name: Pause after End Point Group creation
+- name: Pause after EPG creation
   pause:
     seconds: 1
-  when: (item.leaf_int_selector_profile | trim) != ""
+  when: (item.aep | trim) != ""
