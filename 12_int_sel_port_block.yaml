@@ -1,4 +1,4 @@
-- name: Adding Ethernet Port in Interface Selector Profile using aci_rest
+- name: Adding Ethernet Port from {{ item.from_port | int }} to {{ item.to_port | int }} in Interface Selector Profile {{ item.leaf_int_selector_profile | trim }}
   aci_rest:
     host: "{{ apic_url }}"
     username: "{{ apic_username }}"
