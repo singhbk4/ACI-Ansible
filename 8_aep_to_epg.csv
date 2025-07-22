@@ -3,7 +3,7 @@ aep-srv01,TenantA,AppProfileA,EPG1,vlan-100,trunk, 1/7,1001,1,ipr-1001,Eth_1,1,1
 aep-srv01,TenantA,AppProfileA,EPG2,vlan-101,trunk,,,,ipr-1002,Eth_1,1,1,Eth,ipg-access-srv02,,,,
 aep-srv01,TenantA,AppProfileA,EPG3,vlan-102,trunk,,,,ipr-1001-1002,Eth_2_3,2,3,Eth,,ipg-vpc-srv01,,,
 aep-srv01,TenantA,AppProfileA,EPG4,vlan-103,trunk,,,,ipr-1001-1002,Eth_4,4,4,Eth,,ipg-vpc-srv02,,,
-aep-srv01,TenantA,AppProfileA,EPG5,vlan-104,trunk,,,,ipr-1003-1004,Eth_1,1,1,Eth,,ipg-access-srv09,,,
+aep-srv01,TenantA,AppProfileA,EPG5,vlan-104,trunk,,,,ipr-1003-1004,Eth_1,1,1,Eth,,ipg-vpc-srv09,,,
 aep-srv01,TenantA,AppProfileA,EPG6,vlan-105,trunk,,,,,,,,,,,,,
 aep-srv01,TenantA,AppProfileA,EPG7,vlan-106,trunk,,,,,,,,,,,,,
 aep-srv01,TenantA,AppProfileA,EPG8,vlan-107,trunk,,,,,,,,,,,,,
