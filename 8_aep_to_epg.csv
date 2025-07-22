@@ -9,3 +9,6 @@ TenantA,AppProfileA,EPG7,aep-srv01,For SRV01,vlan-106,trunk,,,,,,,,,,,,,
 TenantA,AppProfileA,EPG8,aep-srv01,For SRV01,vlan-107,trunk,,,,,,,,,,,,,
 TenantA,AppProfileA,EPG9,aep-srv01,For SRV01,vlan-108,trunk,,,,,,,,,,,,,
 TenantA,AppProfileA,EPG9,aep-srv01,For SRV01,vlan-188,trunk, 1/7,1001,1,,,,,,,,1002,pod-1,eth1/2
+TenantA,AppProfileA,EPG1,aep-srv11,For SRV01,vlan-100,trunk,,,,,,,,,,,,,
+TenantA,AppProfileA,EPG2,aep-srv11,For SRV01,vlan-101,trunk,,,,,,,,,,,,,
+TenantA,AppProfileA,EPG3,aep-srv11,For SRV01,vlan-102,trunk,,,,,,,,,,,,,
