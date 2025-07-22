@@ -26,7 +26,7 @@
               children: []
           - infraRsAccBaseGrp:
               attributes:
-                tDn: uni/infra/funcprof/brkoutportgrp-{{ item.policy_group | trim }}
+                tDn: uni/infra/funcprof/accbundle-{{ item.policy_group | trim }}
                 status: created,modified
               children: []
   delegate_to: localhost
