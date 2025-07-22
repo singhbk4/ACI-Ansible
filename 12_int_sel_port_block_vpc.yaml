@@ -1,0 +1,38 @@
+- name: Adding Ethernet Port from {{ item.from_port | int }} to {{ item.to_port | int }} in Interface Selector Profile {{ item.leaf_int_selector_profile | trim }}
+  aci_rest:
+    host: "{{ apic_url }}"
+    username: "{{ apic_username }}"
+    password: "{{ apic_password }}"
+    validate_certs: false
+    method: post
+    path: /api/node/mo/uni/infra/accportprof-{{ item.leaf_int_selector_profile | trim }}/hports-{{ item.interface_name | trim }}-typ-range.json
+    content:
+      infraHPortS:
+        attributes:
+          dn: uni/infra/accportprof-{{ item.leaf_int_selector_profile | trim }}/hports-{{ item.interface_name | trim }}-typ-range
+          name: "{{ item.interface_name | trim }}"
+          rn: hports-{{ item.interface_name | trim }}-typ-range
+          status: created,modified
+        children:
+          - infraPortBlk:
+              attributes:
+                dn: >-
+                  uni/infra/accportprof-{{ item.leaf_int_selector_profile | trim }}/hports-{{ item.interface_name | trim }}-typ-range/portblk-block2
+                fromPort: "{{ item.from_port | int }}"
+                toPort: "{{ item.to_port | int }}"
+                name: block2
+                rn: portblk-block2
+                status: created,modified
+              children: []
+          - infraRsAccBaseGrp:
+              attributes:
+                tDn: uni/infra/funcprof/accbundle-{{ item.vpc_ifpolgrp | trim }}
+                status: created,modified
+              children: []
+  delegate_to: localhost
+  when: (item.vpc_ifpolgrp | trim) != ""
+
+- name: Pause after EPG creation
+  pause:
+    seconds: 1
+  when: (item.vpc_ifpolgrp | trim) != ""
