@@ -1,7 +1,7 @@
 tenant,app_profile,vrf,bd,gateway,mask,epg,domain,domain_type,vm_provider,phys_domain,vmm_domain,vlan_pool,vlan_block_start,vlan_block_end,vlan_pool_desc,aep,aep_desc,encap_id,interface_mode,access_ifpolgrp,vpc_ifpolgrp,leaf_int_selector_profile,switch_profile,from,to,vpc_group,switch_1_id,switch_2_id,vpc_pair_id
 TenantA,AppProfileA,VRFA,BD1,192.168.10.1,24,EPG1,phy-domain01,phys,,phy-domain01,,Pool_01_PHY,100,199,For Servers 1,aep-srv01,For SRV01,,,ipg-access-srv01,ipg-vpc-srv01,ipr-1001,spr-1001,1001,1001,,,,
 TenantA,AppProfileA,VRFA,BD2,192.168.20.1,25,EPG2,phy-domain01,phys,,,vmm-domain01,Pool_02_VMM,200,299,For Servers 2,aep-srv02,For SRV02,,,ipg-access-srv02,ipg-vpc-srv02,ipr-1002,spr-1002,1002,1002,,,,
-TenantA,AppProfileA,VRFA,BD3,192.168.30.1,26,EPG3,phy-domain01,phys,,,,,,,,,,,,ipg-access-srv03,ipg-vpc-srv03,ipr-1001-1002,spr-1001-1002,1001,1002,vpg-1001-1002,1001,1002,101
+TenantA,AppProfileA,VRFA,BD3,192.168.30.1,26,EPG3,phy-domain01,phys,,,,Pool_03_PHY,300,399,,,,,,ipg-access-srv03,ipg-vpc-srv03,ipr-1001-1002,spr-1001-1002,1001,1002,vpg-1001-1002,1001,1002,101
 TenantA,AppProfileA,VRFA,BD4,192.168.40.1,24,EPG4,phy-domain01,phys,,,,,,,,,,,,ipg-access-srv04,ipg-vpc-srv04,ipr-1003,spr-1003,1003,1003,,,,
 TenantA,AppProfileA,VRFA,BD5,192.168.50.1,23,EPG5,phy-domain01,phys,,,,,,,,,,,,ipg-access-srv05,ipg-vpc-srv05,ipr-1004,spr-1004,1004,1004,,,,
 TenantA,AppProfileA,VRFA,BD6,192.168.60.1,23,EPG6,,,vmware,,,,,,,,,,,ipg-access-srv06,ipg-vpc-srv06,ipr-1003-1004,spr-1003-1004,1003,1004,vpg-1003-1004,1003,1004,103
