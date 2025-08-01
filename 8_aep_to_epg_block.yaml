@@ -17,7 +17,7 @@
               attributes:
                 tDn: uni/tn-{{ item.tenant | trim }}/ap-{{ item.aep | trim }}/epg-{{ item.epg | trim }}
                 status: created,modified
-                encap: vlan-110
+                encap: "{{ item.encap_id | trim }}"
               children: []
   delegate_to: localhost
   when: (item.epg | trim) != ""
